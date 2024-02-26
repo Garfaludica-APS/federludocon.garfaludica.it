@@ -1,0 +1,18 @@
+* text=auto eol=lf
+
+*.blade.php text diff=html whitespace=trailing-space,space-before-tab,indent-with-non-tab
+*.css text diff=css whitespace=trailing-space,space-before-tab,indent-with-non-tab
+*.html text diff=html whitespace=trailing-space,space-before-tab,indent-with-non-tab
+*.md text diff=markdown whitespace=blank-at-eof
+*.php text diff=php whitespace=trailing-space,space-before-tab,indent-with-non-tab
+*.js text whitespace=trailing-space,space-before-tab,indent-with-non-tab
+*.vue text whitespace=trailing-space,space-before-tab,indent-with-non-tab,tabwidth=4
+*.yml text whitespace=trailing-space,space-before-tab,tab-in-indent,tabwidth=2
+*.yaml text whitespace=trailing-space,space-before-tab,tab-in-indent,tabwidth=2
+*.json text whitespace=trailing-space,space-before-tab,indent-with-non-tab
+*.xml text whitespace=trailing-space,space-before-tab,indent-with-non-tab
+*.sh text diff=bash whitespace=trailing-space,space-before-tab,indent-with-non-tab
+
+/.github export-ignore
+CHANGELOG.md export-ignore
+.styleci.yml export-ignore
