@@ -16,20 +16,35 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-	return Inertia::render('Welcome', [
-		'canLogin' => Route::has('login'),
-		'canRegister' => Route::has('register'),
-		'laravelVersion' => Application::VERSION,
-		'phpVersion' => PHP_VERSION,
-	]);
-});
+	return Inertia::render('Home');
+})->name('home');
 
-Route::middleware([
-	'auth:sanctum',
-	config('jetstream.auth_session'),
-	'verified',
-])->group(function () {
-	Route::get('/dashboard', function () {
-		return Inertia::render('Dashboard');
-	})->name('dashboard');
-});
+Route::get('/about', function () {
+	return Inertia::render('About');
+})->name('about');
+
+Route::get('/contact', function () {
+	return Inertia::render('Contact');
+})->name('contact');
+
+Route::get('/event', function () {
+	return Inertia::render('Event');
+})->name('event');
+
+Route::get('/reach-us', function () {
+	return Inertia::render('ReachUs');
+})->name('reach-us');
+
+Route::get('/book', function () {
+	return Inertia::render('Book');
+})->name('book');
+
+// Route::middleware([
+// 	'auth:sanctum',
+// 	config('jetstream.auth_session'),
+// 	'verified',
+// ])->group(function () {
+// 	Route::get('/dashboard', function () {
+// 		return Inertia::render('Dashboard');
+// 	})->name('dashboard');
+// });
