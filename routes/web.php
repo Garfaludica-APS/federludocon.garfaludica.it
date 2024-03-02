@@ -16,7 +16,9 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-	return Inertia::render('Home');
+	return Inertia::render('Home', [
+		'loripsum' => file_get_contents('https://loripsum.net/api/10/long/decorate/link/ul/ol/dl/bq/code/headers')
+	]);
 })->name('home');
 
 Route::get('/about', function () {
