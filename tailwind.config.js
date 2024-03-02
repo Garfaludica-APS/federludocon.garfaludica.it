@@ -17,6 +17,9 @@ export default {
 			fontFamily: {
 				sans: ['Figtree', ...defaultTheme.fontFamily.sans],
 			},
+			backgroundImage: {
+				'gobcon-poster': "url('/storage/images/bg.jpg')",
+			}
 		},
 	},
 
