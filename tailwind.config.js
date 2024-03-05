@@ -12,8 +12,29 @@ export default {
 		'./resources/js/**/*.vue',
 	],
 
+	darkMode: 'selector',
+
 	theme: {
+		screens: {
+			'2xs': '410px',
+			'xs': '475px',
+			'sm': '640px',
+			'md': '768px',
+			'ml': '920px',
+			'lg': '1085px',
+			'xl': '1280px',
+			'2xl': '1536px',
+			'3xl': '1670px',
+			'4xl': '1900px',
+		},
 		extend: {
+			colors: {
+				overlay: 'rgba(6, 12, 34, 0.8)',
+				footer: '#040919',
+				gray: {
+					350: '#b6bbc1',
+				}
+			},
 			animation: {
 				'fade-in': 'fadeIn 0.5s ease-in-out',
 			},

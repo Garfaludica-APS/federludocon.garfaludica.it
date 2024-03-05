@@ -17,29 +17,74 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
 	return Inertia::render('Home', [
-		'loripsum' => file_get_contents('https://loripsum.net/api/10/long/decorate/link/ul/ol/dl/bq/code/headers')
+		'tdgLogo' => asset('storage/images/tdg-logo.png'),
 	]);
 })->name('home');
+
+Route::get('/en', function () {
+	App::setLocale('en');
+	return Inertia::render('Home', [
+		'tdgLogo' => asset('storage/images/tdg-logo.png'),
+	]);
+})->name('en.home');
 
 Route::get('/about', function () {
 	return Inertia::render('About');
 })->name('about');
 
+Route::get('/en/about', function () {
+	App::setLocale('en');
+	return Inertia::render('About');
+})->name('en.about');
+
+Route::get('/hotels', function () {
+	return Inertia::render('Hotels');
+})->name('hotels');
+
+Route::get('/en/hotels', function () {
+	App::setLocale('en');
+	return Inertia::render('Hotels');
+})->name('en.hotels');
+
+Route::get('/venue', function () {
+	return Inertia::render('Venue');
+})->name('venue');
+
+Route::get('/en/venue', function () {
+	App::setLocale('en');
+	return Inertia::render('Venue');
+})->name('en.venue');
+
+Route::get('/organization', function () {
+	return Inertia::render('Organization');
+})->name('organization');
+
+Route::get('/en/organization', function () {
+	App::setLocale('en');
+	return Inertia::render('Organization');
+})->name('en.organization');
+
 Route::get('/contact', function () {
 	return Inertia::render('Contact');
 })->name('contact');
 
-Route::get('/event', function () {
-	return Inertia::render('Event');
-})->name('event');
-
-Route::get('/reach-us', function () {
-	return Inertia::render('ReachUs');
-})->name('reach-us');
+Route::get('/en/contact', function () {
+	App::setLocale('en');
+	return Inertia::render('Contact');
+})->name('en.contact');
 
 Route::get('/book', function () {
 	return Inertia::render('Book');
 })->name('book');
+
+Route::get('/en/book', function () {
+	App::setLocale('en');
+	return Inertia::render('Book');
+})->name('en.book');
+
+Route::get('/license', function () {
+	return Inertia::render('License');
+})->name('license');
 
 // Route::middleware([
 // 	'auth:sanctum',
