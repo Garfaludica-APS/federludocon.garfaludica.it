@@ -1,21 +1,14 @@
 <script setup>
-import { computed } from 'vue';
-import { Link } from '@inertiajs/vue3';
-
-const props = defineProps({
-	href: String,
-	active: Boolean,
-});
-
-const classes = computed(() => {
-	return props.active
-		? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 dark:border-indigo-600 text-sm font-medium leading-5 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
-		: 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-700 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 focus:border-gray-300 dark:focus:border-gray-700 transition duration-150 ease-in-out';
+defineProps({
+	type: {
+		type: String,
+		default: 'button',
+	},
 });
 </script>
 
 <template>
-	<Link :href="href" :class="classes">
+	<button :type="type" class="inline-flex items-center justify-center my-auto h-8 px-4 py-2 bg-green-600 border border-transparent rounded-full font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150">
 		<slot />
-	</Link>
+	</button>
 </template>

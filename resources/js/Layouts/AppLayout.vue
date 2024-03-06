@@ -6,6 +6,7 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import NavButton from '@/Components/NavButton.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
 import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
 import Footer from '@/Components/Footer.vue';
