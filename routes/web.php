@@ -37,6 +37,15 @@ Route::get('/en/about', function () {
 	return Inertia::render('About');
 })->name('en.about');
 
+Route::get('/tables', function () {
+	return Inertia::render('About');
+})->name('tables');
+
+Route::get('/en/tables', function () {
+	App::setLocale('en');
+	return Inertia::render('Tables');
+})->name('en.tables');
+
 Route::get('/hotels', function () {
 	return Inertia::render('Hotels');
 })->name('hotels');

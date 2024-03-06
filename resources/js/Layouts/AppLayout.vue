@@ -6,7 +6,6 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
 import NavButton from '@/Components/NavButton.vue';
-import DangerButton from '@/Components/DangerButton.vue';
 import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
 import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
 import Footer from '@/Components/Footer.vue';
@@ -21,6 +20,7 @@ const showingNavigationDropdown = ref(false);
 const locRoutes = ref([
 	{ name: 'home', route: 'home', url: '', active: false },
 	{ name: 'about', route: 'about', url: '', active: false },
+	{ name: 'tables', route: 'tables', url: '', active: false },
 	{ name: 'hotels', route: 'hotels', url: '', active: false },
 	{ name: 'venue', route: 'venue', url: '', active: false },
 	{ name: 'organization', route: 'organization', url: '', active: false },
@@ -96,25 +96,28 @@ onUnmounted(() => {
 									{{ $t('About') }}
 								</NavLink>
 								<NavLink :href="locRoutes[2].url" :active="locRoutes[2].active">
-									{{ $t('Hotels') }}
+									{{ $t('Tables') }}
 								</NavLink>
 								<NavLink :href="locRoutes[3].url" :active="locRoutes[3].active">
-									{{ $t('Venue') }}
+									{{ $t('Hotels') }}
 								</NavLink>
 								<NavLink :href="locRoutes[4].url" :active="locRoutes[4].active">
-									{{ $t('The Organization') }}
+									{{ $t('Venue') }}
 								</NavLink>
 								<NavLink :href="locRoutes[5].url" :active="locRoutes[5].active">
+									{{ $t('Garfaludica') }}
+								</NavLink>
+								<NavLink :href="locRoutes[6].url" :active="locRoutes[6].active">
 									{{ $t('Contact') }}
 								</NavLink>
-								<NavButton :href="locRoutes[6].url" :active="locRoutes[6].active">
-									{{ $t('Book Now!') }}
+								<NavButton :href="locRoutes[7].url" :active="locRoutes[7].active">
+									{{ $t('Book!') }}
 								</NavButton>
 							</div>
 
 							<div class="-me-2 flex items-center px-4 space-x-6">
-								<DarkModeSwitcher class="h-8 w-8 text-gray-500 dark:text-gray-350" />
-								<LanguageSwitcher class="h-8 w-8 text-gray-500 dark:text-gray-350" @switchLang="localizeRoutes" />
+								<DarkModeSwitcher class="h-8 w-8 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 hover:border-gray-500 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 focus:border-gray-500 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out" />
+								<LanguageSwitcher class="h-8 w-8 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 hover:border-gray-500 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 focus:border-gray-500 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out" @switchLang="localizeRoutes" />
 
 								<button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none transition duration-150 ease-in-out ml:hidden" :class="{'bg-gray-100 dark:bg-gray-900': showingNavigationDropdown}" @click="showingNavigationDropdown = !showingNavigationDropdown">
 									<svg
@@ -151,19 +154,22 @@ onUnmounted(() => {
 									{{ $t('About') }}
 								</ResponsiveNavLink>
 								<ResponsiveNavLink :href="locRoutes[2].url" :active="locRoutes[2].active">
-									{{ $t('Hotels') }}
+									{{ $t('Tables') }}
 								</ResponsiveNavLink>
 								<ResponsiveNavLink :href="locRoutes[3].url" :active="locRoutes[3].active">
-									{{ $t('Venue') }}
+									{{ $t('Hotels') }}
 								</ResponsiveNavLink>
 								<ResponsiveNavLink :href="locRoutes[4].url" :active="locRoutes[4].active">
-									{{ $t('The Organization') }}
+									{{ $t('Venue') }}
 								</ResponsiveNavLink>
 								<ResponsiveNavLink :href="locRoutes[5].url" :active="locRoutes[5].active">
+									{{ $t('Garfaludica') }}
+								</ResponsiveNavLink>
+								<ResponsiveNavLink :href="locRoutes[6].url" :active="locRoutes[6].active">
 									{{ $t('Contact') }}
 								</ResponsiveNavLink>
-								<NavButton :href="locRoutes[6].url" :active="locRoutes[6].active">
-									{{ $t('Book Now!') }}
+								<NavButton :href="locRoutes[7].url" :active="locRoutes[7].active">
+									{{ $t('Book!') }}
 								</NavButton>
 							</div>
 						</div>
