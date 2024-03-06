@@ -1,10 +1,11 @@
 {
-	"Welcome": "Welcome",
 	"Home": "Home",
-	"Reach Us": "Reach Us",
-	"About Us": "Garfaludica APS",
-	"The Event": "GobCon Garfagnana",
-	"Contact Us": "Contact Us",
-	"Book Now!" : "Book Now!",
-	"book_page_header_message": "LINGUA INGLESE - Laravel Jetstream provides a beautiful, robust starting point for your next Laravel application. Laravel is designed to help you build your application using a development environment that is simple, powerful, and enjoyable. We believe you should love expressing your creativity through programming, so we have spent time carefully crafting the Laravel ecosystem to be a breath of fresh air. We hope you love it."
+	"About": "About",
+	"Tables": "Tables",
+	"Hotels": "Hotels",
+	"Venue": "Venue",
+	"Garfaludica": "Garfaludica",
+	"Contact": "Contact",
+	"Book!" : "Book!",
+	"Book Now!" : "Book Now!"
 }
