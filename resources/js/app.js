@@ -17,6 +17,26 @@ createInertiaApp({
 		return createApp({ render: () => h(App, props) })
 			.use(plugin)
 			.use(ZiggyVue)
+			.mixin({
+				methods: {
+					lroute: function (name, params, absolute, config)
+					{
+						if (name && Ziggy.routeNamePrefix !== undefined)
+							name = Ziggy.routeNamePrefix + name;
+						return route(name, params, absolute, config);
+					},
+					currentRoute: function (name)
+					{
+						var r = route().current();
+						if (r.startsWith('en.'))
+							r = r.substr(3);
+						if (!name)
+							return r;
+						return r === name;
+
+					},
+				},
+			})
 			.use(i18nVue, {
 				resolve: async lang => {
 					const langs = import.meta.glob('../../lang/*.json');

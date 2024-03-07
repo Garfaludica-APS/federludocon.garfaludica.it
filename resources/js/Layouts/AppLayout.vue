@@ -16,31 +16,12 @@ defineProps({
 });
 
 const showingNavigationDropdown = ref(false);
+const curLanguage = ref('');
 
-const locRoutes = ref([
-	{ name: 'home', route: 'home', url: '', active: false },
-	{ name: 'about', route: 'about', url: '', active: false },
-	{ name: 'tables', route: 'tables', url: '', active: false },
-	{ name: 'hotels', route: 'hotels', url: '', active: false },
-	{ name: 'venue', route: 'venue', url: '', active: false },
-	{ name: 'organization', route: 'organization', url: '', active: false },
-	{ name: 'contact', route: 'contact', url: '', active: false },
-	{ name: 'book', route: 'book', url: '', active: false },
-]);
-
-function localizeRoutes(lang, replace = true) {
-	for (let i = 0; i < locRoutes.value.length; i++) {
-		if (lang === 'it')
-			locRoutes.value[i].route = locRoutes.value[i].name;
-		else
-			locRoutes.value[i].route = lang + '.' + locRoutes.value[i].name;
-		locRoutes.value[i].url = route(locRoutes.value[i].route);
-		if (replace && locRoutes.value[i].active) {
-			const st = window.history.state;
-			st.url = locRoutes.value[i].url;
-			window.history.replaceState(st, document.title, locRoutes.value[i].url);
-		}
-	}
+function localizeRoutes(lang, replace = true)
+{
+	Ziggy.routeNamePrefix = lang === 'it' ? '' : (lang + '.');
+	curLanguage.value = lang;
 }
 
 function onScroll(e)
@@ -56,8 +37,7 @@ function onScroll(e)
 
 onMounted(() => {
 	localizeRoutes(getActiveLanguage(), false);
-	for (let i = 0; i < locRoutes.value.length; i++)
-		locRoutes.value[i].active = route().current(locRoutes.value[i].route);
+
 	const p = document.querySelector('div.bg-gobcon-poster');
 	if (p.scrollTop > 80) {
 		document.querySelector('header').classList.remove('ml:bg-transparent', 'dark:ml:bg-transparent', 'ml:shadow-none');
@@ -83,34 +63,34 @@ onUnmounted(() => {
 						<div class="flex justify-between h-12">
 
 							<div class="shrink-9 flex items-center">
-								<Link :href="locRoutes[0].url">
+								<Link :href="lroute('home')">
 									<ApplicationLogo class="h-12 w-auto" titleClasses="h-full w-auto hidden 2xs:max-ml:inline-block lg:inline-block" />
 								</Link>
 							</div>
 
 							<div class="hidden space-x-8 ml:-my-px ml:ms-10 ml:flex ml:ml-auto">
-								<NavLink :href="locRoutes[0].url" :active="locRoutes[0].active">
+								<NavLink :href="lroute('home')" :active="currentRoute('home')">
 									{{ $t('Home') }}
 								</NavLink>
-								<NavLink :href="locRoutes[1].url" :active="locRoutes[1].active">
+								<NavLink :href="lroute('about')" :active="currentRoute('about')">
 									{{ $t('About') }}
 								</NavLink>
-								<NavLink :href="locRoutes[2].url" :active="locRoutes[2].active">
+								<NavLink :href="lroute('tables')" :active="currentRoute('tables')">
 									{{ $t('Tables') }}
 								</NavLink>
-								<NavLink :href="locRoutes[3].url" :active="locRoutes[3].active">
+								<NavLink :href="lroute('hotels')" :active="currentRoute('hotels')">
 									{{ $t('Hotels') }}
 								</NavLink>
-								<NavLink :href="locRoutes[4].url" :active="locRoutes[4].active">
+								<NavLink :href="lroute('venue')" :active="currentRoute('venue')">
 									{{ $t('Venue') }}
 								</NavLink>
-								<NavLink :href="locRoutes[5].url" :active="locRoutes[5].active">
+								<NavLink :href="lroute('organization')" :active="currentRoute('organization')">
 									{{ $t('Garfaludica') }}
 								</NavLink>
-								<NavLink :href="locRoutes[6].url" :active="locRoutes[6].active">
+								<NavLink :href="lroute('contact')" :active="currentRoute('contact')">
 									{{ $t('Contact') }}
 								</NavLink>
-								<NavButton :href="locRoutes[7].url" :active="locRoutes[7].active">
+								<NavButton :href="lroute('book')" :active="currentRoute('book')">
 									{{ $t('Book!') }}
 								</NavButton>
 							</div>
@@ -147,28 +127,28 @@ onUnmounted(() => {
 
 						<div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="ml:hidden">
 							<div class="pt-2 pb-3 space-y-1">
-								<ResponsiveNavLink :href="locRoutes[0].url" :active="locRoutes[0].active">
+								<ResponsiveNavLink :href="lroute('home')" :active="currentRoute('home')">
 									{{ $t('Home') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="locRoutes[1].url" :active="locRoutes[1].active">
+								<ResponsiveNavLink :href="lroute('about')" :active="currentRoute('about')">
 									{{ $t('About') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="locRoutes[2].url" :active="locRoutes[2].active">
+								<ResponsiveNavLink :href="lroute('tables')" :active="currentRoute('tables')">
 									{{ $t('Tables') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="locRoutes[3].url" :active="locRoutes[3].active">
+								<ResponsiveNavLink :href="lroute('hotels')" :active="currentRoute('hotels')">
 									{{ $t('Hotels') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="locRoutes[4].url" :active="locRoutes[4].active">
+								<ResponsiveNavLink :href="lroute('venue')" :active="currentRoute('venue')">
 									{{ $t('Venue') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="locRoutes[5].url" :active="locRoutes[5].active">
+								<ResponsiveNavLink :href="lroute('organization')" :active="currentRoute('organization')">
 									{{ $t('Garfaludica') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="locRoutes[6].url" :active="locRoutes[6].active">
+								<ResponsiveNavLink :href="lroute('contact')" :active="currentRoute('contact')">
 									{{ $t('Contact') }}
 								</ResponsiveNavLink>
-								<NavButton :href="locRoutes[7].url" :active="locRoutes[7].active">
+								<NavButton :href="lroute('book')" :active="currentRoute('book')">
 									{{ $t('Book!') }}
 								</NavButton>
 							</div>
@@ -179,7 +159,7 @@ onUnmounted(() => {
 			</header>
 
 			<main class="z-10 py-20">
-				<slot />
+				<slot :curLang="curLanguage" />
 			</main>
 		</div>
 

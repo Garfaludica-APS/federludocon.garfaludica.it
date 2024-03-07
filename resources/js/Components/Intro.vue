@@ -1,8 +1,10 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import Button from '@/Components/Button.vue';
 
 const props = defineProps({
 	tdgLogo: String,
+	curLang: String,
 });
 </script>
 
@@ -16,7 +18,7 @@ const props = defineProps({
 		</h1>
 
 		<div class="mt-2 text-gray-500 dark:text-gray-400 leading-relaxed">
-			<button class="border p-2 mx-auto">Prenota Ora!</button>
+			<Button :href="lroute('book')">Prenota Ora!</Button>
 			<button class="border p-2 mx-auto">Entra nel gruppo Telegram</button>
 		</div>
 	</div>
