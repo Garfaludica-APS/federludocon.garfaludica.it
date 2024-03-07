@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
 	<AppLayout :title="$t('Home')" v-slot="{ curLang }">
 		<div class="py-12">
-			<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
+			<div class="mx-auto sm:px-6 lg:px-8 animate-fade-in">
 				<Intro :tdgLogo="$props.tdgLogo" :curLang="curLang" />
 			</div>
 		</div>
