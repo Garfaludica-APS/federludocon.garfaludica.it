@@ -1,6 +1,7 @@
 <script setup>
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import TransparentButton from '@/Components/TransparentButton.vue';
+import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
 	tdgLogo: String,
@@ -16,11 +17,14 @@ const props = defineProps({
 			<span class="text-green-600">GobCon</span> 2024<br>
 			Garfagnana
 		</h1>
+		<p class="text-white font-bold text-lg">XX-YY June, Corfino Villa Collemandina, Lucca</p>
 
 		<div class="mt-4 text-gray-500 dark:text-gray-400 leading-relaxed flex justify-center items-center flex-wrap -mx-4">
-			<TransparentButton :href="lroute('book')" class="border-green-500 hover:bg-green-500 active:bg-green-700 focus:ring-green-500 mx-4 my-4">{{ $t('Prenota ora la tua stanza!') }}</TransparentButton>
+			<TransparentButton :href="lroute('book')" class="border-green-500 hover:bg-green-500 active:bg-green-700 focus:ring-green-500 mx-4 my-4 animate-pulse hover:animate-none">{{ $t('Prenota ora la tua stanza!') }}</TransparentButton>
 			<TransparentButton href="https://t.me/associazionegarfaludica" class="border-indigo-500 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 mx-4 my-4" newtab>Entra nel gruppo Telegram</TransparentButton>
 		</div>
+
+		<p class="mt-8 text-gray-100 text-md">Cerchi amici con cui giocare alla GobCon? <Link :href="lroute('tables')" class="inline-block underline text-orange-600 hover:text-orange-500 active:text-orange-500 font-bold">Organizza un tavolo!</Link></p>
 
 		<div class="mt-20 flex flex-wrap justify-center leading-tight max-w-7xl mx-auto px-8 text-white text-left">
 			<div class="sm:flex-[0_0_50%] w-full my-2 sm:max-w-[50%] px-6">

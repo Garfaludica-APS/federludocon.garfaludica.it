@@ -91,7 +91,7 @@ onUnmounted(() => {
 									{{ $t('Contact') }}
 								</NavLink>
 								<NavButton :href="lroute('book')" :active="currentRoute('book')">
-									{{ $t('Book!') }}
+									{{ $t('Book') }}
 								</NavButton>
 							</div>
 
@@ -149,7 +149,7 @@ onUnmounted(() => {
 									{{ $t('Contact') }}
 								</ResponsiveNavLink>
 								<NavButton :href="lroute('book')" :active="currentRoute('book')">
-									{{ $t('Book!') }}
+									{{ $t('Book') }}
 								</NavButton>
 							</div>
 						</div>
