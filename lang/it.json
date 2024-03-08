@@ -7,5 +7,16 @@
 	"Garfaludica": "Garfaludica",
 	"Contact": "Contatti",
 	"Book" : "Prenota",
-	"Book Now!" : "Prenota Ora!"
+	"Booking Portal": "Portale Prenotazioni",
+	"Telegram Group": "Gruppo Telegram",
+	"Looking for friends to play with at the GobCon?": "Cerchi amici con cui giocare alla GobCon?",
+	"Set up a table!": "Organizza un tavolo!",
+	"About the Event": "Informazioni sull'Evento",
+	"Where": "Dove",
+	"When": "Quando",
+	"home_event_title": "<span style=\"color: rgb(22, 163, 74)\">GobCon</span> 2024<br>Garfagnana",
+	"home_event_subtitle": "XX-YY Giugno, Corfino, Villa Collemandina, Lucca",
+	"home_about_event_text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam Metrodorum non puto ipsum professum, sed, cum appellaretur ab Epicuro, repudiare tantum beneficium noluisse; Mene ergo et Triarium dignos existimas, apud quos turpiter loquare? Non modo carum sibi quemque.",
+	"home_where_text": "Corfino, frazione di Villa Collemandina (Lucca)",
+	"home_when_text": "Da Venerdì a Domenica<br>XX-YY Giugno"
 }

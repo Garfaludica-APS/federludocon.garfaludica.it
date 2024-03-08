@@ -7,11 +7,11 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 import { i18nVue } from 'laravel-vue-i18n';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'GobCon 2024 Garfagnana';
 const orgName = import.meta.env.VITE_ORG_NAME || 'Garfaludica APS';
 
 createInertiaApp({
-	title: (title) => `${title} - ${orgName}`,
+	title: (title) => title ? `${title} - ${appName} - ${orgName}` : `${appName} - ${orgName}`,
 	resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
 	setup({ el, App, props, plugin }) {
 		return createApp({ render: () => h(App, props) })

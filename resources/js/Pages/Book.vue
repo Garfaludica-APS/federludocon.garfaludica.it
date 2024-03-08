@@ -4,7 +4,7 @@ import Book from '@/Components/Book.vue';
 </script>
 
 <template>
-	<AppLayout :title="$t('Book Now!')">
+	<AppLayout :title="$t('Booking Portal')">
 		<div class="py-12">
 			<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
 				<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">

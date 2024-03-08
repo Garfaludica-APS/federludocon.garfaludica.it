@@ -54,7 +54,7 @@ onUnmounted(() => {
 <template>
 	<Head :title="title" />
 
-	<div class="min-h-screen min-w-full bg-gobcon-poster bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen">
+	<div class="min-h-screen min-w-full bg-gobcon-poster bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen scroll-smooth">
 		<div class="min-h-screen min-w-full bg-overlay flex items-center justify-center">
 			<header class="fixed inset-x-0 top-0 z-50 pt-1 bg-white dark:bg-slate-900 ml:bg-transparent dark:ml:bg-transparent shadow ml:shadow-none transition-background duration-500 group">
 				<div>
