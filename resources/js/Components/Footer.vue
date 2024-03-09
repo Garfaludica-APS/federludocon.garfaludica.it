@@ -78,7 +78,7 @@ function copyToClipboard(text)
 					{{ $t('Venue') }}
 				</FooterNavLink>
 				<FooterNavLink href="lroute('organization')">
-					{{ $t('The Organization') }}
+					{{ $t('The Association') }}
 				</FooterNavLink>
 				<FooterNavLink :href="lroute('contact')">
 					{{ $t('Support') }}
@@ -109,7 +109,7 @@ function copyToClipboard(text)
 					{{ $t('Garfaludica APS') }}
 				</FooterNavLink>
 				<FooterNavLink href="https://t.me/associazionegarfaludica" external>
-					{{ $t('Telegram Garfaludica') }}
+					{{ $t('Garfaludica Telegram') }}
 				</FooterNavLink>
 			</nav>
 		</div>
