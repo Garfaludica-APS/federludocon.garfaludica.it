@@ -1,3 +1,3 @@
 <template>
-	<img src="/storage/images/logo.png" alt="Logo Garfaludica APS" />
+	<img :src="imageurl('logo.png')" alt="Logo Garfaludica APS" />
 </template>

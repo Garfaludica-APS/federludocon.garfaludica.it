@@ -33,7 +33,10 @@ createInertiaApp({
 						if (!name)
 							return r;
 						return r === name;
-
+					},
+					imageurl: function (name)
+					{
+						return new URL(`/storage/images/${name}`, import.meta.url).href;
 					},
 				},
 			})

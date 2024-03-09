@@ -47,13 +47,13 @@ function copyToClipboard(text)
 			<p class="text-sm" v-html="$t('footer_org_contact_text')"></p>
 			<div class="mt-6 flex space-x-6 flex-wrap">
 				<a rel="external noopener nofollow" :href="tdgLink" target="_blank">
-					<img src="/storage/images/tdg-round-logo.png" alt="Logo Tana dei Goblin" class="inline-block h-12 w-auto" />
+					<img :src="imageurl('tdg-round-logo.png')" alt="Logo Tana dei Goblin" class="inline-block h-12 w-auto" />
 				</a>
 				<a rel="external noopener nofollow" :href="federludoLink" target="_blank">
-					<img src="/storage/images/federludo-logo.png" alt="Logo Affiliata Federludo" class="inline-block h-12 w-auto" />
+					<img :src="imageurl('federludo-logo.png')" alt="Logo Affiliata Federludo" class="inline-block h-12 w-auto" />
 				</a>
 				<a rel="external noopener nofollow" :href="aicsLink" target="_blank">
-					<img src="/storage/images/aics-logo.png" alt="Logo Associazione Italiana Cultura e Sport" class="inline-block h-12 w-auto" />
+					<img :src="imageurl('aics-logo.png')" alt="Logo Associazione Italiana Cultura e Sport" class="inline-block h-12 w-auto" />
 				</a>
 			</div>
 		</div>
