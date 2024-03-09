@@ -21,7 +21,7 @@ const portalOpen = ref(props.bookingOpenCountdown <= 0);
 	<div class="px-6 py-2 lg:p-8 bg-transparent dark:from-gray-700/50 dark:via-transparent text-center">
 		<img :src="imageurl('tdg-logo.png')" alt="Logo Tana dei Goblin" class="inline-block px-16 w-full max-w-3xl h-auto max-h-[14%] mx-auto" />
 
-		<h1 class="mt-6 text-3xl 2xs:text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl uppercase font-black font-sans leading-tight whitespace-nowrap text-white py-4 sm:py-6" v-html="$t('home_event_title')"></h1>
+		<h1 class="mt-6 text-3xl 2xs:text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl uppercase font-black leading-tight whitespace-nowrap text-white py-4 sm:py-6" v-html="$t('home_event_title')"></h1>
 		<p class="text-white font-bold text-lg xs:text-xl sm:text-2xl" v-html="$t('home_event_subtitle')"></p>
 
 		<div v-if="portalOpen" class="animate-fade-in">
