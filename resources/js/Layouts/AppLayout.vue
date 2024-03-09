@@ -169,9 +169,10 @@ onUnmounted(() => {
 					<Footer />
 				</div>
 			</div>
-			<div class="py-7">
+			<div class="pt-8">
 				<div class="max-w-7xl mx-auto px-4 ml:px-6 lg:px-8 text-center">
 					Copyright © 2024 - <a class="text-rose-500 font-black" rel="noopener" href="https://www.garfaludica.it" target="_blank">Garfaludica APS</a> - Some Rights Reserved. (<Link class="hover:underline" :href="route('license')">MIT License</Link>)<br>Images and logos: All Rights Reserved.
+					<p class="mt-4 text-stone-700 dark:text-stone-400 text-sm [&>a]:text-rose-500 [&>a]:font-black" v-html="$t('footer_dev_text')"></p>
 				</div>
 			</div>
 		</footer>
