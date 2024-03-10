@@ -93,7 +93,7 @@ onUnmounted(() => {
 								<NavButton :href="lroute('book')" :active="currentRoute('book')">
 									{{ $t('Book') }}
 								</NavButton>
-								<Link :href="route('admin')" class="inline-flex items-center absolute py-1 px-1 top-3 right-3 text-sm font-medium leading-5 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out">
+								<Link :href="route('admin')" class="inline-flex items-center absolute py-1 px-1 top-3 right-3 ml:max-2xl:mt-12 text-sm font-medium leading-5 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1">
 										<path fill-rule="evenodd" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7V4.5A3.5 3.5 0 0 0 8 1Zm2 6V4.5a2 2 0 1 0-4 0V7h4Z" clip-rule="evenodd" />
 									</svg>
