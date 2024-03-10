@@ -137,7 +137,7 @@ function copyToClipboard(text)
 			<h4 class="mt-4 pb-2 border-b-2 border-indigo-500 text-lg uppercase font-extrabold">
 				{{ $t('Support Us') }}
 			</h4>
-			<p class="mt-4 text-xs" v-html="$t('footer_donation_text')"></p>
+			<p class="mt-4 text-xs hyphens-auto" v-html="$t('footer_donation_text')"></p>
 			<PayPalDonateButton class="mt-6"/>
 		</div>
 	</div>
