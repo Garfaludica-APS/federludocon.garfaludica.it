@@ -95,6 +95,10 @@ Route::get('/license', function () {
 	return Inertia::render('License');
 })->name('license');
 
+Route::get('/admin', function () {
+	return Inertia::render('Admin');
+})->name('admin');
+
 // Route::middleware([
 // 	'auth:sanctum',
 // 	config('jetstream.auth_session'),

@@ -56,7 +56,7 @@ onUnmounted(() => {
 
 	<div class="min-h-screen min-w-full bg-gobcon-poster bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen scroll-smooth">
 		<div class="min-h-screen min-w-full bg-overlay flex items-center justify-center">
-			<header class="fixed inset-x-0 top-0 z-50 pt-1 bg-white dark:bg-slate-900 ml:bg-transparent dark:ml:bg-transparent shadow ml:shadow-none transition-background duration-500 group">
+			<header class="fixed inset-x-0 top-0 z-50 pt-1 bg-white dark:bg-slate-900 ml:bg-transparent dark:ml:bg-transparent shadow-md ml:shadow-none transition-background duration-500 group">
 				<div>
 					<nav class="max-w-7xl mx-auto px-4 ml:px-6 lg:px-8">
 
@@ -93,6 +93,12 @@ onUnmounted(() => {
 								<NavButton :href="lroute('book')" :active="currentRoute('book')">
 									{{ $t('Book') }}
 								</NavButton>
+								<Link :href="route('admin')" class="inline-flex items-center absolute py-1 px-1 top-3 right-3 text-sm font-medium leading-5 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1">
+										<path fill-rule="evenodd" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7V4.5A3.5 3.5 0 0 0 8 1Zm2 6V4.5a2 2 0 1 0-4 0V7h4Z" clip-rule="evenodd" />
+									</svg>
+									{{ $t('Admin Panel') }}
+								</Link>
 							</div>
 
 							<div class="-me-2 flex items-center px-4 space-x-6">
@@ -151,6 +157,12 @@ onUnmounted(() => {
 								<NavButton :href="lroute('book')" :active="currentRoute('book')">
 									{{ $t('Book') }}
 								</NavButton>
+								<Link :href="route('admin')" class="inline-flex items-center py-1 px-1 float-right text-sm font-medium leading-5 text-gray-500 dark:text-gray-350 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 tansition duration-150 ease-in-out">
+									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1">
+										<path fill-rule="evenodd" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7V4.5A3.5 3.5 0 0 0 8 1Zm2 6V4.5a2 2 0 1 0-4 0V7h4Z" clip-rule="evenodd" />
+									</svg>
+									{{ $t('Admin Panel') }}
+								</Link>
 							</div>
 						</div>
 
@@ -163,7 +175,7 @@ onUnmounted(() => {
 			</main>
 		</div>
 
-		<footer class="bg-gray-300 dark:bg-slate-900 text-gray-800 dark:text-gray-100">
+		<footer class="bg-gray-300 dark:bg-slate-900 text-gray-800 dark:text-gray-100 shadow-md">
 			<div class="bg-slate-100 dark:bg-footer py-16">
 				<div class="max-w-7xl mx-auto px-4 ml:px-6 lg:px-8">
 					<Footer />
