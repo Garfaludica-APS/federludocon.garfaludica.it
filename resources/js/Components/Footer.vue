@@ -44,7 +44,9 @@ function copyToClipboard(text)
 			<p class="mt-4 [&>a]:text-indigo-500" v-html="$t('footer_org_text')"></p>
 			<p>{{ $t('Tax ID Code') }}: <span class="cursor-pointer text-indigo-500" @click="copyToClipboard(taxIdCode)">{{ taxIdCode }}</span></p>
 			<p>{{ $t('IBAN') }}: <span class="cursor-pointer text-indigo-500" @click="copyToClipboard(ibanNoSpaces)">{{ iban }}</span></p>
+			<!--sse-->
 			<p class="text-sm" v-html="$t('footer_org_contact_text')"></p>
+			<!--/sse-->
 			<div class="mt-6 flex space-x-6 flex-wrap">
 				<a rel="external noopener nofollow" :href="tdgLink" target="_blank">
 					<img :src="imageurl('tdg-round-logo.png')" alt="Logo Tana dei Goblin" class="inline-block h-12 w-auto" />
@@ -117,8 +119,10 @@ function copyToClipboard(text)
 			<h4 class="pb-2 border-b-2 border-indigo-500 text-lg uppercase font-extrabold">
 				{{ $t('Contact Us') }}
 			</h4>
+			<!--sse-->
 			<p class="mt-4"><span class="font-bold">{{ $t('Phone') }}:</span> <a rel="noopener" :href="phoneNumberHref" target="_blank">{{ phoneNumber }}</a></p>
 			<p class="mt-2"><span class="font-bold">{{ $t('Email') }}:</span> <a rel="noopener" :href="emailAddressHref" target="_blank">{{ emailAddress }}</a></p>
+			<!--/sse-->
 			<p class="mt-2"><span class="font-bold">{{ $t('Website') }}:</span> <a rel="external noopener" :href="webAddress" target="_blank">{{ webAddressNoProtocol }}</a></p>
 
 			<div class="flex justify-around mt-6">
