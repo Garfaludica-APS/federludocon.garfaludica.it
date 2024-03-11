@@ -3,7 +3,7 @@ import { renderToString } from '@vue/server-renderer';
 import { createInertiaApp } from '@inertiajs/vue3';
 import createServer from '@inertiajs/vue3/server';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/index.js';
 import { i18nVue } from 'laravel-vue-i18n';
 
 const appName = import.meta.env.VITE_APP_NAME || 'GobCon 2024 Garfagnana';
