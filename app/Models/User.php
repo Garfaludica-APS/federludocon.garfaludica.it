@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -23,7 +29,7 @@ class User extends Authenticatable
 	 *
 	 * @var array<int, string>
 	 */
-	protected $fillable = [
+	protected array $fillable = [
 		'name',
 		'email',
 		'password',
@@ -34,7 +40,7 @@ class User extends Authenticatable
 	 *
 	 * @var array<int, string>
 	 */
-	protected $hidden = [
+	protected array $hidden = [
 		'password',
 		'remember_token',
 		'two_factor_recovery_codes',
@@ -46,7 +52,7 @@ class User extends Authenticatable
 	 *
 	 * @var array<string, string>
 	 */
-	protected $casts = [
+	protected array $casts = [
 		'email_verified_at' => 'datetime',
 	];
 
@@ -55,7 +61,7 @@ class User extends Authenticatable
 	 *
 	 * @var array<int, string>
 	 */
-	protected $appends = [
+	protected array $appends = [
 		'profile_photo_url',
 	];
 }

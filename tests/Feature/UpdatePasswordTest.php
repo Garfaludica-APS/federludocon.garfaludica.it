@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Tests\Feature;
 
 use App\Models\User;
@@ -7,11 +13,16 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class UpdatePasswordTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function test_password_can_be_updated(): void
+	public function testPasswordCanBeUpdated(): void
 	{
 		$this->actingAs($user = User::factory()->create());
 
@@ -21,10 +32,10 @@ class UpdatePasswordTest extends TestCase
 			'password_confirmation' => 'new-password',
 		]);
 
-		$this->assertTrue(Hash::check('new-password', $user->fresh()->password));
+		static::assertTrue(Hash::check('new-password', $user->fresh()->password));
 	}
 
-	public function test_current_password_must_be_correct(): void
+	public function testCurrentPasswordMustBeCorrect(): void
 	{
 		$this->actingAs($user = User::factory()->create());
 
@@ -36,10 +47,10 @@ class UpdatePasswordTest extends TestCase
 
 		$response->assertSessionHasErrors();
 
-		$this->assertTrue(Hash::check('password', $user->fresh()->password));
+		static::assertTrue(Hash::check('password', $user->fresh()->password));
 	}
 
-	public function test_new_passwords_must_match(): void
+	public function testNewPasswordsMustMatch(): void
 	{
 		$this->actingAs($user = User::factory()->create());
 
@@ -51,6 +62,6 @@ class UpdatePasswordTest extends TestCase
 
 		$response->assertSessionHasErrors();
 
-		$this->assertTrue(Hash::check('password', $user->fresh()->password));
+		static::assertTrue(Hash::check('password', $user->fresh()->password));
 	}
 }

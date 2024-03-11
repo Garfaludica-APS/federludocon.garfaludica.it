@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Tests\Feature;
 
 use App\Models\User;
@@ -8,14 +14,19 @@ use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 use Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class ApiTokenPermissionsTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function test_api_token_permissions_can_be_updated(): void
+	public function testApiTokenPermissionsCanBeUpdated(): void
 	{
-		if (! Features::hasApiFeatures())
-			$this->markTestSkipped('API support is not enabled.');
+		if (!Features::hasApiFeatures())
+			static::markTestSkipped('API support is not enabled.');
 
 		$this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -25,7 +36,7 @@ class ApiTokenPermissionsTest extends TestCase
 			'abilities' => ['create', 'read'],
 		]);
 
-		$response = $this->put('/user/api-tokens/'.$token->id, [
+		$response = $this->put('/user/api-tokens/' . $token->id, [
 			'name' => $token->name,
 			'permissions' => [
 				'delete',
@@ -33,8 +44,8 @@ class ApiTokenPermissionsTest extends TestCase
 			],
 		]);
 
-		$this->assertTrue($user->fresh()->tokens->first()->can('delete'));
-		$this->assertFalse($user->fresh()->tokens->first()->can('read'));
-		$this->assertFalse($user->fresh()->tokens->first()->can('missing-permission'));
+		static::assertTrue($user->fresh()->tokens->first()->can('delete'));
+		static::assertFalse($user->fresh()->tokens->first()->can('read'));
+		static::assertFalse($user->fresh()->tokens->first()->can('missing-permission'));
 	}
 }

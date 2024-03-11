@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Providers;
 
 use App\Actions\Jetstream\DeleteUser;
@@ -11,10 +17,7 @@ class JetstreamServiceProvider extends ServiceProvider
 	/**
 	 * Register any application services.
 	 */
-	public function register(): void
-	{
-		//
-	}
+	public function register(): void {}
 
 	/**
 	 * Bootstrap any application services.

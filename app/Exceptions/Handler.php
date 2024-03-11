@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -23,8 +29,6 @@ class Handler extends ExceptionHandler
 	 */
 	public function register(): void
 	{
-		$this->reportable(function (Throwable $e) {
-			//
-		});
+		$this->reportable(static function(Throwable $e): void {});
 	}
 }

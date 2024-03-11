@@ -1,16 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class BrowserSessionsTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function test_other_browser_sessions_can_be_logged_out(): void
+	public function testOtherBrowserSessionsCanBeLoggedOut(): void
 	{
 		$this->actingAs($user = User::factory()->create());
 

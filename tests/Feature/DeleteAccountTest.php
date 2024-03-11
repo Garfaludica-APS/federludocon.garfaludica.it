@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Tests\Feature;
 
 use App\Models\User;
@@ -7,14 +13,19 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Jetstream\Features;
 use Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class DeleteAccountTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function test_user_accounts_can_be_deleted(): void
+	public function testUserAccountsCanBeDeleted(): void
 	{
-		if (! Features::hasAccountDeletionFeatures())
-			$this->markTestSkipped('Account deletion is not enabled.');
+		if (!Features::hasAccountDeletionFeatures())
+			static::markTestSkipped('Account deletion is not enabled.');
 
 		$this->actingAs($user = User::factory()->create());
 
@@ -22,13 +33,13 @@ class DeleteAccountTest extends TestCase
 			'password' => 'password',
 		]);
 
-		$this->assertNull($user->fresh());
+		static::assertNull($user->fresh());
 	}
 
-	public function test_correct_password_must_be_provided_before_account_can_be_deleted(): void
+	public function testCorrectPasswordMustBeProvidedBeforeAccountCanBeDeleted(): void
 	{
-		if (! Features::hasAccountDeletionFeatures())
-			$this->markTestSkipped('Account deletion is not enabled.');
+		if (!Features::hasAccountDeletionFeatures())
+			static::markTestSkipped('Account deletion is not enabled.');
 
 		$this->actingAs($user = User::factory()->create());
 
@@ -36,6 +47,6 @@ class DeleteAccountTest extends TestCase
 			'password' => 'wrong-password',
 		]);
 
-		$this->assertNotNull($user->fresh());
+		static::assertNotNull($user->fresh());
 	}
 }

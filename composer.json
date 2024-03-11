@@ -4,6 +4,12 @@
 	"description": "The skeleton application for the Laravel framework.",
 	"keywords": ["laravel", "framework"],
 	"license": "MIT",
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://github.com/Garfaludica-APS/pint"
+		}
+	],
 	"require": {
 		"php": "^8.1",
 		"guzzlehttp/guzzle": "^7.2",
@@ -16,7 +22,7 @@
 	},
 	"require-dev": {
 		"fakerphp/faker": "^1.9.1",
-		"laravel/pint": "^1.0",
+		"garfaludica-aps/pint": "^1.14",
 		"laravel/sail": "^1.18",
 		"mockery/mockery": "^1.4.4",
 		"nunomaduro/collision": "^7.0",

@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Tests\Feature;
 
 use App\Models\User;
@@ -8,14 +14,19 @@ use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 use Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class DeleteApiTokenTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function test_api_tokens_can_be_deleted(): void
+	public function testApiTokensCanBeDeleted(): void
 	{
-		if (! Features::hasApiFeatures())
-			$this->markTestSkipped('API support is not enabled.');
+		if (!Features::hasApiFeatures())
+			static::markTestSkipped('API support is not enabled.');
 
 		$this->actingAs($user = User::factory()->withPersonalTeam()->create());
 
@@ -25,8 +36,8 @@ class DeleteApiTokenTest extends TestCase
 			'abilities' => ['create', 'read'],
 		]);
 
-		$response = $this->delete('/user/api-tokens/'.$token->id);
+		$response = $this->delete('/user/api-tokens/' . $token->id);
 
-		$this->assertCount(0, $user->fresh()->tokens);
+		static::assertCount(0, $user->fresh()->tokens);
 	}
 }

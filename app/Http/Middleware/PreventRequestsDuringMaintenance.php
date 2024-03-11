@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\PreventRequestsDuringMaintenance as Middleware;
@@ -12,6 +18,5 @@ class PreventRequestsDuringMaintenance extends Middleware
 	 * @var array<int, string>
 	 */
 	protected $except = [
-		//
 	];
 }

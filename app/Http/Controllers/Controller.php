@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -8,5 +14,6 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-	use AuthorizesRequests, ValidatesRequests;
+	use AuthorizesRequests;
+	use ValidatesRequests;
 }

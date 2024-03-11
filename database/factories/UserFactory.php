@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Database\Factories;
 
 use App\Models\Team;
@@ -38,7 +44,7 @@ class UserFactory extends Factory
 	 */
 	public function unverified(): static
 	{
-		return $this->state(function (array $attributes) {
+		return $this->state(static function(array $attributes) {
 			return [
 				'email_verified_at' => null,
 			];
@@ -48,19 +54,18 @@ class UserFactory extends Factory
 	/**
 	 * Indicate that the user should have a personal team.
 	 */
-	public function withPersonalTeam(callable $callback = null): static
+	public function withPersonalTeam(?callable $callback = null): static
 	{
-		if (! Features::hasTeamFeatures())
+		if (!Features::hasTeamFeatures())
 			return $this->state([]);
-
 		return $this->has(
 			Team::factory()
-				->state(fn (array $attributes, User $user) => [
-					'name' => $user->name.'\'s Team',
+				->state(static fn(array $attributes, User $user) => [
+					'name' => $user->name . '\'s Team',
 					'user_id' => $user->id,
 					'personal_team' => true,
 				])
-				->when(is_callable($callback), $callback),
+				->when(\is_callable($callback), $callback),
 			'ownedTeams'
 		);
 	}

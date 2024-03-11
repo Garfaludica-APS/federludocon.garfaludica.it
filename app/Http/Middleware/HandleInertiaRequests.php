@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
@@ -8,11 +14,7 @@ use Tightenco\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
-	/**
-	 * The root template that is loaded on the first page visit.
-	 *
-	 * @var string
-	 */
+	/** The root template that is loaded on the first page visit. */
 	protected $rootView = 'app';
 
 	/**
@@ -32,8 +34,8 @@ class HandleInertiaRequests extends Middleware
 	{
 		return [
 			...parent::share($request),
-			'ziggy' => fn () => [
-				...(new Ziggy)->toArray(),
+			'ziggy' => static fn() => [
+				...(new Ziggy())->toArray(),
 				'location' => $request->url(),
 			],
 		];

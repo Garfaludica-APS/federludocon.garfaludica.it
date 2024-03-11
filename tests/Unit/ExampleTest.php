@@ -1,16 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class ExampleTest extends TestCase
 {
 	/**
 	 * A basic test example.
 	 */
-	public function test_that_true_is_true(): void
+	public function testThatTrueIsTrue(): void
 	{
-		$this->assertTrue(true);
+		static::assertTrue(true);
 	}
 }

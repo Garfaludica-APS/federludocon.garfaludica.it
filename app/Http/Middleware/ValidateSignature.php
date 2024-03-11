@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Middleware;
 
 use Illuminate\Routing\Middleware\ValidateSignature as Middleware;
@@ -11,7 +17,7 @@ class ValidateSignature extends Middleware
 	 *
 	 * @var array<int, string>
 	 */
-	protected $except = [
+	protected array $except = [
 		// 'fbclid',
 		// 'utm_campaign',
 		// 'utm_content',

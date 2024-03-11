@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
@@ -13,14 +19,10 @@ class AuthServiceProvider extends ServiceProvider
 	 * @var array<class-string, class-string>
 	 */
 	protected $policies = [
-		//
 	];
 
 	/**
 	 * Register any authentication / authorization services.
 	 */
-	public function boot(): void
-	{
-		//
-	}
+	public function boot(): void {}
 }

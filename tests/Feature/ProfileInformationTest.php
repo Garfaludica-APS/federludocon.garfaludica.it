@@ -1,16 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * @internal
+ *
+ * @small
+ */
 class ProfileInformationTest extends TestCase
 {
 	use RefreshDatabase;
 
-	public function test_profile_information_can_be_updated(): void
+	public function testProfileInformationCanBeUpdated(): void
 	{
 		$this->actingAs($user = User::factory()->create());
 
@@ -19,7 +30,7 @@ class ProfileInformationTest extends TestCase
 			'email' => 'test@example.com',
 		]);
 
-		$this->assertEquals('Test Name', $user->fresh()->name);
-		$this->assertEquals('test@example.com', $user->fresh()->email);
+		static::assertSame('Test Name', $user->fresh()->name);
+		static::assertSame('test@example.com', $user->fresh()->email);
 	}
 }
