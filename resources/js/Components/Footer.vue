@@ -77,7 +77,7 @@ function copyToClipboard(text)
 				<FooterNavLink :href="lroute('venue')">
 					{{ $t('Venue') }}
 				</FooterNavLink>
-				<FooterNavLink href="lroute('organization')">
+				<FooterNavLink :href="lroute('organization')">
 					{{ $t('The Association') }}
 				</FooterNavLink>
 				<FooterNavLink :href="lroute('contact')">
@@ -90,7 +90,7 @@ function copyToClipboard(text)
 				{{ $t('Useful Links') }}
 			</h4>
 			<nav>
-				<FooterNavLink href="lroute('book')">
+				<FooterNavLink :href="lroute('book')">
 					{{ $t('Booking Portal') }}
 				</FooterNavLink>
 				<FooterNavLink href="#" external>
