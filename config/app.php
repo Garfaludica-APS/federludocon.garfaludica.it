@@ -21,7 +21,7 @@ return [
 	|
 	 */
 
-	'name' => env('APP_NAME', 'Laravel'),
+	'name' => env('APP_NAME', 'GobCon Booking Portal'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -60,7 +60,9 @@ return [
 	|
 	 */
 
-	'url' => env('APP_URL', 'http://localhost'),
+	'url' => env('APP_URL', 'https://gobcon.garfaludica.it'),
+
+	'frontend_url' => env('FRONTEND_URL', 'https://gobcon.garfaludica.it'),
 
 	'asset_url' => env('ASSET_URL'),
 
@@ -75,7 +77,7 @@ return [
 	|
 	 */
 
-	'timezone' => 'UTC',
+	'timezone' => env('APP_TIMEZONE', 'UTC'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -88,7 +90,7 @@ return [
 	|
 	 */
 
-	'locale' => 'it',
+	'locale' => env('APP_LOCALE', 'it'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -101,7 +103,7 @@ return [
 	|
 	 */
 
-	'fallback_locale' => 'en',
+	'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -114,7 +116,7 @@ return [
 	|
 	 */
 
-	'faker_locale' => 'en_US',
+	'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -131,6 +133,12 @@ return [
 
 	'cipher' => 'AES-256-CBC',
 
+	'previous_keys' => [
+		...array_filter(
+			explode(',', env('APP_PREVIOUS_KEYS', ''))
+		),
+	],
+
 	/*
 	|--------------------------------------------------------------------------
 	| Maintenance Mode Driver
@@ -145,8 +153,8 @@ return [
 	 */
 
 	'maintenance' => [
-		'driver' => 'file',
-		// 'store' => 'redis',
+		'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
+		'store' => env('APP_MAINTENANCE_STORE', 'redis'),
 	],
 
 	/*
