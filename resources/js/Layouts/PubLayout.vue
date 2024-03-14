@@ -16,12 +16,24 @@ defineProps({
 });
 
 const showingNavigationDropdown = ref(false);
-const curLanguage = ref('');
 
 function localizeRoutes(lang, replace = true)
 {
 	Ziggy.routeNamePrefix = lang === 'it' ? '' : (lang + '.');
-	curLanguage.value = lang;
+	if (!replace)
+		return;
+	const cur = route().current();
+	const base = cur.startsWith('en.') ? cur.substring(3) : cur;
+	const newRoute = lang === 'it' ? base : (lang + '.' + base);
+	let newUrl;
+	try {
+		newUrl = route(newRoute, undefined, false);
+	} catch(e) {
+		newUrl = route(base, undefined, false);
+	}
+	const st = window.history.state;
+	st.url = newUrl;
+	window.history.replaceState(st, document.title, newUrl);
 }
 
 function onScroll(e)
@@ -175,7 +187,7 @@ onUnmounted(() => {
 			</header>
 
 			<main class="z-10 py-20">
-				<slot :curLang="curLanguage" />
+				<slot />
 			</main>
 		</div>
 
