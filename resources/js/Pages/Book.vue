@@ -1,17 +1,22 @@
-<script setup>
+<script>
 import PubLayout from '@/Layouts/PubLayout.vue';
+
+export default {
+	layout: (h, page) => h(PubLayout, { title: 'Booking Portal' }, () => page),
+}
+</script>
+
+<script setup>
 import Book from '@/Components/Book.vue';
 </script>
 
 <template>
-	<PubLayout :title="$t('Booking Portal')">
-		<div class="py-12">
-			<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
-				<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-					<Book />
-					<Book />
-				</div>
+	<div class="py-12">
+		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
+			<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+				<Book />
+				<Book />
 			</div>
 		</div>
-	</PubLayout>
+	</div>
 </template>

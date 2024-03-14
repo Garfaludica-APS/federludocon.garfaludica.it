@@ -64,7 +64,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<Head :title="title" />
+	<Head :title="$t(title)" />
 
 	<div class="min-h-screen min-w-full bg-gobcon-poster bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen scroll-smooth">
 		<div class="min-h-screen min-w-full bg-overlay flex items-center justify-center">

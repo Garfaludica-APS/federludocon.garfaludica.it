@@ -1,16 +1,21 @@
-<script setup>
+<script>
 import PubLayout from '@/Layouts/PubLayout.vue';
+
+export default {
+	layout: (h, page) => h(PubLayout, { title: 'The Association' }, () => page),
+}
+</script>
+
+<script setup>
 import Welcome from '@/Components/Welcome.vue';
 </script>
 
 <template>
-	<PubLayout :title="$t('The Association')">
-		<div class="py-12">
-			<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
-				<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
-					<Welcome />
-				</div>
+	<div class="py-12">
+		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
+			<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+				<Welcome />
 			</div>
 		</div>
-	</PubLayout>
+	</div>
 </template>

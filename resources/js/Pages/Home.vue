@@ -1,12 +1,17 @@
-<script setup>
+<script>
 import PubLayout from '@/Layouts/PubLayout.vue';
+
+export default {
+	layout: (h, page) => h(PubLayout, { title: '' }, () => page),
+}
+</script>
+
+<script setup>
 import Intro from '@/Components/Intro.vue';
 
 const props = defineProps({
 	tdgLogo: String,
 });
-
-defineOptions({ layout: PubLayout });
 </script>
 
 <template>
