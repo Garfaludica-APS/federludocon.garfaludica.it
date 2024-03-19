@@ -17,9 +17,9 @@ return [
 	| Default Log Channel
 	|--------------------------------------------------------------------------
 	|
-	| This option defines the default log channel that gets used when writing
-	| messages to the logs. The name specified in this option should match
-	| one of the channels defined in the "channels" configuration array.
+	| This option defines the default log channel that is utilized to write
+	| messages to your logs. The value provided here should match one of
+	| the channels present in the list of "channels" configured below.
 	|
 	 */
 
@@ -46,13 +46,12 @@ return [
 	| Log Channels
 	|--------------------------------------------------------------------------
 	|
-	| Here you may configure the log channels for your application. Out of
-	| the box, Laravel uses the Monolog PHP logging library. This gives
-	| you a variety of powerful log handlers / formatters to utilize.
+	| Here you may configure the log channels for your application. Laravel
+	| utilizes the Monolog PHP logging library, which includes a variety
+	| of powerful log handlers and formatters that you're free to use.
 	|
 	| Available Drivers: "single", "daily", "slack", "syslog",
-	|                    "errorlog", "monolog",
-	|                    "custom", "stack"
+	|                    "errorlog", "monolog", "custom", "stack"
 	|
 	 */
 
@@ -113,7 +112,7 @@ return [
 		'syslog' => [
 			'driver' => 'syslog',
 			'level' => env('LOG_LEVEL', 'debug'),
-			'facility' => env('LOG_SYSLOG_FACILITY', LOG_USER),
+			'facility' => env('LOG_SYSLOG_FACILITY', \LOG_USER),
 			'replace_placeholders' => true,
 		],
 

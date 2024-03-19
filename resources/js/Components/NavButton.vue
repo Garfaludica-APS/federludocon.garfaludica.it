@@ -3,10 +3,6 @@ import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
-	type: {
-		type: String,
-		default: 'button',
-	},
 	active: {
 		type: Boolean,
 		default: false,

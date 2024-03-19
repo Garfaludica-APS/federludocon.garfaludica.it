@@ -1,12 +1,7 @@
 <?php
 
-declare(strict_types=1);
-
-/*
- * Copyright © 2024 - Garfaludica APS - MIT License
- */
-
 return [
+
 	/*
 	|--------------------------------------------------------------------------
 	| Cross-Origin Resource Sharing (CORS) Configuration
@@ -18,7 +13,7 @@ return [
 	|
 	| To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
 	|
-	 */
+	*/
 
 	'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
@@ -35,4 +30,5 @@ return [
 	'max_age' => 0,
 
 	'supports_credentials' => false,
+
 ];

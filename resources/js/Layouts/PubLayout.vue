@@ -1,7 +1,6 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
-import ApplicationMark from '@/Components/ApplicationMark.vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { Head, Link } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
@@ -9,7 +8,7 @@ import NavButton from '@/Components/NavButton.vue';
 import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
 import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
 import Footer from '@/Components/Footer.vue';
-import { loadLanguageAsync, getActiveLanguage } from 'laravel-vue-i18n';
+import { getActiveLanguage } from 'laravel-vue-i18n';
 
 defineProps({
 	title: String,
@@ -58,7 +57,7 @@ onMounted(() => {
 	p.addEventListener('scroll', onScroll);
 });
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
 	document.querySelector('div.bg-gobcon-poster').removeEventListener('scroll', onScroll);
 });
 </script>
@@ -66,7 +65,7 @@ onUnmounted(() => {
 <template>
 	<Head :title="$t(title)" />
 
-	<div class="min-h-screen min-w-full bg-gobcon-poster bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen scroll-smooth">
+	<div class="min-h-screen min-w-full bg-gobcon-poster bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen scroll-smooth" scroll-region>
 		<div class="min-h-screen min-w-full bg-overlay flex items-center justify-center">
 			<header class="fixed inset-x-0 top-0 z-50 pt-1 bg-white dark:bg-slate-900 ml:bg-transparent dark:ml:bg-transparent shadow-md ml:shadow-none transition-background duration-500 group">
 				<div>

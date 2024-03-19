@@ -52,6 +52,5 @@ onUnmounted(() => {
 			{{ (seconds % 60).toLocaleString(undefined, {minimumIntegerDigits: 2}) }}<br>
 			<span class="hidden xs:inline-block text-xs md:text-base">{{ $t('seconds') }}</span>
 		</div>
-		<!-- <p>{{ days }} days, {{ hours % 24 }} hours, {{ minutes % 60 }} minutes, {{ seconds % 60 }} seconds</p> -->
 	</div>
 </template>

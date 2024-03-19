@@ -6,20 +6,8 @@ declare(strict_types=1);
  * Copyright © 2024 - Garfaludica APS - MIT License
  */
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
- */
 
 Route::get('/', static function() {
 	return Inertia::render('Home', [
@@ -85,14 +73,7 @@ Route::get('/en/book', static function() {
 
 Route::get('/license', static fn() => Inertia::render('License'))->name('license');
 
-Route::get('/admin', static fn() => Inertia::render('Admin'))->name('admin');
-
-// Route::middleware([
-// 	'auth:sanctum',
-// 	config('jetstream.auth_session'),
-// 	'verified',
-// ])->group(function () {
-// 	Route::get('/dashboard', function () {
-// 		return Inertia::render('Dashboard');
-// 	})->name('dashboard');
-// });
+Route::prefix('admin')->group(static function(): void {
+	Route::get('/', static fn() => Inertia::render('Admin/Dashboard'))->name('admin');
+	Route::get('/admins', static fn() => Inertia::render('Admin/Admins'))->name('admin.admins');
+});
