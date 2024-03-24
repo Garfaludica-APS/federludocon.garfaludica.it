@@ -1,7 +1,12 @@
 <?php
 
-return [
+declare(strict_types=1);
 
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
+return [
 	/*
 	|--------------------------------------------------------------------------
 	| Default Hash Driver
@@ -13,7 +18,7 @@ return [
 	|
 	| Supported: "bcrypt", "argon", "argon2id"
 	|
-	*/
+	 */
 
 	'driver' => env('HASH_DRIVER', 'bcrypt'),
 
@@ -26,7 +31,7 @@ return [
 	| passwords are hashed using the Bcrypt algorithm. This will allow you
 	| to control the amount of time it takes to hash the given password.
 	|
-	*/
+	 */
 
 	'bcrypt' => [
 		'rounds' => env('BCRYPT_ROUNDS', 12),
@@ -42,7 +47,7 @@ return [
 	| passwords are hashed using the Argon algorithm. These will allow you
 	| to control the amount of time it takes to hash the given password.
 	|
-	*/
+	 */
 
 	'argon' => [
 		'memory' => env('ARGON_MEMORY', 65536),
@@ -60,8 +65,7 @@ return [
 	| the user's password during login if the configured work factor for
 	| the algorithm has changed, allowing graceful upgrades of hashes.
 	|
-	*/
+	 */
 
 	'rehash_on_login' => true,
-
 ];

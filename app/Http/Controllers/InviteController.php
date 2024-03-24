@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Controllers;
 
 use App\Models\Invite;
@@ -15,13 +21,13 @@ class InviteController extends Controller
 	public function store(Request $request): void
 	{
 		$validated = $request->validate([
-			'email' => 'required|email:strict,dns,spoof|max:254|unique:invites|unique:App\Models\Admin',
+			'email' => 'required|email:strict,dns,spoof|max:254|unique:invites|unique:App\\Models\\Admin',
 		]);
 		$request->user()->invites()->create([
 			...$validated,
 			'token' => Str::random(60),
 		]);
-		//return to_route('admins.index');
+		// return to_route('admins.index');
 	}
 
 	/**

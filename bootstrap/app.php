@@ -33,15 +33,15 @@ return Application::configure(basePath: \dirname(__DIR__))
 			HandleInertiaRequests::class,
 		]);
 		$middleware->redirectGuestsTo(
-			fn (Request $request) => App::isLocale('en') ? route('en.auth.login') : route('auth.login')
+			static fn(Request $request) => App::isLocale('en') ? route('en.auth.login') : route('auth.login')
 		);
 		$middleware->redirectUsersTo(
-			fn (Request $request) => route('admin.dashboard')
+			static fn(Request $request) => route('admin.dashboard')
 		);
 	})
 	->withExceptions(static function(Exceptions $exceptions): void {
-		$exceptions->respond(function (Response|RedirectResponse $response, Throwable $exception, Request $request): Response|RedirectResponse {
-			if (app()->isProduction() && in_array($response->status(), [500, 503, 404, 403]))
+		$exceptions->respond(static function(RedirectResponse|Response $response, \Throwable $exception, Request $request): RedirectResponse|Response {
+			if (app()->isProduction() && \in_array($response->status(), [500, 503, 404, 403]))
 				return inertia('Error', ['status' => $response->status()])
 					->toResponse($request)
 					->setStatusCode($response->status());

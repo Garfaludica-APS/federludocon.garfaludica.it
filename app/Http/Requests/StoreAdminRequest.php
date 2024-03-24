@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -17,12 +23,11 @@ class StoreAdminRequest extends FormRequest
 	/**
 	 * Get the validation rules that apply to the request.
 	 *
-	 * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+	 * @return array<string, array<mixed>|\Illuminate\Contracts\Validation\ValidationRule|string>
 	 */
 	public function rules(): array
 	{
 		return [
-			//
 		];
 	}
 }

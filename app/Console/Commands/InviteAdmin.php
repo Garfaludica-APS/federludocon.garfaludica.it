@@ -1,11 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Console\Commands;
 
 use App\Models\Invite;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
 use Illuminate\Support\Str;
+
 use function Laravel\Prompts\text;
 
 class InviteAdmin extends Command implements PromptsForMissingInput
@@ -15,9 +22,11 @@ class InviteAdmin extends Command implements PromptsForMissingInput
 	 *
 	 * @var string
 	 */
-	protected $signature = 'admin:invite
-				{email : Email address to send the invite to}
-				{--s|super : Make the user a super admin}';
+	protected $signature = <<<'EOD'
+		admin:invite
+						{email : Email address to send the invite to}
+						{--s|super : Make the user a super admin}
+		EOD;
 
 	/**
 	 * The console command description.
@@ -29,7 +38,7 @@ class InviteAdmin extends Command implements PromptsForMissingInput
 	/**
 	 * Execute the console command.
 	 */
-	public function handle()
+	public function handle(): void
 	{
 		Invite::factory()->create([
 			'email' => $this->argument('email'),
@@ -43,11 +52,11 @@ class InviteAdmin extends Command implements PromptsForMissingInput
 	protected function promptForMissingArgumentsUsing(): array
 	{
 		return [
-			'email' => fn () => text(
+			'email' => static fn() => text(
 				label: 'What is the email of the new admin?',
 				placeholder: 'admin@garfaludica.it',
 				default: 'admin@garfaludica.it',
-					validate: ['email' => 'email:strict,dns,spoof|max:254|unique:invites|unique:admins'],
+				validate: ['email' => 'email:strict,dns,spoof|max:254|unique:invites|unique:admins'],
 			),
 		];
 	}

@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -15,23 +21,23 @@ class LocalizeApp
 	/**
 	 * Handle an incoming request.
 	 *
-	 * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+	 * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
 	 */
 	public function handle(Request $request, Closure $next, string $domain = 'pub'): Response
 	{
 		$locale = Config::get('app.locale', 'it');
 		$headerLang = $request->getPreferredLanguage(['it', 'en']);
+
 		switch ($domain) {
-		case 'admin':
-			$locale = $request->cookie('lang', $headerLang ?? $locale);
-			break;
-		case 'pub':
-		default:
-			if (Str::startsWith($request->route()->getName(), 'en.'))
-				$locale = 'en';
-			else
+			case 'admin':
 				$locale = $request->cookie('lang', $headerLang ?? $locale);
-			break;
+				break;
+			case 'pub':
+			default:
+				if (Str::startsWith($request->route()->getName(), 'en.'))
+					$locale = 'en';
+				else $locale = $request->cookie('lang', $headerLang ?? $locale);
+				break;
 		}
 
 		App::setLocale($locale);
@@ -42,12 +48,10 @@ class LocalizeApp
 
 		if ($domain === 'admin')
 			return $next($request);
-
 		if ($locale === 'en' && !Str::startsWith($request->route()->getName(), 'en.'))
 			return redirect()->route('en.' . $request->route()->getName(), $request->route()->parameters());
 		if ($locale === 'it' && Str::startsWith($request->route()->getName(), 'en.'))
 			return redirect()->route(Str::substr($request->route()->getName(), 3), $request->route()->parameters());
-
 		return $next($request);
 	}
 }

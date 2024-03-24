@@ -1,9 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules\Password;
 
@@ -20,7 +26,7 @@ class LoginRequest extends FormRequest
 	/**
 	 * Get the validation rules that apply to the request.
 	 *
-	 * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+	 * @return array<string, array<mixed>|\Illuminate\Contracts\Validation\ValidationRule|string>
 	 */
 	public function rules(): array
 	{
@@ -41,7 +47,7 @@ class LoginRequest extends FormRequest
 			return [
 				'email' => $username,
 				'password' => $this->input('password'),
-			];
+		];
 		return $this->only('username', 'password');
 	}
 

@@ -6,12 +6,11 @@ declare(strict_types=1);
  * Copyright © 2024 - Garfaludica APS - MIT License
  */
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\InviteController;
-use App\Http\Controllers\AdminController;
 
 Route::group([
 	'middleware' => 'lang:pub',
@@ -74,7 +73,7 @@ Route::group([
 	'as' => 'auth.',
 ], static function(): void {
 	Route::get('/login', 'login')->withoutMiddleware('lang:admin')->middleware('lang:pub')->name('login');
-	Route::post('/login', 'authenticate')->middleware('throttle:login')->name('authenticate');
+	Route::post('/login', 'authenticate')->name('authenticate');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:web')->name('auth.logout');

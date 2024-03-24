@@ -1,10 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Console\Commands;
 
 use App\Models\Admin;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
+
 use function Laravel\Prompts\password;
 use function Laravel\Prompts\search;
 
@@ -15,9 +22,11 @@ class ChangeAdminPassword extends Command implements PromptsForMissingInput
 	 *
 	 * @var string
 	 */
-	protected $signature = 'admin:change-password
-				{admin : The ID of the admin}
-				{password : The new password}';
+	protected $signature = <<<'EOD'
+		admin:change-password
+						{admin : The ID of the admin}
+						{password : The new password}
+		EOD;
 
 	/**
 	 * The console command description.
@@ -50,14 +59,14 @@ class ChangeAdminPassword extends Command implements PromptsForMissingInput
 	protected function promptForMissingArgumentsUsing(): array
 	{
 		return [
-			'admin' => fn () => search(
+			'admin' => static fn() => search(
 				label: 'Search for an admin:',
 				placeholder: 'E.g. admin',
-				options: fn ($value) => strlen($value) > 0
+				options: static fn($value) => \mb_strlen($value) > 0
 					? Admin::where('username', 'like', "%{$value}%")->pluck('username', 'id')->all()
 					: [],
 			),
-			'password' => fn () => password(
+			'password' => static fn() => password(
 				label: 'What is the new password?',
 				placeholder: 'password',
 				hint: 'Password must be at least 8 characters long',

@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
@@ -23,11 +29,7 @@ class AuthController extends Controller
 	{
 		$credentials = $request->credentials();
 
-		if (Auth::attempt($credentials, $request->boolean('remember'))) {
-			$request->session()->regenerate();
-			$this->limiter->clear($request);
-			return redirect()->intended(route('admin.dashboard'));
-		}
+		$this->limiter->increment($request);
 
 		if ($this->limiter->tooManyAttempts($request)) {
 			$seconds = $this->limiter->availableIn($request);
@@ -39,14 +41,18 @@ class AuthController extends Controller
 			])->onlyInput('username', 'remember');
 		}
 
-		$this->limiter->increment($request);
+		if (Auth::attempt($credentials, $request->boolean('remember'))) {
+			$request->session()->regenerate();
+			$this->limiter->clear($request);
+			return redirect()->intended(route('admin.dashboard'));
+		}
 
 		return redirect()->back()->withErrors([
 			'login' => __('These credentials do not match our records.'),
 		])->onlyInput('username', 'remember');
 	}
 
-	public function login(Request $request): Response|RedirectResponse
+	public function login(Request $request): RedirectResponse|Response
 	{
 		return inertia('Auth/Login');
 	}

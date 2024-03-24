@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\Admin;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Invite>
@@ -20,7 +25,7 @@ class InviteFactory extends Factory
 	{
 		return [
 			'email' => fake()->unique()->safeEmail(),
-			'token' =>  Str::random(60),
+			'token' => Str::random(60),
 			'created_by' => null,
 		];
 	}

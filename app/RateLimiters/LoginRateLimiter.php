@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\RateLimiters;
 
 use Illuminate\Cache\RateLimiter;
@@ -25,7 +31,7 @@ class LoginRateLimiter
 		return $this->limiter->tooManyAttempts($this->throttleKey($request), 5);
 	}
 
-	public function increment(Request $request)
+	public function increment(Request $request): void
 	{
 		$this->limiter->hit($this->throttleKey($request), 60);
 	}
@@ -35,12 +41,12 @@ class LoginRateLimiter
 		return $this->limiter->availableIn($this->throttleKey($request));
 	}
 
-	public function clear(Request $request)
+	public function clear(Request $request): void
 	{
 		$this->limiter->clear($this->throttleKey($request));
 	}
 
-	protected function throttleKey(Request $request)
+	protected function throttleKey(Request $request): void
 	{
 		Str::transliterate(Str::lower($request->input('username')) . '|' . $request->ip());
 	}
