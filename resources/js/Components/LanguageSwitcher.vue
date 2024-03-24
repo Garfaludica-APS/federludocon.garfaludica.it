@@ -23,9 +23,17 @@ const nextLanguage = computed(() => {
 	return props.languages[idx];
 });
 
+function setCookie(lang, days = 365) {
+	const date = new Date();
+	date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+	let expires = "expires=" + date.toUTCString();
+	document.cookie = `lang=${lang};${expires};path=/;SameSite=Lax;domain=localhost`;
+}
+
 function loadNextLanguage() {
 	currentLanguage.value = nextLanguage.value;
 	loadLanguageAsync(currentLanguage.value);
+	setCookie(currentLanguage.value);
 	emit('switchLang', currentLanguage.value);
 }
 

@@ -9,8 +9,8 @@ const props = defineProps({
 
 const classes = computed(() => {
 	return props.active
-		? 'flex cursor-pointer py-3 dark:text-slate-300 focus:outline-none font-bold brightness-200'
-		: 'flex cursor-pointer py-3 dark:text-slate-300 dark:hover:text-white focus:outline-none';
+		? 'flex cursor-pointer py-3 dark:text-slate-300 focus:outline-none font-bold brightness-200 transition duration-150 ease-in-out'
+		: 'flex cursor-pointer py-3 dark:text-slate-300 dark:hover:text-white focus:outline-none transition duration-150 ease-in-out';
 });
 </script>
 

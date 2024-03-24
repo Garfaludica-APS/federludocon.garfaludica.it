@@ -65,6 +65,6 @@ const hoverColor = computed(() => {
 
 <template>
 	<a rel="external noopener" :href="href" target="_blank" class="flex h-10 w-10 text-center items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full p-2 text-xl text-gray-600 dark:text-gray-300 focus:outline-none transition duration-500 ease-in-out" :class="hoverColor">
-		<FontAwesomeIcon :icon="faIcon" class="" />
+		<FontAwesomeIcon :icon="faIcon" />
 	</a>
 </template>
