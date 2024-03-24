@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
@@ -10,10 +10,6 @@ import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
 import Footer from '@/Components/Footer.vue';
 import Copyright from '@/Components/Copyright.vue';
 import { getActiveLanguage } from 'laravel-vue-i18n';
-
-const props = defineProps({
-	title: String,
-});
 
 const showingNavigationDropdown = ref(false);
 
@@ -65,8 +61,6 @@ onUnmounted(() => {
 </script>
 
 <template>
-	<Head :title="$t(title)" />
-
 	<div class="min-h-screen min-w-full bg-gobcon-poster bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen scroll-smooth" scroll-region>
 		<div class="min-h-screen min-w-full bg-overlay flex items-center justify-center">
 			<header class="fixed inset-x-0 top-0 z-50 pt-1 bg-white dark:bg-slate-900 ml:bg-transparent dark:ml:bg-transparent shadow-md ml:shadow-none transition-background duration-500 group">

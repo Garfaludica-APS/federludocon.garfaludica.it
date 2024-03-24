@@ -1,9 +1,10 @@
 <script>
+import BaseLayout from '@/Layouts/BaseLayout.vue';
 import AuthLayout from '@/Layouts/AuthLayout.vue';
 import { Link } from '@inertiajs/vue3';
 
 export default {
-	layout: (h, page) => h(AuthLayout, { title: 'Login' }, () => page),
+	layout: (h, page) => h(BaseLayout, { title: 'Login' }, () => h(AuthLayout, () => page)),
 }
 </script>
 

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
 import { mdiBackburger, mdiForwardburger, mdiLogout } from '@mdi/js';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
@@ -8,19 +8,10 @@ import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
 import AsideNavLink from '@/Components/AsideNavLink.vue';
 import Copyright from '@/Components/Copyright.vue';
 
-defineProps({
-	title: {
-		type: String,
-		default: 'Admin Panel'
-	}
-});
-
 const isMenuOpen = ref(false);
 </script>
 
 <template>
-	<Head :title="$t(title)" />
-
 		<div class="min-h-screen w-screen lg:w-auto pt-14 bg-gray-100 dark:bg-slate-800 text-black dark:text-slate-100" :class="{ 'pl-60': isMenuOpen, 'lg:pl-60': !isMenuOpen }">
 		<nav class="top-0 inset-x-0 fixed bg-gray-100 h-14 z-30 w-screen lg:w-auto dark:bg-slate-800" :class="{ 'pl-60': isMenuOpen, 'lg:pl-60': !isMenuOpen }">
 			<div class="flex lg:items-stretch justify-end max-w-7xl mx-auto shadow-lg lg:shadow-none">

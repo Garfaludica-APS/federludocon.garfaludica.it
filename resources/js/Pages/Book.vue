@@ -1,8 +1,9 @@
 <script>
+import BaseLayout from '@/Layouts/BaseLayout.vue';
 import PubLayout from '@/Layouts/PubLayout.vue';
 
 export default {
-	layout: (h, page) => h(PubLayout, { title: 'Booking Portal' }, () => page),
+	layout: (h, page) => h(BaseLayout, { title: 'Booking Portal' }, () => h(PubLayout, () => page)),
 }
 </script>
 
