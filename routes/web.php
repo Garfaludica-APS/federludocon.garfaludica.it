@@ -7,6 +7,7 @@ declare(strict_types=1);
  */
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InviteController;
 use Illuminate\Support\Facades\Route;
@@ -55,7 +56,7 @@ Route::group([
 	'as' => 'admin.',
 ], static function(): void {
 	Route::get('/', static fn() => to_route('admin.dashboard'))->name('index');
-	Route::get('/dashboard', static fn() => Inertia::render('Admin/Dashboard'))->name('dashboard');
+	Route::get('/dashboard', DashboardController::class)->name('dashboard');
 	Route::resource('admins', AdminController::class)->except([
 		'show', 'create', 'store',
 	]);

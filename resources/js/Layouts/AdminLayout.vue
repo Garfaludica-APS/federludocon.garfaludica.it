@@ -1,6 +1,6 @@
 <script setup>
-import { ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import { mdiBackburger, mdiForwardburger, mdiLogout } from '@mdi/js';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
@@ -9,6 +9,10 @@ import AsideNavLink from '@/Components/AsideNavLink.vue';
 import Copyright from '@/Components/Copyright.vue';
 
 const isMenuOpen = ref(false);
+
+const page = usePage();
+
+const admin = computed(() => page.props.auth.admin);
 </script>
 
 <template>
@@ -24,7 +28,7 @@ const isMenuOpen = ref(false);
 				</div>
 				<div class="flex flex-1 items-stretch">
 					<span class="h-14 py-2 pr-4 font-semibold flex items-center align-center">
-						Logged in as: John Doe
+						{{ $t('Welcome back, :name', { name: admin.username }) }}
 					</span>
 				</div>
 				<div class="flex flex-1 justify-end items-stretch space-x-2">
