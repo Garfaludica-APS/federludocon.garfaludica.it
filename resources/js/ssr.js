@@ -3,6 +3,7 @@ import { renderToString } from '@vue/server-renderer';
 import { createInertiaApp } from '@inertiajs/vue3';
 import createServer from '@inertiajs/vue3/server';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { modal } from 'inertia-modal';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/index.js';
 import { i18nVue } from 'laravel-vue-i18n';
 
@@ -17,6 +18,9 @@ createServer((page) =>
 		resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
 		setup({ App, props, plugin }) {
 			return createSSRApp({ render: () => h(App, props) })
+				.use(modal, {
+					resolve: (name) => resolvePageComponent(name, import.meta.glob('./Pages/**/*.vue')),
+				})
 				.use(plugin)
 				.use(ZiggyVue, {
 					...page.props.ziggy,

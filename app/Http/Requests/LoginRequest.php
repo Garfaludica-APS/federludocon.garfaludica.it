@@ -10,8 +10,6 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\Factory as ValidationFactory;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\Password;
 
 class LoginRequest extends FormRequest
 {
@@ -20,7 +18,7 @@ class LoginRequest extends FormRequest
 	 */
 	public function authorize(): bool
 	{
-		return !Auth::check();
+		return true;
 	}
 
 	/**
@@ -31,8 +29,8 @@ class LoginRequest extends FormRequest
 	public function rules(): array
 	{
 		return [
-			'username' => 'required|string|min:3|max:32',
-			'password' => ['required', Password::defaults()],
+			'username' => 'required|string|min:3|max:254',
+			'password' => 'required|string|min:8',
 			'remember' => 'boolean',
 		];
 	}

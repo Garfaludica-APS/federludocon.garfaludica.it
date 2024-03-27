@@ -9,13 +9,16 @@ declare(strict_types=1);
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Invite>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Invitation>
  */
-class InviteFactory extends Factory
+class InvitationFactory extends Factory
 {
+	protected static ?string $token;
+
 	/**
 	 * Define the model's default state.
 	 *
@@ -25,8 +28,10 @@ class InviteFactory extends Factory
 	{
 		return [
 			'email' => fake()->unique()->safeEmail(),
-			'token' => Str::random(60),
+			'token' => static::$token ??= Hash::make(Str::random(60)),
+			'is_super_admin' => fake()->boolean(),
 			'created_by' => null,
+			'accepted_at' => fake()->dateTime(now()),
 		];
 	}
 }

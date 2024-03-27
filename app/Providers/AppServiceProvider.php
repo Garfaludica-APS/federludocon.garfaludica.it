@@ -8,6 +8,9 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -33,5 +36,17 @@ class AppServiceProvider extends ServiceProvider
 					->uncompromised()
 				: Password::min(8);
 		});
+
+		RateLimiter::for('login', function(Request $request) {
+			return $this->app->isProduction()
+				? Limit::perMinutes(5, 15)->by(request()->ip())
+				: Limit::none();
+		});
+		RateLimiter::for('password-reset', function(Request $request) {
+			return $this->app->isProduction()
+				? Limit::perMinutes(15, 3)->by(request()->ip())
+				: Limit::none();
+		});
+
 	}
 }

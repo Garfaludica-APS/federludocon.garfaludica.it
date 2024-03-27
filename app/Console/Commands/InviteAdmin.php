@@ -8,7 +8,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Models\Invite;
+use App\Models\Invitation;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
 use Illuminate\Support\Str;
@@ -40,13 +40,14 @@ class InviteAdmin extends Command implements PromptsForMissingInput
 	 */
 	public function handle(): void
 	{
-		Invite::factory()->create([
+		Invitation::factory()->create([
 			'email' => $this->argument('email'),
 			'token' => Str::random(60),
 			'is_super_admin' => $this->option('super'),
 		]);
+		//TODO: send
 
-		$this->info('Invite sent to \'' . $this->argument('email') . '\'.');
+		$this->info('Invitation sent to \'' . $this->argument('email') . '\'.');
 	}
 
 	protected function promptForMissingArgumentsUsing(): array

@@ -1,6 +1,5 @@
 <script setup>
 import { toast } from 'vue3-toastify';
-import 'vue3-toastify/dist/index.css';
 import { trans } from 'laravel-vue-i18n';
 
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
@@ -24,7 +23,7 @@ const aicsLink = 'https://www.aics.it/';
 function showToast(msg, timeout = 3000)
 {
 	const t = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-	toast(msg, { autoClose: timeout, theme: t, position: 'bottom-center' });
+	toast(msg, { autoClose: timeout, theme: t, position: 'bottom-center', type: 'info' });
 }
 
 function copyToClipboard(text)

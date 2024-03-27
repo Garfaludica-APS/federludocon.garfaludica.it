@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\LocalizeApp;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -39,15 +40,17 @@ return Application::configure(basePath: \dirname(__DIR__))
 			static fn(Request $request) => route('admin.dashboard')
 		);
 	})
+	->withSchedule(static function(Schedule $schedule): void {
+		$schedule->command('auth:clear-resets')->everyFifteenMinutes();
+	})
 	->withExceptions(static function(Exceptions $exceptions): void {
 		$exceptions->respond(static function(RedirectResponse|Response $response, \Throwable $exception, Request $request): RedirectResponse|Response {
-			if (app()->isProduction() && \in_array($response->status(), [500, 503, 404, 403]))
-				return inertia('Error', ['status' => $response->status()])
-					->toResponse($request)
-					->setStatusCode($response->status());
 			if ($response->status() === 419)
-				return back()->with([
+				return back()->with('flash', [
 					'message' => __('The page expired, please try again.'),
+					'location' => 'modal',
+					'timeout' => 7000,
+					'style' => 'error',
 				]);
 			return $response;
 		});

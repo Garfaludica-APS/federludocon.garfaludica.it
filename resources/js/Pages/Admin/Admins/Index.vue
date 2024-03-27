@@ -28,7 +28,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 const props = defineProps({
 	admin: Object,
 	admins: Array,
-	invites: Array,
+	invitations: Array,
 });
 
 const invitingAdmin = ref(false);
@@ -45,7 +45,7 @@ const startInvitingAdmin = () => {
 };
 
 const inviteAdmin = () => {
-	form.post(route('invites.store'), {
+	form.post(route('admin.invitations.store'), {
 		preserveScroll: true,
 		onSuccess: () => closeModal(),
 		onError: () => inviteEmailInput.value.focus(),
@@ -59,8 +59,7 @@ const closeModal = () => {
 	form.reset();
 };
 
-const hasAdmins = computed(() => props.admins !== undefined && props.admins.length > 0);
-const hasInvites = computed(() => props.invites !== undefined && props.invites.length > 0);
+const hasInvitations = computed(() => props.invitations !== undefined && props.invitations.length > 0);
 
 var headerBtnContainer;
 onMounted(() => {
@@ -86,8 +85,8 @@ onUnmounted(() => {
 						<th />
 					</tr>
 				</thead>
-				<tbody v-if="hasAdmins">
-					<tr v-for="admin in admins" :key="admin.id">
+				<tbody>
+					<tr :key="admin.id">
 						<td data-label="Username">
 							{{ admin.username }}
 						</td>
@@ -99,12 +98,17 @@ onUnmounted(() => {
 						</td>
 						<td />
 					</tr>
-				</tbody>
-				<tbody v-else>
-					<tr>
-						<td colspan="4" class="italic">
-							No admins found.
+					<tr v-for="adm in admins" :key="adm.id">
+						<td data-label="Username">
+							{{ adm.username }}
 						</td>
+						<td data-label="Email">
+							{{ adm.email }}
+						</td>
+						<td data-label="Super Admin">
+							{{ adm.is_super_admin ? $t('Yes') : $t('No') }}
+						</td>
+						<td />
 					</tr>
 				</tbody>
 				<tfoot>
@@ -114,7 +118,7 @@ onUnmounted(() => {
 		</div>
 	</section>
 	<section>
-		<h2 class="font-bold text-xl py-4">{{ $t('Invites') }}</h2>
+		<h2 class="font-bold text-xl py-4">{{ $t('Invitations') }}</h2>
 		<div class="rounded-2xl dark:bg-slate-900/70 bg-white">
 			<table>
 				<thead>
@@ -126,19 +130,19 @@ onUnmounted(() => {
 						<th />
 					</tr>
 				</thead>
-				<tbody v-if="hasInvites">
-					<tr v-for="invite in invites" :key="invite.id">
+				<tbody v-if="hasInvitations">
+					<tr v-for="invitation in invitations" :key="invitation.id">
 						<td data-label="Email">
-							{{ invite.email }}
+							{{ invitation.email }}
 						</td>
 						<td data-label="Super Admin">
-							{{ invite.is_super_admin ? $t('Yes') : $t('No') }}
+							{{ invitation.is_super_admin ? $t('Yes') : $t('No') }}
 						</td>
 						<td data-label="Invited By">
-							{{ invite.admin.username }}
+							{{ invitation.admin.username }}
 						</td>
 						<td data-label="Expiration Time">
-							{{ invite.expires_at }}
+							{{ invitation.expires_at }}
 						</td>
 						<td />
 					</tr>
@@ -146,7 +150,7 @@ onUnmounted(() => {
 				<tbody v-else>
 					<tr>
 						<td colspan="5" class="italic">
-							No invites found.
+							No invitation found.
 						</td>
 					</tr>
 				</tbody>

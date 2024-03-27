@@ -21,12 +21,12 @@ class LoginRateLimiter
 		$this->limiter = $limiter;
 	}
 
-	public function attempts(Request $request)
+	public function attempts(Request $request): mixed
 	{
 		return $this->limiter->attempts($this->throttleKey($request));
 	}
 
-	public function tooManyAttempts(Request $request)
+	public function tooManyAttempts(Request $request): bool
 	{
 		return $this->limiter->tooManyAttempts($this->throttleKey($request), 5);
 	}
@@ -36,7 +36,7 @@ class LoginRateLimiter
 		$this->limiter->hit($this->throttleKey($request), 60);
 	}
 
-	public function availableIn(Request $request)
+	public function availableIn(Request $request): int
 	{
 		return $this->limiter->availableIn($this->throttleKey($request));
 	}
@@ -48,6 +48,6 @@ class LoginRateLimiter
 
 	protected function throttleKey(Request $request): void
 	{
-		Str::transliterate(Str::lower($request->input('username')) . '|' . $request->ip());
+		Str::transliterate(Str::lower($request->input('username')));
 	}
 }

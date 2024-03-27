@@ -16,15 +16,11 @@ return new class extends Migration {
 	 */
 	public function up(): void
 	{
-		Schema::create('invites', static function(Blueprint $table): void {
+		Schema::create('invitations', static function(Blueprint $table): void {
 			$table->ulid('id')->primary();
 			$table->string('email', length: 254)->unique();
 			$table->string('token');
 			$table->boolean('is_super_admin')->default(false);
-			// $table->foreignId('hotel_id')
-			// 	->nullable()
-			// 	->constrained()
-			// 	->cascadeOnUpdate()->restrictOnDelete();
 			$table->foreignId('created_by')->nullable()->constrained(
 				table: 'admins',
 			)->cascadeOnUpdate()->nullOnDelete();
@@ -33,7 +29,7 @@ return new class extends Migration {
 		});
 
 		Schema::table('admins', static function(Blueprint $table): void {
-			$table->foreignUlid('invite_id')
+			$table->foreignUlid('invitation_id')
 				->nullable()
 				->constrained()
 				->cascadeOnUpdate()->nullOnDelete();
@@ -45,7 +41,7 @@ return new class extends Migration {
 	 */
 	public function down(): void
 	{
-		Schema::dropColumns('admins', 'invite_id');
-		Schema::dropIfExists('invites');
+		Schema::dropColumns('admins', 'invitation_id');
+		Schema::dropIfExists('invitations');
 	}
 };

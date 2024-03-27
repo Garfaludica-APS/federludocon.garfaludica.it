@@ -3,6 +3,17 @@ import { Link } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
 import Copyright from '@/Components/Copyright.vue';
+
+const props = defineProps({
+	backRoute: {
+		type: String,
+		default: 'home',
+	},
+	backText: {
+		type: String,
+		default: 'Back to Home',
+	},
+});
 </script>
 
 <template>
@@ -14,9 +25,9 @@ import Copyright from '@/Components/Copyright.vue';
 				<!--sse-->
 				<slot />
 				<!--/sse-->
-				<div class="text-center mt-10">
-					<Link :href="lroute('home')" class="text-lg font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">
-						{{ $t('Back to Home') }}
+				<div v-if="backRoute" class="text-center mt-10">
+					<Link :href="lroute(backRoute)" class="text-lg font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">
+						{{ $t(backText) }}
 					</Link>
 				</div>
 			</main>

@@ -42,10 +42,20 @@ class CreateAdmin extends Command implements PromptsForMissingInput
 	 */
 	public function handle(): void
 	{
+		$password = password(
+			label: 'Confirm the password:',
+			placeholder: 'password',
+			hint: 'Password must be at least 8 characters long',
+			validate: ['password' => 'min:8'],
+		);
+		if ($password !== $this->argument('password')) {
+			$this->error('Passwords do not match');
+			return;
+		}
 		Admin::factory()->create([
 			'username' => $this->argument('username'),
 			'email' => $this->argument('email'),
-			'password' => bcrypt($this->argument('password')),
+			'password' => $password,
 			'is_super_admin' => $this->option('super'),
 		]);
 

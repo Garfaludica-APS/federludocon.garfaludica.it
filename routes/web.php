@@ -6,10 +6,10 @@ declare(strict_types=1);
  * Copyright © 2024 - Garfaludica APS - MIT License
  */
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\InviteController;
+use App\Http\Controllers\Admin\InvitationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -57,30 +57,43 @@ Route::group([
 ], static function(): void {
 	Route::get('/', static fn() => to_route('admin.dashboard'))->name('index');
 	Route::get('/dashboard', DashboardController::class)->name('dashboard');
-	Route::resource('admins', AdminController::class)->except([
-		'show', 'create', 'store',
+	Route::resource('admins', AdminController::class)->only([
+		'index', 'destroy',
 	]);
-	Route::resource('invites', InviteController::class)->only([
+	Route::resource('invites', InvitationController::class)->only([
 		'store', 'destroy',
 	]);
 })->name('admin');
 
 Route::get('/en/admin', static fn() => to_route('admin.dashboard'))->middleware(['lang:pub', 'auth:web'])->name('en.admin.index');
 
+Route::get('/accept-invite/{invite}/{token}', [InvitationController::class, 'acceptForm'])->middleware(['lang:admin', 'guest:web'])->name('admin.invitation.accept');
+Route::post('/accept-invite/{invite}', [InvitationController::class, 'accept'])->middleware(['lang:admin', 'guest:web'])->name('admin.register');
+
 Route::group([
-	'middleware' => ['lang:admin', 'guest:web'],
+	'middleware' => ['lang:pub', 'guest:web'],
 	'prefix' => 'admin',
 	'controller' => AuthController::class,
 	'as' => 'auth.',
 ], static function(): void {
 	Route::get('/login', 'login')->withoutMiddleware('lang:admin')->middleware('lang:pub')->name('login');
-	Route::post('/login', 'authenticate')->name('authenticate');
+	Route::get('/forgot-password', 'forgotPassword')->name('password.forgot');
 });
 
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:web')->name('auth.logout');
-
-Route::get('/accept-invite/{invite}/{token}', [AdminController::class, 'create'])->middleware(['lang:admin', 'guest:web'])->name('auth.admin.create');
-
-Route::post('/accept-invite/{invite}', [AdminController::class, 'store'])->middleware(['lang:admin', 'guest:web'])->name('auth.admin.store');
+Route::group([
+	'middleware' => ['lang:admin', 'guest:web'],
+	'prefix' => 'admin',
+	'controller' => AuthController::class,
+	'as' => 'auth.',
+], static function() : void {
+	Route::post('/login', 'authenticate')->middleware('throttle:login')->name('authenticate');
+	Route::post('/forgot-password', 'sendPasswordResetLink')->middleware('throttle:password-reset')->name('password.email');
+	Route::post('/reset-password', 'updatePassword')->name('password.reset');
+});
 
 Route::get('/en/admin/login', [AuthController::class, 'login'])->middleware(['lang:pub', 'guest:web'])->name('en.auth.login');
+
+Route::get('/en/forgot-password', [AuthController::class, 'forgotPassword'])->middleware(['lang:pub', 'guest:web'])->name('en.auth.password.forgot');
+Route::get('/reset-password/{token}', [AuthController::class, 'resetPassword'])->middleware(['lang:admin', 'guest:web'])->name('password.reset');
+
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:web')->name('auth.logout');

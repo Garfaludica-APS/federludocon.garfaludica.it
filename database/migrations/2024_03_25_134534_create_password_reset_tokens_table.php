@@ -16,14 +16,10 @@ return new class extends Migration {
 	 */
 	public function up(): void
 	{
-		Schema::create('admins', static function(Blueprint $table): void {
-			$table->id();
-			$table->string('username', length: 32)->unique();
-			$table->string('email', length: 254)->unique();
-			$table->string('password');
-			$table->rememberToken();
-			$table->boolean('is_super_admin')->default(false);
-			$table->timestamps();
+		Schema::create('password_reset_tokens', static function(Blueprint $table): void {
+			$table->string('email', 254)->primary();
+			$table->string('token');
+			$table->timestamp('created_at')->nullable();
 		});
 	}
 
@@ -32,6 +28,6 @@ return new class extends Migration {
 	 */
 	public function down(): void
 	{
-		Schema::dropIfExists('admins');
+		Schema::dropIfExists('password_reset_tokens');
 	}
 };
