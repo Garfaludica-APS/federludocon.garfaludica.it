@@ -296,9 +296,9 @@ onUnmounted(() => {
 
 			<ActionButton
 				icon="user-plus"
-				class="bg-lime-600 hover:bg-lime-500 active:bg-lime-700 focus:ring-lime-500 ms-3"
+				class="bg-lime-600 hover:bg-lime-500 active:bg-lime-700 focus:ring-lime-500 ms-3 disabled:bg-lime-600/50 disabled:text-gray-100"
 				:class="{ 'opacity-25': form.processing }"
-				:disabled="form.processing"
+				:disabled="form.email.length < 3 || (!form.superAdmin && form.selectedHotels.length == 0) || form.processing"
 				@click="inviteAdmin"
 			>
 				Invite Admin
