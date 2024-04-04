@@ -61,7 +61,7 @@ class InvitationController extends Controller
 		$hotelIds = [];
 		if (!$superAdmin && isset($validated['selectedHotels']))
 			foreach ($validated['selectedHotels'] as $hotel)
-				if (\in_array($hotel['id'], $validHotelIds, true) && !\in_array($hotel['id'], $hotelIds, true))
+				if (($admin->is_super_admin || \in_array($hotel['id'], $validHotelIds, true)) && !\in_array($hotel['id'], $hotelIds, true))
 					$hotelIds[] = $hotel['id'];
 		$invitation = $request->user()->createdInvitations()->create([
 			'email' => $validated['email'],

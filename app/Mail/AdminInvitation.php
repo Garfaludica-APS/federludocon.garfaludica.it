@@ -14,6 +14,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Hotel;
 
 class AdminInvitation extends Mailable
 {
@@ -24,7 +25,7 @@ class AdminInvitation extends Mailable
 	 * Create a new message instance.
 	 */
 	public function __construct(public Invitation $invitation, public string $token) {
-		$this->hotels=Hotel::find($invitation->$hotels);
+		$this->hotels=Hotel::find($invitation->hotels);
 	}
 
 	/**
