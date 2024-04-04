@@ -29,7 +29,7 @@ class AdminController extends Controller
 		$this->authorize('viewAny', Admin::class);
 		$admin = Auth::user();
 		return inertia('Admin/Admins', [
-			'admins' => Admin::where('id', '<>', Auth::id())->get()->transform(fn ($cur) => [
+			'admins' => Admin::where('id', '<>', Auth::id())->get()->transform(static fn($cur) => [
 				'id' => $cur->id,
 				'username' => $cur->username,
 				'email' => $cur->email,
@@ -42,7 +42,7 @@ class AdminController extends Controller
 					'delete' => $admin->can('delete', $cur),
 				],
 			]),
-			'invitations' => Invitation::whereNull('accepted_at')->with('creator:id,username')->get()->transform(fn ($invitation) => [
+			'invitations' => Invitation::whereNull('accepted_at')->with('creator:id,username')->get()->transform(static fn($invitation) => [
 				'id' => $invitation->id,
 				'email' => $invitation->email,
 				'is_super_admin' => $invitation->is_super_admin,

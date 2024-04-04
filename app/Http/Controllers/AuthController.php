@@ -109,7 +109,7 @@ class AuthController extends Controller
 				'email' => 'required|email|exists:admins',
 				'token' => 'required|string',
 			],
-		)->after(function ($validator) {
+		)->after(static function($validator): void {
 			$admin = Admin::where('email', $validator->getValue('email'))->first();
 			if ($admin === null)
 				$validator->errors()->add('email', __('Can not find an admin with this email.'));

@@ -1,12 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Policies;
 
 use App\Models\Admin;
 
 class AdminPolicy
 {
-	public function before(Admin $admin, string $ability): bool|null
+	public function before(Admin $admin, string $ability): ?bool
 	{
 		if ($ability === 'delete')
 			return null;
@@ -28,8 +34,6 @@ class AdminPolicy
 			return false;
 		if ($admin->is_super_admin)
 			return true;
-		if ($admin->invitedAdmins()->get()->contains($target))
-			return true;
-		return false;
+		return (bool)($admin->invitedAdmins()->get()->contains($target));
 	}
 }

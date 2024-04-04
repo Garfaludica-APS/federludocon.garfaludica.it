@@ -12,7 +12,6 @@ use App\Http\Controllers\Controller;
 use App\Mail\AdminInvitation;
 use App\Models\Admin;
 use App\Models\Invitation;
-use App\Rules\ValidToken;
 use App\Rules\ValidTokenWithEmail;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
@@ -43,14 +42,14 @@ class InvitationController extends Controller
 			'selectedHotels.*.id' => 'exists:hotels,id',
 		]);
 		$invitations = Invitation::where('email', $validated['email'])->get();
+
 		foreach ($invitations as $invitation)
 			if ($invitation->created_at > now()->subMinutes(60 * 24 * 3))
 				return back()->withErrors([
 					'email' => __('There\'s already a pending invitation for this email address.'),
-
 				])->onlyInput('email');
-			else
-				$invitation->delete();
+
+		$invitation->delete();
 
 		$superAdmin = $validated['superAdmin'] ?? false;
 		$admin = Auth::user();
@@ -61,7 +60,7 @@ class InvitationController extends Controller
 		$hotelIds = [];
 		if (!$superAdmin && isset($validated['selectedHotels']))
 			foreach ($validated['selectedHotels'] as $hotel)
-				if (in_array($hotel['id'], $validHotelIds, true) && !in_array($hotel['id'], $hotelIds, true))
+				if (\in_array($hotel['id'], $validHotelIds, true) && !\in_array($hotel['id'], $hotelIds, true))
 					$hotelIds[] = $hotel['id'];
 		$invitation = $request->user()->createdInvitations()->create([
 			'email' => $validated['email'],
@@ -103,12 +102,11 @@ class InvitationController extends Controller
 			'email' => 'required|email:strict,dns,spoof|max:254|unique:admins',
 			'username' => 'required|string|min:3|max:32|unique:admins|unique:admins,email',
 			'password' => ['required', 'confirmed', Password::defaults()],
-		])->after(function ($validator) use ($invitation) {
+		])->after(static function($validator) use ($invitation): void {
 			if ($validator->getValue('email') !== $invitation->email)
 				$validator->errors()->add('email', __('The email does not match the invitation.'));
 			if (!Hash::check($validator->getValue('token'), $invitation->token))
 				$validator->errors()->add('token', __('The token is invalid.'));
-
 		})->validate();
 
 		DB::transaction(static function() use ($invitation, $validated): void {
@@ -141,13 +139,14 @@ class InvitationController extends Controller
 				'token' => ['required', 'string', new ValidTokenWithEmail(
 					'invitations',
 					60 * 24 * 3,
-				)]
-			])->after(function ($validator) use ($invitation) {
-				if ($validator->getValue('email') !== $invitation->email)
-					$validator->errors()->add('email', __('The email does not match the invitation.'));
-				if (!Hash::check($validator->getValue('token'), $invitation->token))
-					$validator->errors()->add('token', __('The token is invalid.'));
-			});
+				)],
+			]
+		)->after(static function($validator) use ($invitation): void {
+			if ($validator->getValue('email') !== $invitation->email)
+				$validator->errors()->add('email', __('The email does not match the invitation.'));
+			if (!Hash::check($validator->getValue('token'), $invitation->token))
+				$validator->errors()->add('token', __('The token is invalid.'));
+		});
 		if ($validator->fails())
 			abort(404);
 

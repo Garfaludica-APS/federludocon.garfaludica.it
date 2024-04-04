@@ -19,16 +19,13 @@ class Invitation extends Model
 {
 	use HasFactory;
 	use HasUlids;
-
 	public const UPDATED_AT = null;
-
 	protected $fillable = [
 		'email',
 		'token',
 		'is_super_admin',
 		'hotels',
 	];
-
 	protected $hidden = [
 		'token',
 	];
@@ -46,7 +43,7 @@ class Invitation extends Model
 	public function addHotel(Hotel|int $hotel): void
 	{
 		if ($this->hasHotel($hotel))
-			return;
+		return;
 		if ($hotel instanceof Hotel)
 			$hotel = $hotel->id;
 		$this->hotels[] = $hotel;
@@ -55,7 +52,7 @@ class Invitation extends Model
 	public function removeHotel(Hotel|int $hotel): void
 	{
 		if (!$this->hasHotel($hotel))
-			return;
+		return;
 		if ($hotel instanceof Hotel)
 			$hotel = $hotel->id;
 		$this->hotels = array_diff($this->hotels, [$hotel]);
@@ -65,7 +62,7 @@ class Invitation extends Model
 	{
 		if ($hotel instanceof Hotel)
 			$hotel = $hotel->id;
-		return in_array($hotel, $this->hotels, true);
+		return \in_array($hotel, $this->hotels, true);
 	}
 
 	protected function casts(): array

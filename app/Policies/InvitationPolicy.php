@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Policies;
 
 use App\Models\Admin;
@@ -7,7 +13,7 @@ use App\Models\Invitation;
 
 class InvitationPolicy
 {
-	public function before(Admin $admin): bool|null
+	public function before(Admin $admin): ?bool
 	{
 		if ($admin->is_super_admin)
 			return true;

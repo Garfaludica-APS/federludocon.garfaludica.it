@@ -23,7 +23,6 @@ class Admin extends Authenticatable
 	use CanResetPassword;
 	use HasFactory;
 	use Notifiable;
-
 	protected $fillable = [
 		'username',
 		'email',
@@ -39,7 +38,7 @@ class Admin extends Authenticatable
 	public static function boot(): void
 	{
 		parent::boot();
-		static::deleting(function ($admin) {
+		static::deleting(static function($admin): void {
 			$invitation = $admin->invitation();
 			if ($invitation)
 				$invitation->delete();
