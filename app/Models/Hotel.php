@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Hotel extends Model
 {
 	use HasFactory;
+
 	protected $fillable = [
 		'name',
 	];

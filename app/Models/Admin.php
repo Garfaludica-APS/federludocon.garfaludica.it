@@ -23,6 +23,7 @@ class Admin extends Authenticatable
 	use CanResetPassword;
 	use HasFactory;
 	use Notifiable;
+
 	protected $fillable = [
 		'username',
 		'email',
@@ -30,6 +31,7 @@ class Admin extends Authenticatable
 		'is_super_admin',
 		'hotels',
 	];
+
 	protected $hidden = [
 		'password',
 		'remember_token',

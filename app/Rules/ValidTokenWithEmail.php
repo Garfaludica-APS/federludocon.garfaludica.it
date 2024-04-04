@@ -22,9 +22,13 @@ class ValidTokenWithEmail implements DataAwareRule, ValidationRule
 	 * @param \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
 	 */
 	protected string $table;
+
 	protected ?string $column;
+
 	protected string $emailColumn = 'email';
+
 	protected int $expireMinutes = 60;
+
 	protected string $email;
 
 	public function __construct(

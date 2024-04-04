@@ -21,7 +21,9 @@ class ValidToken implements ValidationRule
 	 * @param \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
 	 */
 	protected string $table;
+
 	protected ?string $column;
+
 	protected int $expireMinutes = 60;
 
 	public function __construct(

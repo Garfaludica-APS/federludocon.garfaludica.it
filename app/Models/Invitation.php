@@ -19,13 +19,16 @@ class Invitation extends Model
 {
 	use HasFactory;
 	use HasUlids;
+
 	public const UPDATED_AT = null;
+
 	protected $fillable = [
 		'email',
 		'token',
 		'is_super_admin',
 		'hotels',
 	];
+
 	protected $hidden = [
 		'token',
 	];
