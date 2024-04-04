@@ -97,3 +97,10 @@ Route::get('/en/forgot-password', [AuthController::class, 'forgotPassword'])->mi
 Route::get('/reset-password/{token}', [AuthController::class, 'resetPassword'])->middleware(['lang:admin', 'guest:web'])->name('password.reset');
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:web')->name('auth.logout');
+
+
+Route::get('/mailable', function () {
+	$invoice = App\Models\invitation::first();
+
+	return new App\Mail\AdminInvitation($invoice, 'Garfa');
+    });

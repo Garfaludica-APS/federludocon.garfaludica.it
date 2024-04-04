@@ -1,12 +1,15 @@
-<x-mail::message>
-# Introduction
+<x-mail::message :message="$message" :logoPath="$logoPath">
 
-Invited by {{ $invitation->creator->username }}.
+{{__('You have been invited by :username (:email) to manage the following hotels:',['username'=> $invitation->creator->username, 'email' => $invitation->creator->email])}}
+@foreach ($hotels as $hotel)
+	<ul>{{ $hotel->name }}</ul>
+@endforeach
 
+For the event GobCon 2024 Garfagnana.
 <x-mail::button :url="$invitationUrl">
 Accept Invitation
 </x-mail::button>
 
 Thanks,<br>
-{{ config('app.name') }}
+Garfaludica APS
 </x-mail::message>

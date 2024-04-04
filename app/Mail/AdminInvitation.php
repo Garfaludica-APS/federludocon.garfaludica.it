@@ -19,11 +19,13 @@ class AdminInvitation extends Mailable
 {
 	use Queueable;
 	use SerializesModels;
-
+	public $hotels;
 	/**
 	 * Create a new message instance.
 	 */
-	public function __construct(public Invitation $invitation, public string $token) {}
+	public function __construct(public Invitation $invitation, public string $token) {
+		$this->hotels=Hotel::find($invitation->$hotels);
+	}
 
 	/**
 	 * Get the message envelope.
@@ -49,6 +51,7 @@ class AdminInvitation extends Mailable
 					'token' => $this->token,
 					'email' => $this->invitation->email,
 				]),
+				'logoPath' => storage_path('images/logo.png'),
 			],
 		);
 	}
