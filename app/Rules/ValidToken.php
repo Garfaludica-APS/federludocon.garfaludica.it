@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Rules;
 
 use Closure;
@@ -12,13 +18,10 @@ class ValidToken implements ValidationRule
 	/**
 	 * Run the validation rule.
 	 *
-	 * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+	 * @param \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString $fail
 	 */
-
 	protected string $table;
-
 	protected ?string $column;
-
 	protected int $expireMinutes = 60;
 
 	public function __construct(

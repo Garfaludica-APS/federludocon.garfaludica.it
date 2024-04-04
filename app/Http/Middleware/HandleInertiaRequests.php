@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -43,15 +44,17 @@ class HandleInertiaRequests extends Middleware
 	{
 		return array_merge(parent::share($request), [
 			'flash' => [
-				'message' => fn () => $request->session()->get('flash.message'),
-				'location' => fn () => $request->session()->get('flash.location') ?? (empty($request->session()->get('flash.message')) ? 'none' : 'page'),
-				'timeout' => fn () => $request->session()->get('flash.timeout') ?? false,
-				'style' => fn () => $request->session()->get('flash.style') ?? 'default',
+				'message' => static fn() => $request->session()->get('flash.message'),
+				'location' => static fn() => $request->session()->get('flash.location') ?? (empty($request->session()->get('flash.message')) ? 'none' : 'page'),
+				'timeout' => static fn() => $request->session()->get('flash.timeout') ?? false,
+				'style' => static fn() => $request->session()->get('flash.style') ?? 'default',
 			],
-			'auth.admin' => fn () => $request->user()
-				? $request->user()->only('id', 'username', 'email')
+			'auth.admin' => static fn() => $request->user()
+				? $request->user()
 				: null,
-
+			'auth.admin.hotels' => static fn() => $request->user()
+				? ($request->user()->is_super_admin ? Hotel::all() : $request->user()->hotels()->get())
+				: null,
 		]);
 	}
 }

@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -12,8 +18,10 @@ class SendPasswordResetLink extends Command implements PromptsForMissingInput
 	 *
 	 * @var string
 	 */
-	protected $signature = 'app:send-reset-link
-				{admin : The ID of the admin}';
+	protected $signature = <<<'EOD'
+		app:send-reset-link
+						{admin : The ID of the admin}
+		EOD;
 
 	/**
 	 * The console command description.
@@ -25,7 +33,7 @@ class SendPasswordResetLink extends Command implements PromptsForMissingInput
 	/**
 	 * Execute the console command.
 	 */
-	public function handle()
+	public function handle(): void
 	{
 		// TODO: send mail
 		$this->info('Password reset mailed to the admin.');
@@ -37,7 +45,7 @@ class SendPasswordResetLink extends Command implements PromptsForMissingInput
 			'admin' => static fn() => search(
 				label: 'Search for an admin:',
 				placeholder: 'E.g. admin',
-				options: static fn($value) => \mb_strlen($value) > 0
+				options: static fn($value) => mb_strlen($value) > 0
 					? Admin::where('username', 'like', "%{$value}%")->pluck('username', 'id')->all()
 					: [],
 			),

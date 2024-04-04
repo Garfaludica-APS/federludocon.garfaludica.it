@@ -21,8 +21,8 @@ return new class extends Migration {
 			$table->string('username', length: 32)->unique();
 			$table->string('email', length: 254)->unique();
 			$table->string('password');
-			$table->rememberToken();
 			$table->boolean('is_super_admin')->default(false);
+			$table->rememberToken();
 			$table->timestamps();
 		});
 	}

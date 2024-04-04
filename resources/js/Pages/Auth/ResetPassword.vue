@@ -36,7 +36,7 @@ const passwordInput = ref(null);
 const confirmInput = ref(null);
 
 const resetPassword = () => {
-	form.post(route('auth.password.reset'), {
+	form.post(route('auth.password.update'), {
 		onError: () => passwordInput.value.focus(),
 		onFinish: () => form.reset(),
 	});

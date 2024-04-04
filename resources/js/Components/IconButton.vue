@@ -7,7 +7,7 @@ const props = defineProps({
 	icon: String,
 	classes: {
 		type: String,
-		default: 'text-xs uppercase rounded-md font-semibold',
+		default: 'text-xs uppercase rounded-sm font-semibold',
 	}
 });
 
@@ -24,16 +24,14 @@ const svgPath = computed(() => {
 </script>
 
 <template>
-	<Link v-if="href" :href="href" type="button" as="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-white tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" :class="classes">
-		<svg v-if="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+	<Link v-if="href" :href="href" type="button" as="button" class="inline-flex items-center justify-center p-1 border border-transparent text-white tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" :class="classes">
+		<svg v-if="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
 			<path fill-rule="evenodd" :d="svgPath" clip-rule="evenodd" />
 		</svg>
-		<slot />
 	</Link>
-	<button v-else type="button" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-white tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" :class="classes">
-		<svg v-if="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+	<button v-else type="button" class="inline-flex items-center justify-center p-1 border border-transparent text-white tracking-widest focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150" :class="classes">
+		<svg v-if="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
 			<path fill-rule="evenodd" :d="svgPath" clip-rule="evenodd" />
 		</svg>
-		<slot />
 	</button>
 </template>

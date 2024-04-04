@@ -62,7 +62,7 @@ class ChangeAdminPassword extends Command implements PromptsForMissingInput
 			'admin' => static fn() => search(
 				label: 'Search for an admin:',
 				placeholder: 'E.g. admin',
-				options: static fn($value) => \mb_strlen($value) > 0
+				options: static fn($value) => mb_strlen($value) > 0
 					? Admin::where('username', 'like', "%{$value}%")->pluck('username', 'id')->all()
 					: [],
 			),

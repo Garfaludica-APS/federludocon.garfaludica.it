@@ -36,8 +36,7 @@ class LocalizeApp
 			default:
 				if (Str::startsWith($request->route()->getName(), 'en.'))
 					$locale = 'en';
-				else
-					$locale = $request->cookie('lang', $headerLang ?? $locale);
+				else $locale = $request->cookie('lang', $headerLang ?? $locale);
 				break;
 		}
 
@@ -53,7 +52,6 @@ class LocalizeApp
 			return redirect()->route('en.' . $request->route()->getName(), $request->route()->parameters());
 		if ($locale === 'it' && Str::startsWith($request->route()->getName(), 'en.'))
 			return redirect()->route(Str::substr($request->route()->getName(), 3), $request->route()->parameters());
-
 		return $next($request);
 	}
 }

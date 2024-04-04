@@ -11,7 +11,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Models\Admin;
 use App\RateLimiters\LoginRateLimiter;
-use App\Rules\ValidToken;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,6 +18,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password as PasswordValidation;
 use Inertia\Response;
@@ -100,24 +100,25 @@ class AuthController extends Controller
 
 	public function resetPassword(Request $request, string $token): Response
 	{
-		$request->validate([
-			'token' => ['required', 'string', new ValidToken(
-				config('auth.passwords.admins.table'),
-				config('auth.passwords.admins.expire'),
-			)],
-		]);
-		// $tokens = DB::table(config('auth.passwords.admins.table'))
-		// 	->select('token')
-		// 	->where('created_at', '>', now()->subMinutes(config('auth.passwords.admins.expire')))
-		// 	->get();
-		// $tokenValid = false;
-		// foreach ($tokens as $t)
-		// 	if (Hash::check($token, $t->token)) {
-		// 		$tokenValid = true;
-		// 		break;
-		// 	}
-		// if (!$tokenValid)
-		// 	abort(404);
+		$validator = Validator::make(
+			[
+				'email' => $request->input('email'),
+				'token' => $token,
+			],
+			[
+				'email' => 'required|email|exists:admins',
+				'token' => 'required|string',
+			],
+		)->after(function ($validator) {
+			$admin = Admin::where('email', $validator->getValue('email'))->first();
+			if ($admin === null)
+				$validator->errors()->add('email', __('Can not find an admin with this email.'));
+			if (!Password::tokenExists($admin, $validator->getValue('token')))
+				$validator->errors()->add('token', __('The token is invalid.'));
+		});
+
+		if ($validator->fails())
+			abort(404);
 
 		return inertia('Auth/ResetPassword', ['token' => $token]);
 	}
@@ -132,7 +133,7 @@ class AuthController extends Controller
 
 		$status = Password::reset(
 			$request->only('email', 'password', 'password_confirmation', 'token'),
-			function (Admin $admin, string $password) {
+			static function(Admin $admin, string $password): void {
 				$admin->forceFill([
 					'password' => Hash::make($password),
 				])->setRememberToken(Str::random(60));

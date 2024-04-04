@@ -45,7 +45,7 @@ const passwordInput = ref(null);
 const confirmInput = ref(null);
 
 const createAdmin = () => {
-	form.post(route('admin.invitation.accept', {
+	form.post(route('admin.register', {
 		'invitation': props.invitation
 	}), {
 		onError: () => passwordInput.value.focus(),
@@ -71,7 +71,7 @@ const createAdmin = () => {
 				:error="form.errors.username"
 				type="text"
 				class="mt-10"
-				:placeholder="$t('Username or Email')"
+				:placeholder="$t('Choose your Username')"
 				autocomplete="username"
 				autofocus
 				autocapitalize="off"

@@ -40,12 +40,13 @@ class InviteAdmin extends Command implements PromptsForMissingInput
 	 */
 	public function handle(): void
 	{
-		Invitation::factory()->create([
+		Invitation::create([
 			'email' => $this->argument('email'),
 			'token' => Str::random(60),
 			'is_super_admin' => $this->option('super'),
+			'hotels' => [],
 		]);
-		//TODO: send
+		// TODO: send
 
 		$this->info('Invitation sent to \'' . $this->argument('email') . '\'.');
 	}

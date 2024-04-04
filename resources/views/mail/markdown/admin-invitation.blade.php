@@ -1,7 +1,7 @@
 <x-mail::message>
 # Introduction
 
-Invited by {{ $invite->admin->username }}.
+Invited by {{ $invitation->creator->username }}.
 
 <x-mail::button :url="$invitationUrl">
 Accept Invitation

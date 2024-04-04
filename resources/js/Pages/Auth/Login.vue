@@ -23,7 +23,7 @@ const form = useForm({
 const passwordInput = ref(null);
 
 const login = () => {
-	form.post(route('auth.login'), {
+	form.post(route('auth.authenticate'), {
 		onError: () => passwordInput.value.focus(),
 		onFinish: () => form.reset('password'),
 	});

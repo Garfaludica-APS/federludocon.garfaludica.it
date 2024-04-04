@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace App\RateLimiters;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Cache\RateLimiter;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class LoginRateLimiter
@@ -21,33 +21,33 @@ class LoginRateLimiter
 		$this->limiter = $limiter;
 	}
 
-	public function attempts(Request $request): mixed
+	public function attempts(LoginRequest $request): mixed
 	{
 		return $this->limiter->attempts($this->throttleKey($request));
 	}
 
-	public function tooManyAttempts(Request $request): bool
+	public function tooManyAttempts(LoginRequest $request): bool
 	{
 		return $this->limiter->tooManyAttempts($this->throttleKey($request), 5);
 	}
 
-	public function increment(Request $request): void
+	public function increment(LoginRequest $request): void
 	{
 		$this->limiter->hit($this->throttleKey($request), 60);
 	}
 
-	public function availableIn(Request $request): int
+	public function availableIn(LoginRequest $request): int
 	{
 		return $this->limiter->availableIn($this->throttleKey($request));
 	}
 
-	public function clear(Request $request): void
+	public function clear(LoginRequest $request): void
 	{
 		$this->limiter->clear($this->throttleKey($request));
 	}
 
-	protected function throttleKey(Request $request): void
+	protected function throttleKey(LoginRequest $request): string
 	{
-		Str::transliterate(Str::lower($request->input('username')));
+		return Str::transliterate(Str::lower($request->input('username')));
 	}
 }

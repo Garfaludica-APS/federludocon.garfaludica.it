@@ -26,6 +26,7 @@ class Invitation extends Model
 		'email',
 		'token',
 		'is_super_admin',
+		'hotels',
 	];
 
 	protected $hidden = [
@@ -42,17 +43,44 @@ class Invitation extends Model
 		return $this->hasOne(Admin::class, 'invitation_id');
 	}
 
+	public function addHotel(Hotel|int $hotel): void
+	{
+		if ($this->hasHotel($hotel))
+			return;
+		if ($hotel instanceof Hotel)
+			$hotel = $hotel->id;
+		$this->hotels[] = $hotel;
+	}
+
+	public function removeHotel(Hotel|int $hotel): void
+	{
+		if (!$this->hasHotel($hotel))
+			return;
+		if ($hotel instanceof Hotel)
+			$hotel = $hotel->id;
+		$this->hotels = array_diff($this->hotels, [$hotel]);
+	}
+
+	public function hasHotel(Hotel|int $hotel): bool
+	{
+		if ($hotel instanceof Hotel)
+			$hotel = $hotel->id;
+		return in_array($hotel, $this->hotels, true);
+	}
+
 	protected function casts(): array
 	{
 		return [
+			'token' => 'hashed',
 			'is_super_admin' => 'boolean',
+			'hotels' => 'array',
 		];
 	}
 
 	protected function email(): Attribute
 	{
 		return Attribute::make(
-			set: fn (string $value) => strtolower($value),
+			set: static fn(string $value) => mb_strtolower($value),
 		);
 	}
 }

@@ -16,8 +16,8 @@ const admin = computed(() => page.props.auth.admin);
 </script>
 
 <template>
-		<div class="min-h-screen w-screen lg:w-auto pt-14 bg-gray-100 dark:bg-slate-800 text-black dark:text-slate-100" :class="{ 'pl-60': isMenuOpen, 'lg:pl-60': !isMenuOpen }">
-		<nav class="top-0 inset-x-0 fixed bg-gray-100 h-14 z-30 w-screen lg:w-auto dark:bg-slate-800" :class="{ 'pl-60': isMenuOpen, 'lg:pl-60': !isMenuOpen }">
+		<div class="min-h-screen w-screen lg:w-auto pt-14 bg-gray-100 dark:bg-slate-800 text-black dark:text-slate-100" :class="{ 'pl-72': isMenuOpen, 'lg:pl-72': !isMenuOpen }">
+		<nav class="top-0 inset-x-0 fixed bg-gray-100 h-14 z-30 w-screen lg:w-auto dark:bg-slate-800" :class="{ 'pl-72': isMenuOpen, 'lg:pl-80': !isMenuOpen }">
 			<div class="flex lg:items-stretch justify-end max-w-7xl mx-auto shadow-lg lg:shadow-none">
 				<div class="flex lg:hidden py-2 px-3 items-center cursor-pointer dark:text-white dark:hover:text-slate-400" @click="isMenuOpen = !isMenuOpen">
 					<span class="inline-flex justify-center items-center w-8 h-8">
@@ -29,6 +29,7 @@ const admin = computed(() => page.props.auth.admin);
 				<div class="flex flex-1 items-stretch">
 					<span class="h-14 py-2 pr-4 font-semibold flex items-center align-center">
 						{{ $t('Welcome back, :name', { name: admin.username }) }}
+
 					</span>
 				</div>
 				<div class="flex flex-1 justify-end items-stretch space-x-2">
@@ -42,7 +43,7 @@ const admin = computed(() => page.props.auth.admin);
 				</div>
 			</div>
 		</nav>
-		<aside class="lg:py-2 lg:pl-2 w-60 fixed flex z-40 top-0 h-screen transition-[left]" :class="{ '-left-60 lg:left-0': !isMenuOpen, 'left-0': isMenuOpen }">
+		<aside class="lg:py-2 lg:pl-2 w-72 fixed flex z-40 top-0 h-screen transition-[left]" :class="{ '-left-72 lg:left-0': !isMenuOpen, 'left-0': isMenuOpen }">
 			<nav class="lg:rounded-2xl flex-1 flex flex-col overflow-hidden text-slate-100 bg-slate-900">
 				<div class="flex flex-row h-14 items-center justify-between text-center dark:bg-slate-900">
 					<ApplicationLogo class="h-10 w-auto mx-auto" />
@@ -54,17 +55,30 @@ const admin = computed(() => page.props.auth.admin);
 					<li>
 						<AsideNavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
 							<template #icon>
-								 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block w-16 h-6">
+								 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block w-16 min-w-16 h-6">
 									<path fill-rule="evenodd" d="M2.25 5.25a3 3 0 0 1 3-3h13.5a3 3 0 0 1 3 3V15a3 3 0 0 1-3 3h-3v.257c0 .597.237 1.17.659 1.591l.621.622a.75.75 0 0 1-.53 1.28h-9a.75.75 0 0 1-.53-1.28l.621-.622a2.25 2.25 0 0 0 .659-1.59V18h-3a3 3 0 0 1-3-3V5.25Zm1.5 0v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5Z" clip-rule="evenodd" />
 								</svg>
 							</template>
 							{{ $t('Dashboard') }}
 						</AsideNavLink>
 					</li>
+					<li v-for="hotel in page.props.auth.admin.hotels">
+						<AsideNavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
+							<template #icon>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block w-16 min-w-16 h-6">
+								<path d="M11.584 2.376a.75.75 0 0 1 .832 0l9 6a.75.75 0 1 1-.832 1.248L12 3.901 3.416 9.624a.75.75 0 0 1-.832-1.248l9-6Z" />
+								<path fill-rule="evenodd" d="M20.25 10.332v9.918H21a.75.75 0 0 1 0 1.5H3a.75.75 0 0 1 0-1.5h.75v-9.918a.75.75 0 0 1 .634-.74A49.109 49.109 0 0 1 12 9c2.59 0 5.134.202 7.616.592a.75.75 0 0 1 .634.74Zm-7.5 2.418a.75.75 0 0 0-1.5 0v6.75a.75.75 0 0 0 1.5 0v-6.75Zm3-.75a.75.75 0 0 1 .75.75v6.75a.75.75 0 0 1-1.5 0v-6.75a.75.75 0 0 1 .75-.75ZM9 12.75a.75.75 0 0 0-1.5 0v6.75a.75.75 0 0 0 1.5 0v-6.75Z" clip-rule="evenodd" />
+								<path d="M12 7.875a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" />
+							</svg>
+
+							</template>
+							{{ $t('hotel_name_' + hotel.name) }}
+						</AsideNavLink>
+					</li>
 					<li>
 						<AsideNavLink :href="route('admin.admins.index')" :active="route().current('admin.admins.index')">
 							<template #icon>
-								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block w-16 h-6">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block w-16 min-w-16 h-6">
 									<path d="M4.5 6.375a4.125 4.125 0 1 1 8.25 0 4.125 4.125 0 0 1-8.25 0ZM14.25 8.625a3.375 3.375 0 1 1 6.75 0 3.375 3.375 0 0 1-6.75 0ZM1.5 19.125a7.125 7.125 0 0 1 14.25 0v.003l-.001.119a.75.75 0 0 1-.363.63 13.067 13.067 0 0 1-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 0 1-.364-.63l-.001-.122ZM17.25 19.128l-.001.144a2.25 2.25 0 0 1-.233.96 10.088 10.088 0 0 0 5.06-1.01.75.75 0 0 0 .42-.643 4.875 4.875 0 0 0-6.957-4.611 8.586 8.586 0 0 1 1.71 5.157v.003Z" />
 								</svg>
 							</template>

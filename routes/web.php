@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\InvitationController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -60,15 +60,15 @@ Route::group([
 	Route::resource('admins', AdminController::class)->only([
 		'index', 'destroy',
 	]);
-	Route::resource('invites', InvitationController::class)->only([
+	Route::resource('invitations', InvitationController::class)->only([
 		'store', 'destroy',
 	]);
 })->name('admin');
 
 Route::get('/en/admin', static fn() => to_route('admin.dashboard'))->middleware(['lang:pub', 'auth:web'])->name('en.admin.index');
 
-Route::get('/accept-invite/{invite}/{token}', [InvitationController::class, 'acceptForm'])->middleware(['lang:admin', 'guest:web'])->name('admin.invitation.accept');
-Route::post('/accept-invite/{invite}', [InvitationController::class, 'accept'])->middleware(['lang:admin', 'guest:web'])->name('admin.register');
+Route::get('/accept-invite/{invitation}/{token}', [InvitationController::class, 'acceptForm'])->middleware(['lang:admin', 'guest:web'])->name('admin.invitations.accept');
+Route::post('/accept-invite/{invitation}', [InvitationController::class, 'accept'])->middleware(['lang:admin', 'guest:web'])->name('admin.register');
 
 Route::group([
 	'middleware' => ['lang:pub', 'guest:web'],
@@ -85,10 +85,10 @@ Route::group([
 	'prefix' => 'admin',
 	'controller' => AuthController::class,
 	'as' => 'auth.',
-], static function() : void {
+], static function(): void {
 	Route::post('/login', 'authenticate')->middleware('throttle:login')->name('authenticate');
 	Route::post('/forgot-password', 'sendPasswordResetLink')->middleware('throttle:password-reset')->name('password.email');
-	Route::post('/reset-password', 'updatePassword')->name('password.reset');
+	Route::post('/reset-password', 'updatePassword')->name('password.update');
 });
 
 Route::get('/en/admin/login', [AuthController::class, 'login'])->middleware(['lang:pub', 'guest:web'])->name('en.auth.login');

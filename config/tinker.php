@@ -19,10 +19,10 @@ return [
 	 */
 
 	'commands' => [
-		App\Console\Commands\CreateAdmin::class,
-		App\Console\Commands\InviteAdmin::class,
-		App\Console\Commands\SendPasswordResetLink::class,
-		App\Console\Commands\ChangeAdminPassword::class,
+		\App\Console\Commands\CreateAdmin::class,
+		\App\Console\Commands\InviteAdmin::class,
+		\App\Console\Commands\SendPasswordResetLink::class,
+		\App\Console\Commands\ChangeAdminPassword::class,
 	],
 
 	/*

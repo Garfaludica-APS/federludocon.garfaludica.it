@@ -52,7 +52,7 @@ class CreateAdmin extends Command implements PromptsForMissingInput
 			$this->error('Passwords do not match');
 			return;
 		}
-		Admin::factory()->create([
+		Admin::create([
 			'username' => $this->argument('username'),
 			'email' => $this->argument('email'),
 			'password' => $password,

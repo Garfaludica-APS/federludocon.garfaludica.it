@@ -147,8 +147,8 @@ return [
 		'options' => [
 			'cluster' => env('REDIS_CLUSTER', 'redis'),
 			'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'gobcon'), '_') . '_database_'),
-			'serializer' => Redis::SERIALIZER_NONE,
-			'compression' => Redis::COMPRESSION_NONE,
+			'serializer' => \Redis::SERIALIZER_NONE,
+			'compression' => \Redis::COMPRESSION_NONE,
 		],
 
 		'default' => [
