@@ -9,6 +9,9 @@
 	"Book" : "Prenota",
 	"Booking Portal": "Portale Prenotazioni",
 	"Telegram Group": "Gruppo Telegram",
+	"Facebook page":"Pagina Facebook",
+	"Instagram Page":"Pagina Instagram",
+	"Come to visit!":"Vieni a Trovarci!",
 	"Looking for friends to play with at the GobCon?": "Cerchi amici con cui giocare alla GobCon?",
 	"Set up a table!": "Organizza un tavolo!",
 	"Admin Panel": "Pannello Admin",
@@ -46,9 +49,19 @@
 	"hotel_name_Isera Refuge": "Rifugio Isera",
 	"hotel_name_Braccicorti Farmhouse": "Agriturismo Braccicorti",
 	"Hello, with this email, we invite you to manage the following hotels:": "Ciao, con questa mail, la invitiamo a gestire i seguenti hotel:",
-	"for the event GobCon 2024 Garfagnana.":"per l’evento GobCon 2024 Garfagnana",
+	"for the event GobCon 2024 Garfagnana.":"per l'evento GobCon 2024 Garfagnana",
 	"After 3 days the invitation link expires and will no longer work.":"Dopo 3 giorno il link di invito scade e non funzionerà più.",
 	"We hope that this event will be profitable.":"Ci auguriamo che questo evento possa essere proficuo.",
 	"Thanks":"Grazie",
-	"Garfaludica APS":"Garfaludica APS"
+	"Garfaludica APS":"Garfaludica APS",
+	"Who we are":"Chi siamo",
+	"organization_page_presentation":"Benvenuti nell'entusiasmante mondo ludico dell'Associazione Garfaludica APS! Situata nel pittoresco contesto di Castelnuovo di Garfagnana, siamo un'associazione dedicata agli appassionati di giochi da tavolo, wargames, giochi di ruolo, carte, scacchi e tanto altro ancora. Presso la nostra sede, trovate un ambiente accogliente e vibrante, dove l'entusiasmo per il gioco è palpabile in ogni angolo. Che tu sia un veterano esperto o un neofita curioso, c'è sempre qualcosa di nuovo da scoprire e qualcuno con cui condividere la tua passione per il gioco. I nostri orari sono flessibili per garantire la massima convenienza per i nostri soci. Per rimanere aggiornati sugli eventi in programma e sugli orari di apertura, ti invitiamo a consultare il nostro Gruppo Telegram ufficiale, dove potrai connetterti con altri membri, partecipare a discussioni e ricevere le ultime notizie sull'associazione.",
+	"5xM": "5<b style=\"color:red\">X</b>mille a Garfaludica APS",
+	"end_5xM": "Il modello 730 deve essere trasmesso all'Agenzia delle Entrate, esclusivamente per via telematica, entro il <u style=\"color:green\"><b>15 ottobre 2024</b></u>. Non è comunque necessario attendere ottobre: puoi farlo anche subito!",
+	"Tax ID code": "Codice Fiscale",
+	"pre_5xM": "Da quest'anno è possibile devolvere il 5xmille della propria dichiarazione dei redditi a Garfaludica APS. Si tratta di un modo per donare all'associazione parte delle imposte (tasse) che si pagano ogni anno.<br><br> <u style=\"color:green\"><b>Farlo è &ldquo;gratuito&rdquo;:</b></u> le imposte non aumentano per il fatto che si devolve il proprio 5xmille<br><br>",
+	"bod_5xM": "<u>Se la tua dichiarazione dei redditi è compilata da un commercialista</u>, ti basterà comunicare al tuo commercialista la volontà di destinare il 5xmille a Garfaludica APS fornendogli il codice fiscale che trovi in fondo a questo messaggio.<br> <u>Se invece compili la tua dichiarazione dei redditi da solo/a</u>, nel modello 730 dovrai individuare il riquadro denominato &ldquo;SCELTA PER LA DESTINAZIONE DEL CINQUE PER MILLE DELL'IRPEF&rdquo;. All'interno troverai diversi sotto riquadri. Puoi compilare SOLO UNO di questi riquadri (gli altri devono essere lasciati in bianco). Il riquadro da compilare è il primo, intitolato &ldquo;SOSTEGNO DEGLI ENTI DEL TERZO SETTORE ISCRITTI NEL RUNTS...(omissis)...&rdquo;.<br> Per compilarlo:",
+	"list_5xM_1":"Inserire la propria firma nell'apposito campo &ldquo;FIRMA&rdquo;;",
+	"list_5xM_2":"Inserire il codice fiscale di Garfaludica APS (che trovi alla fine di questa sezione) nell'apposito campo &ldquo;Codice fiscale del beneficiario&rdquo;."
+
 }
