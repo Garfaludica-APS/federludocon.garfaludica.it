@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\Hotel\PresentationController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -63,6 +64,9 @@ Route::group([
 	Route::resource('invitations', InvitationController::class)->only([
 		'store', 'destroy',
 	]);
+	Route::singleton('hotel.presentation', PresentationController::class)->only([
+		'show', 'update',
+	]);
 })->name('admin');
 
 Route::get('/en/admin', static fn() => to_route('admin.dashboard'))->middleware(['lang:pub', 'auth:web'])->name('en.admin.index');
@@ -97,10 +101,3 @@ Route::get('/en/forgot-password', [AuthController::class, 'forgotPassword'])->mi
 Route::get('/reset-password/{token}', [AuthController::class, 'resetPassword'])->middleware(['lang:admin', 'guest:web'])->name('password.reset');
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:web')->name('auth.logout');
-
-
-Route::get('/mailable', function () {
-	$invoice = App\Models\invitation::first();
-
-	return new App\Mail\AdminInvitation($invoice, 'Garfa');
-    });

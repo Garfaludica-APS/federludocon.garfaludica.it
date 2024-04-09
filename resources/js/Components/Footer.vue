@@ -1,4 +1,5 @@
 <script setup>
+import { usePage } from '@inertiajs/vue3';
 import { toast } from 'vue3-toastify';
 import { trans } from 'laravel-vue-i18n';
 
@@ -6,6 +7,8 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import FooterNavLink from '@/Components/FooterNavLink.vue';
 import SocialLink from '@/Components/SocialLink.vue';
 import PayPalDonateButton from '@/Components/PaypalDonateButton.vue';
+
+const page = usePage();
 
 const phoneNumber = '+39 324 746 0610';
 const phoneNumberHref = 'tel:' + phoneNumber.replace(/\s/g, '');
@@ -69,9 +72,6 @@ function copyToClipboard(text)
 				<FooterNavLink :href="lroute('about')">
 					{{ $t('About') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('tables')">
-					{{ $t('Tables') }}
-				</FooterNavLink>
 				<FooterNavLink :href="lroute('hotels')">
 					{{ $t('Hotels') }}
 				</FooterNavLink>
@@ -91,7 +91,7 @@ function copyToClipboard(text)
 				{{ $t('Useful Links') }}
 			</h4>
 			<nav>
-				<FooterNavLink :href="lroute('book')">
+				<FooterNavLink v-if="page.props.settings.portalOpen" :href="lroute('book')">
 					{{ $t('Booking Portal') }}
 				</FooterNavLink>
 				<FooterNavLink href="#" external>

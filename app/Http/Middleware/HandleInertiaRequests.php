@@ -10,6 +10,7 @@ namespace App\Http\Middleware;
 
 use App\Models\Hotel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Inertia\Middleware;
 
 class HandleInertiaRequests extends Middleware
@@ -55,6 +56,14 @@ class HandleInertiaRequests extends Middleware
 			'auth.admin.hotels' => static fn() => $request->user()
 				? ($request->user()->is_super_admin ? Hotel::all() : $request->user()->hotels()->get())
 				: null,
+			'settings.portalOpen' => static function() {
+				$open = config('gobcon.open', true);
+				return ($open instanceof Carbon) ? $open->isPast() : $open;
+			},
+			'settings.portalTimer' => static function() {
+				$timer = config('gobcon.open', false);
+				return ($timer instanceof Carbon) ? ceil(abs($timer->diffInSeconds())) : null;
+			},
 		]);
 	}
 }
