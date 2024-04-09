@@ -63,7 +63,7 @@ const admin = computed(() => page.props.auth.admin);
 						</AsideNavLink>
 					</li>
 					<li v-for="hotel in page.props.auth.admin.hotels">
-						<AsideNavLink :href="route('admin.dashboard')" :active="route().current('admin.dashboard')">
+						<AsideNavLink :href="route('admin.hotel.presentation.show', { hotel: hotel })" :active="route().current('admin.hotel.presentation.show', { hotel: hotel })">
 							<template #icon>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="inline-block w-16 min-w-16 h-6">
 								<path d="M11.584 2.376a.75.75 0 0 1 .832 0l9 6a.75.75 0 1 1-.832 1.248L12 3.901 3.416 9.624a.75.75 0 0 1-.832-1.248l9-6Z" />

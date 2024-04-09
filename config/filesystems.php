@@ -40,6 +40,12 @@ return [
 			'throw' => false,
 		],
 
+		'translations' => [
+			'driver' => 'local',
+			'root' => lang_path(),
+			'throw' => true,
+		],
+
 		'public' => [
 			'driver' => 'local',
 			'root' => storage_path('app/public'),

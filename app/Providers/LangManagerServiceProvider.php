@@ -15,7 +15,7 @@ class LangManagerServiceProvider extends ServiceProvider
 	public function register(): void
 	{
 		$this->app->singleton(Manager::class, function (Application $app) {
-			return new Manager($app->makeWith(Manager::class, ['fileSystem' => Storage::disk('translations')]));
+			return new Manager(Storage::disk('translations'));
 		});
 	}
 

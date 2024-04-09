@@ -3,18 +3,24 @@
 namespace App\Lang;
 
 use Illuminate\Contracts\Filesystem\Filesystem;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Storage;
+use PhpParser\Node;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor;
+use PhpParser\Node\Expr;
+use PhpParser\Node\Stmt;
+use PhpParser\ParserFactory;
 
 class Manager
 {
 	protected array $originalTranslations = [];
 	protected array $translations = [];
 	protected array $files = [];
+	protected array $stmts = [];
+	protected array $tokens = [];
 	/**
 	 * Create a new class instance.
 	 */
-	public function __construct(protected Application $app, protected Filesystem $fileSystem, protected string $baseFileName = 'messages') { }
+	public function __construct(protected Filesystem $fileSystem, protected string $fileName = 'stored') { }
 
 	public function importTranslations(bool $force = false): void
 	{
@@ -23,25 +29,58 @@ class Manager
 				$this->translations = $this->originalTranslations;
 			return;
 		}
-		$langPath = $this->app['path.lang'];
-		$files = $this->fileSystem->allFiles($langPath);
+		$files = $this->fileSystem->allFiles();
 		foreach ($files as $file) {
-			$basename = $file->getBasename();
-			if (preg_match('/^' . $this->baseFileName . '_([a-z]{2})\.json$/', $basename, $matches)) {
+			if (preg_match('/^([a-z]{2})\/' . $this->fileName . '\.php$/', $file, $matches)) {
 				$locale = $matches[1];
 				$this->files[$locale] = $file;
-				$this->originalTranslations[$locale] = $this->fileSystem->json($file);
+				$this->originalTranslations[$locale] = $this->loadTranslations($locale, $file);
 				$this->translations[$locale] = $this->originalTranslations[$locale];
 			}
 		}
 	}
 
+	protected function loadTranslations(string $locale, string $file): array
+	{
+		$parser = (new ParserFactory())->createForHostVersion();
+		$this->stmts[$locale] = $parser->parse($this->fileSystem->get($file));
+		$this->tokens[$locale] = $parser->getTokens();
+		$retunStmt = null;
+		foreach ($this->stmts[$locale] as $stmt) {
+			if (!$stmt instanceof Stmt\Return_)
+				continue;
+			$returnStmt = $stmt->expr;
+		}
+		if ($returnStmt === null)
+			return [];
+		$translations = [];
+		foreach ($returnStmt->items as $item)
+			$translations[$item->key->value] = $item->value->value;
+		return $translations;
+	}
+
+	protected function encodeTranslations(string $locale): string
+	{
+		$translations = $this->translations[$locale];
+		$traverser = new NodeTraverser(new NodeVisitor\CloningVisitor());
+		$stmts = $traverser->traverse($this->stmts[$locale]);
+		$items = [];
+		foreach ($translations as $key => $value)
+			$items[] = new Expr\ArrayItem(new Node\Scalar\String_($value), new Node\Scalar\String_($key));
+		foreach ($stmts as $stmt) {
+			if (!$stmt instanceof Stmt\Return_)
+				continue;
+			$stmt->expr = new Node\Expr\Array_($items);
+		}
+		$prettyPrinter = new \PhpParser\PrettyPrinter\Standard();
+		return $prettyPrinter->printFormatPreserving($stmts, $this->stmts[$locale], $this->tokens[$locale]);
+	}
+
 	public function exportTranslations(bool $force = false): void
 	{
-		$langPath = $this->app['path.lang'];
 		foreach ($this->translations as $locale => $translations) {
 			if ($force || $translations !== $this->originalTranslations[$locale])
-				$this->fileSystem->put($this->files[$locale], json_encode($translations, JSON_PRETTY_PRINT));
+				$this->fileSystem->put($this->files[$locale], $this->encodeTranslations($locale));
 		}
 	}
 
@@ -145,7 +184,7 @@ class Manager
 		return $this->getTranslation($locale, $key) ?? $key;
 	}
 
-	public function translate(string $key, string|array $locale, ?string $value = null): null
+	public function translate(string $key, string|array $locale, ?string $value = null): void
 	{
 		if ($value === null && is_string($locale))
 			$this->removeTranslation($key, $locale);
