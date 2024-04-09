@@ -38,8 +38,8 @@ const Isera_list_2 = trans('Tenda: <b>:price</b>', {price :'15€'})+'<span clas
 								{{ $t('GobCon 2024') }}
 							</h1>
 						</div>
-						<p class="mt-6 text-lg text-gray-200 dark:text-slate-300 leading-relaxed" v-html="$t('about_page_presentation_1')"></p>
-						<p class="mt-6 text-lg text-gray-200 dark:text-slate-300 leading-relaxed" v-html="$t('about_page_presentation_2')"></p>
+						<p class="mt-6 text-lg text-black dark:text-slate-200 leading-relaxed" v-html="$t('about_page_presentation_1')"></p>
+						<p class="mt-6 text-lg text-black dark:text-slate-200 leading-relaxed" v-html="$t('about_page_presentation_2')"></p>
 
 					</div>
 
@@ -50,25 +50,25 @@ const Isera_list_2 = trans('Tenda: <b>:price</b>', {price :'15€'})+'<span clas
 										<p v-html="$t('Title_programm')"></p>
 								</h1>
 							</div>
-							<p class="mt-6 text-slate-200 text-lg dark:text-slate-300 leading-relaxed">
+							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
 								<p class="font-bold">{{ $t('Friday') }}</p>
-								<ol class="pl-6 lg:pl-8 text-base list-decimal text-gray-500 dark:text-slate-300 leading-relaxed">
+								<ol class="pl-6 lg:pl-8 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
 									<li v-html="$t('Fri_list_1')"></li>
 									<li v-html="$t('Fri_list_2')"></li>
 								</ol>
 							</p>
-							<p class="mt-6 text-slate-200 text-lg dark:text-slate-300 leading-relaxed">
+							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
 								<p class="font-bold">{{ $t('Saturday') }}</p>
-								<ol class="pl-6 lg:pl-8 text-base list-decimal text-gray-500 dark:text-slate-300 leading-relaxed">
+								<ol class="pl-6 lg:pl-8 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
 									<li v-html="$t('Sat_list_1')"></li>
 									<li v-html="$t('Sat_list_2')"></li>
 									<li v-html="$t('Sat_list_3')"></li>
 									<li v-html="$t('Sat_list_4')"></li>
 								</ol>
 							</p>
-							<p class="mt-6 text-slate-200 text-lg dark:text-slate-300 leading-relaxed">
+							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
 								<p class="font-bold">{{ $t('Sunday') }}</p>
-								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 text-base list-decimal text-gray-500 dark:text-slate-300 leading-relaxed">
+								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
 									<li v-html="$t('Sun_list_1')"></li>
 									<li v-html="$t('Sun_list_2')"></li>
 									<li v-html="$t('Sun_list_3')"></li>
@@ -79,9 +79,9 @@ const Isera_list_2 = trans('Tenda: <b>:price</b>', {price :'15€'})+'<span clas
 									<p v-html="$t('Title_Play_areas')"></p>
 								</h1>
 							</div>
-							<p class="mt-6 text-slate-200 text-lg dark:text-slate-300 leading-relaxed">
+							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
 								<p v-html="$t('Body_Play_areas')"></p>
-								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 text-base list-decimal text-gray-500 dark:text-slate-300 leading-relaxed">
+								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
 									<li v-html="$t('Play_areas_list_1')"></li>
 									<li v-html="$t('Play_areas_list_2')"></li>
 								</ol>
@@ -91,9 +91,9 @@ const Isera_list_2 = trans('Tenda: <b>:price</b>', {price :'15€'})+'<span clas
 									<p> {{ $t('Meals') }} </p>
 								</h1>
 							</div>
-							<p class="mt-6 text-slate-200 text-lg dark:text-slate-300 leading-relaxed">
+							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
 								<p v-html="$t('Meals_exp')"></p>
-								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 pt-3 text-base list-decimal text-gray-500 dark:text-slate-300 leading-relaxed">
+								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 pt-3 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
 									<li v-html="$t('Meals_list_1')"></li>
 									<li v-html="$t('Meals_list_2')"></li>
 									<li v-html="$t('Meals_list_3')"></li>
@@ -110,18 +110,18 @@ const Isera_list_2 = trans('Tenda: <b>:price</b>', {price :'15€'})+'<span clas
 								{{ $t('Prices') }}
 							</h1>
 						</div>
-						<p class="mt-6 text-slate-200 text-lg dark:text-slate-300 leading-relaxed font-bold">{{ $t('hotel_name_Panoramic Hotel') }}</p>
-						<p class="mt-2 text-slate-200 text-lg dark:text-slate-300 leading-relaxed" v-html="$t('Panoramico_body')"></p>
-						<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 pt-2 text-base list-decimal text-gray-500 dark:text-slate-300 leading-relaxed">
+						<p class="mt-6 text-black dark:text-slate-200 leading-relaxed font-bold">{{ $t('hotel_name_Panoramic Hotel') }}</p>
+						<p class="mt-2 text-black dark:text-slate-200 leading-relaxed" v-html="$t('Panoramico_body')"></p>
+						<ol class="pl-6 lg:pl-8 pb-3 lg:pb-3 pt-2 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
 									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_1"></li>
 									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_2"></li>
 									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_3"></li>
 									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_4"></li>
 									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_5"></li>
 						</ol>
-						<p class="mt-6 text-slate-200 text-lg dark:text-slate-300 leading-relaxed font-bold">{{ $t('hotel_name_Isera Refuge')}} </p>
-						<p class="mt-2 text-slate-200 text-lg dark:text-slate-300 leading-relaxed" v-html="$t('Isera_body')"></p>
-						<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 pt-2 text-base list-decimal text-gray-500 dark:text-slate-300 leading-relaxed">
+						<p class="mt-3 text-black dark:text-slate-200 leading-relaxed font-bold">{{ $t('hotel_name_Isera Refuge')}} </p>
+						<p class="mt-2 text-black dark:text-slate-200 leading-relaxed" v-html="$t('Isera_body')"></p>
+						<ol class="pl-6 lg:pl-8 pb-3 lg:pb-3 pt-2 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
 									<li class="pb-1 lg:pb-2" v-html="Isera_list_1"></li>
 									<li class="pb-1 lg:pb-2" v-html="Isera_list_2"></li>
 						</ol>
