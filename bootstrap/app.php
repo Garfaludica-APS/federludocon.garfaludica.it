@@ -24,6 +24,10 @@ return Application::configure(basePath: \dirname(__DIR__))
 		health: '/up',
 	)
 	->withMiddleware(static function(Middleware $middleware): void {
+		$middleware->replace(
+			\Illuminate\Http\Middleware\TrustProxies::class,
+			\Monicahq\Cloudflare\Http\Middleware\TrustProxies::class
+		);
 		$middleware->encryptCookies(except: [
 			'lang',
 		]);
@@ -42,6 +46,7 @@ return Application::configure(basePath: \dirname(__DIR__))
 	})
 	->withSchedule(static function(Schedule $schedule): void {
 		$schedule->command('auth:clear-resets')->everyFifteenMinutes();
+		$schedule->command('cloudflare:reload')->daily();
 	})
 	->withExceptions(static function(Exceptions $exceptions): void {
 		$exceptions->respond(static function(RedirectResponse|Response $response, \Throwable $exception, Request $request): RedirectResponse|Response {
