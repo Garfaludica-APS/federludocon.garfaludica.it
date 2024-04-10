@@ -35,7 +35,7 @@ Route::group([
 	Route::get('/privacy', [ModalController::class, 'privacy'])->name('modal.privacy');
 	Route::get('/terms', [ModalController::class, 'terms'])->name('modal.terms');
 	Route::get('/refund', [ModalController::class, 'refund'])->name('modal.refund');
-	Route::get('/license', [ModalController::class, 'license'])->name('license');
+	Route::get('/license', [ModalController::class, 'license'])->name('modal.license');
 });
 
 Route::group([

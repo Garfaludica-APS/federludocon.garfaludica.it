@@ -29,7 +29,7 @@ const bugReportMailto = computed(() => {
 <template>
 	<div class="pt-8">
 		<div class="max-w-7xl mx-auto px-4 ml:px-6 lg:px-8 text-center">
-			Copyright © 2024 - <a class="text-rose-500 font-black" rel="noopener" href="https://www.garfaludica.it" target="_blank">Garfaludica APS</a> - Some Rights Reserved. (<Link class="hover:underline" :href="route('license', {redirect: lroute().current() })" preserve-state preserve-scroll>MIT License</Link>)<br>Images and logos: All Rights Reserved.
+			Copyright © 2024 - <a class="text-rose-500 font-black" rel="noopener" href="https://www.garfaludica.it" target="_blank">Garfaludica APS</a> - Some Rights Reserved. (<Link class="hover:underline" :href="route('modal.license', {redirect: lroute().current() })" preserve-state preserve-scroll>MIT License</Link>)<br>Images and logos: All Rights Reserved.
 			<div class="flex justify-center items-center mx-auto space-x-3">
 			<a rel="external noopener" :href="repository" target="_blank" class="flex mt-2 w-fit cursor-pointer text-center items-center justify-center bg-gray-200 dark:bg-gray-700 rounded-full py-2 px-4 text-xs text-gray-600 dark:text-gray-300 focus:outline-none hover:bg-[#646c70] focus:bg-[#646c70] hover:text-white focus:text-white transition duration-500 ease-in-out">
 				<FontAwesomeIcon :icon="faCodeBranch" />
