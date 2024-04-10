@@ -12,7 +12,7 @@ const props = defineProps({
 	},
 	bugReportEmail: {
 		type: String,
-		default: 'bug-report@garfaludica.it',
+		default: 'info@garfaludica.it',
 	},
 	bugReportSubject: {
 		type: String,

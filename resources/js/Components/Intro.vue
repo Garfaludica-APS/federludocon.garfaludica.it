@@ -21,7 +21,7 @@ const props = defineProps({
 		<div v-if="page.props.settings.portalOpen" class="animate-fade-in">
 			<div class="mt-4 text-gray-500 dark:text-gray-400 leading-relaxed flex justify-center items-center flex-wrap -mx-4">
 				<TransparentButton :href="lroute('book')" class="text-sm border-green-500 hover:bg-green-500 active:bg-green-700 focus:ring-green-500 mx-4 my-4 animate-pulse hover:animate-none text-white">{{ $t('Booking Portal') }}</TransparentButton>
-				<TransparentButton href="#" class="text-sm border-indigo-500 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 mx-4 my-4 text-white" newtab>{{ $t('Telegram Group') }}</TransparentButton>
+				<TransparentButton href="https://t.me/gobcongarfagnana" class="text-sm border-indigo-500 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 mx-4 my-4 text-white" newtab>{{ $t('Telegram Group') }}</TransparentButton>
 			</div>
 
 			<!-- <p class="mt-8 text-gray-100 text-lg">{{ $t('Looking for friends to play with at the GobCon?') }} <Link :href="lroute('tables')" class="inline-block underline text-orange-600 hover:text-orange-500 active:text-orange-500 font-bold">{{ $t('Set up a table!') }}</Link></p> -->

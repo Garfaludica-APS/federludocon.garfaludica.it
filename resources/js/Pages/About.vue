@@ -9,6 +9,10 @@ export default {
 </script>
 
 <script setup>
+import { usePage } from '@inertiajs/vue3';
+
+const page = usePage();
+
 const icon_person = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline text-[#0b8a26]"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>'
 const Panoramico_list_1 = trans('camera matrimoniale ad uso singolo: <b>:price</b>', {price :'80€'})+'<span class="ml-3">'+icon_person+'</span>'
 const Panoramico_list_2 = trans('camera doppia: <b>:price</b>', {price :'60€'})+'<span class="ml-3">'+icon_person+icon_person+'</span>'
@@ -33,6 +37,7 @@ const Isera_list_2 = trans('Tenda: <b>:price</b>', {price :'15€'})+'<span clas
 			<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 				<div>
 					<div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
+						<p class="text-red-500 mb-6 text-xl" v-if="!page.props.settings.portalOpen" v-html="$t('<strong>WARNING:</strong> bookings are currently closed. Bookings will open <strong>:date</strong> (Rome time).', {date: page.props.settings.portalOpenDate})"></p>
 						<div class="flex items-center">
 							<h1 class="text-2xl font-medium bg-gradient-to-r to-[#0b8a26] from-[#9bc009] via-[#fbdb19] inline-block text-transparent bg-clip-text">
 								{{ $t('GobCon 2024') }}

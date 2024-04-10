@@ -17,7 +17,7 @@ createInertiaApp({
 	setup({ el, App, props, plugin }) {
 		return createApp({ render: () => h(App, props) })
 			.use(modal, {
-				resolve: (name) => resolvePageComponent(name, import.meta.glob('./Pages/**/*.vue')),
+				resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
 			})
 			.use(plugin)
 			.use(ZiggyVue)

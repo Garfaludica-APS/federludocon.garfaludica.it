@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\Hotel\PresentationController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\ModalController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -30,6 +32,9 @@ Route::group([
 	Route::get('/organization', static fn() => Inertia::render('Organization'))->name('organization');
 	Route::get('/contact', static fn() => Inertia::render('Contact'))->name('contact');
 	Route::get('/book', static fn() => abort(404))->name('book');
+	Route::get('/privacy', [ModalController::class, 'privacy'])->name('modal.privacy');
+	Route::get('/terms', [ModalController::class, 'terms'])->name('modal.terms');
+	Route::get('/refund', [ModalController::class, 'refund'])->name('modal.refund');
 	Route::get('/license', static fn() => Inertia::render('License'))->name('license');
 });
 
@@ -50,6 +55,9 @@ Route::group([
 	Route::get('/organization', static fn() => Inertia::render('Organization'))->name('organization');
 	Route::get('/contact', static fn() => Inertia::render('Contact'))->name('contact');
 	Route::get('/book', static fn() => abort(404))->name('book');
+	Route::get('/privacy', [ModalController::class, 'privacy'])->name('modal.privacy');
+	Route::get('/terms', [ModalController::class, 'terms'])->name('modal.terms');
+	Route::get('/refund', [ModalController::class, 'refund'])->name('modal.refund');
 });
 
 Route::group([

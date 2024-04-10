@@ -94,16 +94,16 @@ function copyToClipboard(text)
 				<FooterNavLink v-if="page.props.settings.portalOpen" :href="lroute('book')">
 					{{ $t('Booking Portal') }}
 				</FooterNavLink>
-				<FooterNavLink href="#" external>
+				<FooterNavLink href="https://t.me/gobcongarfagnana" external>
 					{{ $t('Telegram Group') }}
 				</FooterNavLink>
-				<FooterNavLink href="#">
+				<FooterNavLink :href="lroute('modal.refund', { redirect: lroute().current() })" preserve-state preserve-scroll>
 					{{ $t('Refund Policy') }}
 				</FooterNavLink>
-				<FooterNavLink href="#">
+				<FooterNavLink :href="lroute('modal.terms', { redirect: lroute().current() })" preserve-state preserve-scroll>
 					{{ $t('Terms of Service') }}
 				</FooterNavLink>
-				<FooterNavLink href="#">
+				<FooterNavLink :href="lroute('modal.privacy', { redirect: lroute().current() })" preserve-state preserve-scroll>
 					{{ $t('Privacy Policy') }}
 				</FooterNavLink>
 				<FooterNavLink :href="webAddress" external>

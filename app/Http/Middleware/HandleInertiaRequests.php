@@ -64,6 +64,14 @@ class HandleInertiaRequests extends Middleware
 				$timer = config('gobcon.open', false);
 				return ($timer instanceof Carbon) ? ceil(abs($timer->diffInSeconds())) : null;
 			},
+			'settings.portalOpenDate' => static function() {
+				$date = config('gobcon.open', null);
+				if ($date instanceof Carbon) {
+					$date->setTimezone('Europe/Rome');
+					return $date->translatedFormat('l j F Y H:i');
+				}
+				return null;
+			},
 		]);
 	}
 }
