@@ -227,7 +227,7 @@ onUnmounted(() => {
 				<tbody v-else>
 					<tr>
 						<td colspan="5" class="italic">
-							No invitation found.
+							{{$t('No invitation found.')}}
 						</td>
 					</tr>
 				</tbody>
@@ -280,7 +280,7 @@ onUnmounted(() => {
 								<svg v-show="selected" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-6 h-6">
 									<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
 								</svg>
-								<span :class=' selected ? "ml-0" : "ml-6" '>{{ hotel.name }}</span>
+								<span :class=' selected ? "ml-0" : "ml-6" '>{{ $t(hotel.name) }}</span>
 							</li>
 						</ListboxOption>
 					</ListboxOptions>
@@ -291,7 +291,7 @@ onUnmounted(() => {
 
 		<template #footer>
 			<SecondaryButton @click="closeModal">
-				Cancel
+				{{$t('Cancel')}}
 			</SecondaryButton>
 
 			<ActionButton
@@ -301,7 +301,7 @@ onUnmounted(() => {
 				:disabled="form.email.length < 3 || (!form.superAdmin && form.selectedHotels.length == 0) || form.processing"
 				@click="inviteAdmin"
 			>
-				Invite Admin
+				{{$t('Invite Admin')}}
 			</ActionButton>
 		</template>
 	</DialogModal>
