@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\Hotel\PresentationController;
+use App\Http\Controllers\HotelController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -24,11 +25,11 @@ Route::group([
 	})->name('home');
 	Route::get('/about', static fn() => Inertia::render('About'))->name('about');
 	Route::get('/tables', static fn() => Inertia::render('About'))->name('tables');
-	Route::get('/hotels', static fn() => Inertia::render('Hotels'))->name('hotels');
+	Route::get('/hotels', HotelController::class)->name('hotels');
 	Route::get('/venue', static fn() => Inertia::render('Venue'))->name('venue');
 	Route::get('/organization', static fn() => Inertia::render('Organization'))->name('organization');
 	Route::get('/contact', static fn() => Inertia::render('Contact'))->name('contact');
-	Route::get('/book', static fn() => Inertia::render('Book'))->name('book');
+	Route::get('/book', static fn() => abort(404))->name('book');
 	Route::get('/license', static fn() => Inertia::render('License'))->name('license');
 });
 
@@ -44,11 +45,11 @@ Route::group([
 	})->name('home');
 	Route::get('/about', static fn() => Inertia::render('About'))->name('about');
 	Route::get('/tables', static fn() => Inertia::render('About'))->name('tables');
-	Route::get('/hotels', static fn() => Inertia::render('Hotels'))->name('hotels');
+	Route::get('/hotels', HotelController::class)->name('hotels');
 	Route::get('/venue', static fn() => Inertia::render('Venue'))->name('venue');
 	Route::get('/organization', static fn() => Inertia::render('Organization'))->name('organization');
 	Route::get('/contact', static fn() => Inertia::render('Contact'))->name('contact');
-	Route::get('/book', static fn() => Inertia::render('Book'))->name('book');
+	Route::get('/book', static fn() => abort(404))->name('book');
 });
 
 Route::group([

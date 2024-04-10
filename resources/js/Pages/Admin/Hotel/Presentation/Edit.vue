@@ -6,7 +6,7 @@ import { trans } from 'laravel-vue-i18n';
 export default {
 	layout: (h, page) => h(BaseLayout, { title: 'Edit Hotel Presentation Page' }, () => h(AdminLayout, {}, {
 		default: () => page,
-		header: () => h('h1', { class: 'font-extrabold, text-3xl' }, trans('Hotel\'s Presentation Page')),
+		header: () => h('h1', { class: 'font-extrabold text-3xl' }, trans('Hotel\'s Presentation Page')),
 	})),
 }
 </script>
@@ -40,7 +40,7 @@ onBeforeMount(() => {
 
 <template>
 	<div class="bg-white dark:bg-gray-900 rounded-lg shadow-xl overflow-hidden p-8">
-		<h2 class="font-bold text-xl">{{ $t(':hotel - Presentation Page', { hotel: hotel.name }) }}</h2>
+		<h2 class="font-bold text-xl">{{ $t(':hotel - Presentation Page', { hotel: $t('hotel_name_' + hotel.name) }) }}</h2>
 		<form class="dark:text-white py-2 mt-4" @submit.prevent="updatePresentation">
 			<TabGroup :defaultIndex="startTabIndex">
 				<TabList class="flex space-x-1 rounded-xl bg-blue-900/20 h-12 p-1 w-fit">
