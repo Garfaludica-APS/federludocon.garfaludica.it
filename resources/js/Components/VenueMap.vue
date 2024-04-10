@@ -29,6 +29,7 @@ const camperMarker = {
 		api-key="AIzaSyDmCRFGUtUffG08T2ylnEAW3I9HdJrNcFI"
 		:center="center"
 		:zoom="13"
+		map-type-id="hybrid"
 	>
 		<Marker :options="iseraMarker">
 			<InfoWindow>
