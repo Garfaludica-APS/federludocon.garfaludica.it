@@ -50,7 +50,7 @@ const camperMarker = {
 				<article>
 					<h1 class="text-lg font-bold">{{ $t('hotel_name_Panoramic Hotel') }}</h1>
 					<h2 class="font-bold">{{ $t('Address') }}:</h2>
-					<p>{{ $t('Street Fondo la Terra, 9, 55030 Corfino (Villa Collemandina), Lucca') }}</p>
+					<p>{{ $t('Via Fondo la Terra, 9, 55030 Corfino (Villa Collemandina), Lucca') }}</p>
 					<h2 class="font-bold">{{ $t('Contacts')}}:</h2>
 					<p>{{ $t('Tel: :tel', {tel: '+39 320 311 8664'}) }}</p>
 					<p>{{ $t('Email: :email', {email: 'info@albergopanoramico.it'}) }}</p>
@@ -78,7 +78,7 @@ const camperMarker = {
 				<article>
 					<h1 class="text-lg font-bold">{{ $t('Camper Equipped Area') }}</h1>
 					<h2 class="font-bold">{{ $t('Address') }}:</h2>
-					<p>{{ $t('Parking Street Madonna, 55030 Corfino (Villa Collemandina), Lucca') }}</p>
+					<p>{{ $t('Parcheggio Via Madonna, 55030 Corfino (Villa Collemandina), Lucca') }}</p>
 				</article>
 			</InfoWindow>
 		</Marker>

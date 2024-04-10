@@ -30,7 +30,7 @@ const props = defineProps({
 			<p class="mt-8 text-gray-100 text-base xs:text-lg sm:text-xl font-semibold">{{ $t('The booking portal is closed right now. It will open in:') }}</p>
 			<Countdown :startSeconds="page.props.settings.portalTimer" class="pt-12 text-orange-600" @countdown-end="page.props.settings.portalOpen = true" />
 			<p class="mt-10 text-gray-100 text-sm xs:text-base sm:text-lg">
-				{{ $t('While waiting, you can join our Telegram group to stay updated!') }} <a href="#" class="underline text-indigo-600 hover:text-indigo-500 active:text-indigo-500 font-bold" target="_blank">{{ $t('Join the group!') }}</a>
+				{{ $t('While waiting, you can join our Telegram group to stay updated!') }} <a href="https://t.me/gobcongarfagnana" class="underline text-indigo-600 hover:text-indigo-500 active:text-indigo-500 font-bold" target="_blank">{{ $t('Join the group!') }}</a>
 			</p>
 		</div>
 
