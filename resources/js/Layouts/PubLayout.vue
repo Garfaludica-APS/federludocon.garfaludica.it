@@ -73,7 +73,7 @@ const acceptCookies = () => {
 };
 
 onUnmounted(() => {
-	scrollElem.removeEventListener('scroll', onScroll);
+	scrollElem.value.removeEventListener('scroll', onScroll);
 });
 </script>
 
