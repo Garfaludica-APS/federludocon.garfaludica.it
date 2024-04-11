@@ -69,7 +69,7 @@ class InvitationController extends Controller
 			'is_super_admin' => $superAdmin,
 			'hotels' => $hotelIds,
 		]);
-		Mail::to($validated['email'])->send(new AdminInvitation($invitation, $token)); // TODO: queue
+		Mail::to($validated['email'])->queue(new AdminInvitation($invitation, $token));
 		return redirect()->route('admin.admins.index')->with('flash', [
 			'message' => __('Invitation sent to :email.', ['email' => $validated['email']]),
 			'location' => 'toast-tc',
