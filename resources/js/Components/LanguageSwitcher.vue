@@ -27,7 +27,8 @@ function setCookie(lang, days = 365) {
 	const date = new Date();
 	date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
 	let expires = "expires=" + date.toUTCString();
-	document.cookie = `lang=${lang};${expires};path=/;SameSite=Lax;domain=localhost`;
+	const domain = window.location.hostname;
+	document.cookie = `lang=${lang};${expires};path=/;SameSite=Strict;domain=${domain};secure`;
 }
 
 function loadNextLanguage() {
