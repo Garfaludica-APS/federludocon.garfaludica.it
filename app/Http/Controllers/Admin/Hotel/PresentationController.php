@@ -55,7 +55,7 @@ class PresentationController extends Controller
 			$manager->translate($key, $locale, $text);
 		}
 		$manager->exportTranslations();
-		return redirect()->route('admin.hotels.presentation.show', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.presentation.show', $hotel)->with('flash', [
 			'message' => __('Presentation page updated successfully.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,
