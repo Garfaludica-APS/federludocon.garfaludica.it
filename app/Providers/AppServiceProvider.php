@@ -8,7 +8,6 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Lang\Manager;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
@@ -21,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
 	/**
 	 * Register any application services.
 	 */
-	public function register(): void { }
+	public function register(): void {}
 
 	/**
 	 * Bootstrap any application services.

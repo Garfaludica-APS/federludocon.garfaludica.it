@@ -43,7 +43,7 @@ class InvitationController extends Controller
 		]);
 		$invitations = Invitation::where('email', $validated['email'])->get();
 
-		foreach ($invitations as $invitation){
+		foreach ($invitations as $invitation) {
 			if ($invitation->created_at > now()->subMinutes(60 * 24 * 3))
 				return back()->withErrors([
 					'email' => __('There\'s already a pending invitation for this email address.'),

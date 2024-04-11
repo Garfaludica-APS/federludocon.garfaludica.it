@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Http\Controllers\Admin\Hotel;
 
 use App\Http\Controllers\Controller;
@@ -43,6 +49,7 @@ class PresentationController extends Controller
 			'presentation.*' => 'required|string',
 		]);
 		$manager->importTranslations();
+
 		foreach ($validated['presentation'] as $locale => $text) {
 			$key = 'hotel_' . Str::transliterate($hotel->name) . '_presentation_text';
 			$manager->translate($key, $locale, $text);

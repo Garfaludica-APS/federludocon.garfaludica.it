@@ -8,24 +8,27 @@ declare(strict_types=1);
 
 namespace App\Mail;
 
+use App\Models\Hotel;
 use App\Models\Invitation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Hotel;
 
 class AdminInvitation extends Mailable
 {
 	use Queueable;
 	use SerializesModels;
+
 	public $hotels;
+
 	/**
 	 * Create a new message instance.
 	 */
-	public function __construct(public Invitation $invitation, public string $token) {
-		$this->hotels=Hotel::find($invitation->hotels);
+	public function __construct(public Invitation $invitation, public string $token)
+	{
+		$this->hotels = Hotel::find($invitation->hotels);
 	}
 
 	/**

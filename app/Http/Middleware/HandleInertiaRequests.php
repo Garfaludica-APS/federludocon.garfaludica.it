@@ -70,7 +70,6 @@ class HandleInertiaRequests extends Middleware
 					$date->setTimezone('Europe/Rome');
 					return $date->translatedFormat('l j F Y H:i');
 				}
-				return null;
 			},
 		]);
 	}

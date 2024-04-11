@@ -8,12 +8,11 @@ declare(strict_types=1);
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\Hotel\PresentationController;
 use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Admin\Hotel\PresentationController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ModalController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

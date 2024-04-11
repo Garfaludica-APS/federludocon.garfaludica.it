@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Providers;
 
 use App\Lang\Manager;
@@ -14,18 +20,13 @@ class LangManagerServiceProvider extends ServiceProvider
 	 */
 	public function register(): void
 	{
-		$this->app->singleton(Manager::class, function (Application $app) {
-			return new Manager(Storage::disk('translations'));
-		});
+		$this->app->singleton(Manager::class, static fn(Application $app) => new Manager(Storage::disk('translations')));
 	}
 
 	/**
 	 * Bootstrap services.
 	 */
-	public function boot(): void
-	{
-		//
-	}
+	public function boot(): void {}
 
 	public function provides(): array
 	{
