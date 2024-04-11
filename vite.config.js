@@ -19,11 +19,7 @@ export default defineConfig({
 				},
 			},
 		}),
-		i18n({
-			additionalLangPaths: [
-				'lang/database',
-			]
-		}),
+		i18n(),
 	],
 	resolve: {
 		alias: {
