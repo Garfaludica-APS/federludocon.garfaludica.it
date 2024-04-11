@@ -30,7 +30,7 @@ Route::group([
 	Route::get('/venue', static fn() => Inertia::render('Venue'))->name('venue');
 	Route::get('/organization', static fn() => Inertia::render('Organization'))->name('organization');
 	Route::get('/contact', static fn() => Inertia::render('Contact'))->name('contact');
-	Route::get('/book', static fn() => abort(404))->name('book');
+	//Route::get('/book', static fn() => abort(404))->name('book');
 	Route::get('/privacy', [ModalController::class, 'privacy'])->name('modal.privacy');
 	Route::get('/terms', [ModalController::class, 'terms'])->name('modal.terms');
 	Route::get('/refund', [ModalController::class, 'refund'])->name('modal.refund');
@@ -53,7 +53,7 @@ Route::group([
 	Route::get('/venue', static fn() => Inertia::render('Venue'))->name('venue');
 	Route::get('/organization', static fn() => Inertia::render('Organization'))->name('organization');
 	Route::get('/contact', static fn() => Inertia::render('Contact'))->name('contact');
-	Route::get('/book', static fn() => abort(404))->name('book');
+	//Route::get('/book', static fn() => abort(404))->name('book');
 	Route::get('/privacy', [ModalController::class, 'privacy'])->name('modal.privacy');
 	Route::get('/terms', [ModalController::class, 'terms'])->name('modal.terms');
 	Route::get('/refund', [ModalController::class, 'refund'])->name('modal.refund');

@@ -26,7 +26,7 @@ import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import ConfirmationModal from '@/Components/ConfirmationModal.vue';
-import { Listbox, ListboxButton, ListboxOptions, ListboxOption, ListboxLabel, Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue';
+import { Listbox, ListboxOptions, ListboxOption, ListboxLabel, Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue';
 
 const props = defineProps({
 	admins: Array,
