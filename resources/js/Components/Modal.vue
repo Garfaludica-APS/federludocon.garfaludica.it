@@ -19,6 +19,7 @@ const props = defineProps({
 const emit = defineEmits(['close']);
 
 watch(() => props.show, () => {
+	if (typeof window === 'undefined') return;
 	if (props.show) {
 		document.body.style.overflow = 'hidden';
 	} else {
