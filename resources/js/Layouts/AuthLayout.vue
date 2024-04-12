@@ -1,8 +1,10 @@
 <script setup>
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
 import Copyright from '@/Components/Copyright.vue';
+
+const page = usePage();
 
 const props = defineProps({
 	backRoute: {
@@ -26,7 +28,7 @@ const props = defineProps({
 				<slot />
 				<!--/sse-->
 				<div v-if="backRoute" class="text-center mt-10">
-					<Link :href="lroute(backRoute)" class="text-lg font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">
+					<Link :href="route(page.props.rp + backRoute)" class="text-lg font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">
 						{{ $t(backText) }}
 					</Link>
 				</div>

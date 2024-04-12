@@ -8,11 +8,13 @@ export default {
 </script>
 
 <script setup>
-import { useForm, Link } from '@inertiajs/vue3';
+import { useForm, usePage, Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import TextInput from '@/Components/TextInput.vue';
 import ActionButton from '@/Components/ActionButton.vue';
 import FlashMessage from '@/Components/FlashMessage.vue';
+
+const page = usePage();
 
 const form = useForm({
 	username: '',
@@ -72,7 +74,7 @@ const login = () => {
 			</label>
 		</div>
 		<div class="flex space-x-4 justify-between px-10 py-4 items-center bg-gray-100 dark:bg-slate-800">
-			<Link :href="lroute('auth.password.forgot')" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">{{ $t('Forgot your password?') }}</Link>
+			<Link :href="route(page.props.rp + 'auth.password.forgot')" class="font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-200">{{ $t('Forgot your password?') }}</Link>
 			<ActionButton :disabled="form.username.length < 3 || form.password.length < 8 || form.processing" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 disabled:bg-indigo-600/50 disabled:text-gray-100 ml-auto" classes="text-xl rounded-md font-bold" type="submit">
 				{{ $t('Login') }}
 			</ActionButton>

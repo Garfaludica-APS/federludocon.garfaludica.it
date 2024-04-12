@@ -11,7 +11,9 @@ namespace App\Http\Middleware;
 use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\App;
 use Inertia\Middleware;
+use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -71,6 +73,11 @@ class HandleInertiaRequests extends Middleware
 					return $date->translatedFormat('l j F Y H:i');
 				}
 			},
+			'ziggy' => fn () => [
+				...(new Ziggy())->toArray(),
+				'location' => $request->url(),
+			],
+			'rp' => App::isLocale('it') ? '' : 'en.',
 		]);
 	}
 }

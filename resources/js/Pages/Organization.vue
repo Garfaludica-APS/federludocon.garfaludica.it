@@ -7,10 +7,13 @@ export default {
 }
 </script>
 
+<script setup>
+import logo from '@/../../storage/images/logo.png';
+</script>
 
 <template>
 	<div class="flex justify-center">
-		<img :src="imageurl('logo.png')" alt="Logo Garfaludica APS" />
+		<img :src="logo" alt="Logo Garfaludica APS" />
 	</div>
 	<div class="py-12">
 		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">

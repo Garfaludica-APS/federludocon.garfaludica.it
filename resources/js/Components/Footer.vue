@@ -8,6 +8,10 @@ import FooterNavLink from '@/Components/FooterNavLink.vue';
 import SocialLink from '@/Components/SocialLink.vue';
 import PayPalDonateButton from '@/Components/PaypalDonateButton.vue';
 
+import aicslogo from '@/../../storage/images/aics-logo.png';
+import federludologo from '@/../../storage/images/federludo-logo.png';
+import tdglogo from '@/../../storage/images/tdg-round-logo.png';
+
 const page = usePage();
 
 const phoneNumber = '+39 324 746 0610';
@@ -51,13 +55,13 @@ function copyToClipboard(text)
 			<!--/sse-->
 			<div class="mt-6 flex space-x-6 flex-wrap">
 				<a rel="external noopener nofollow" :href="tdgLink" target="_blank">
-					<img :src="imageurl('tdg-round-logo.png')" alt="Logo Tana dei Goblin" class="inline-block h-12 w-auto" />
+					<img :src="tdglogo" alt="Logo Tana dei Goblin" class="inline-block h-12 w-auto" />
 				</a>
 				<a rel="external noopener nofollow" :href="federludoLink" target="_blank">
-					<img :src="imageurl('federludo-logo.png')" alt="Logo Affiliata Federludo" class="inline-block h-12 w-auto" />
+					<img :src="federludologo" alt="Logo Affiliata Federludo" class="inline-block h-12 w-auto" />
 				</a>
 				<a rel="external noopener nofollow" :href="aicsLink" target="_blank">
-					<img :src="imageurl('aics-logo.png')" alt="Logo Associazione Italiana Cultura e Sport" class="inline-block h-12 w-auto" />
+					<img :src="aicslogo" alt="Logo Associazione Italiana Cultura e Sport" class="inline-block h-12 w-auto" />
 				</a>
 			</div>
 		</div>
@@ -66,22 +70,22 @@ function copyToClipboard(text)
 				{{ $t('Useful Links') }}
 			</h4>
 			<nav>
-				<FooterNavLink :href="lroute('home')">
+				<FooterNavLink :href="route(page.props.rp + 'home')">
 					{{ $t('Home') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('about')">
+				<FooterNavLink :href="route(page.props.rp + 'about')">
 					{{ $t('About') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('hotels')">
+				<FooterNavLink :href="route(page.props.rp + 'hotels')">
 					{{ $t('Hotels') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('venue')">
+				<FooterNavLink :href="route(page.props.rp + 'venue')">
 					{{ $t('Venue') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('organization')">
+				<FooterNavLink :href="route(page.props.rp + 'organization')">
 					{{ $t('The Association') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('contact')">
+				<FooterNavLink :href="route(page.props.rp + 'contact')">
 					{{ $t('Support') }}
 				</FooterNavLink>
 			</nav>
@@ -91,19 +95,19 @@ function copyToClipboard(text)
 				{{ $t('Useful Links') }}
 			</h4>
 			<nav>
-				<FooterNavLink v-if="page.props.settings.portalOpen" :href="lroute('book')">
+				<FooterNavLink v-if="page.props.settings.portalOpen" :href="route(page.props.rp + 'book')">
 					{{ $t('Booking Portal') }}
 				</FooterNavLink>
 				<FooterNavLink href="https://t.me/gobcongarfagnana" external>
 					{{ $t('Telegram Group') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('modal.refund', { redirect: lroute().current() })" preserve-state preserve-scroll>
+				<FooterNavLink :href="route(page.props.rp + 'modal.refund', { redirect: route().current() })" preserve-state preserve-scroll>
 					{{ $t('Refund Policy') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('modal.terms', { redirect: lroute().current() })" preserve-state preserve-scroll>
+				<FooterNavLink :href="route(page.props.rp + 'modal.terms', { redirect: route().current() })" preserve-state preserve-scroll>
 					{{ $t('Terms of Service') }}
 				</FooterNavLink>
-				<FooterNavLink :href="lroute('modal.privacy', { redirect: lroute().current() })" preserve-state preserve-scroll>
+				<FooterNavLink :href="route(page.props.rp + 'modal.privacy', { redirect: route().current() })" preserve-state preserve-scroll>
 					{{ $t('Privacy Policy') }}
 				</FooterNavLink>
 				<FooterNavLink :href="webAddress" external>

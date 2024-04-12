@@ -18,7 +18,7 @@ const showingNavigationDropdown = ref(false);
 
 function localizeRoutes(lang, replace = true)
 {
-	Ziggy.routeNamePrefix = lang === 'it' ? '' : (lang + '.');
+	page.props.rp = lang === 'it' ? '' : (lang + '.');
 	if (!replace)
 		return;
 	const cur = route().current();
@@ -73,7 +73,8 @@ const acceptCookies = () => {
 };
 
 onUnmounted(() => {
-	scrollElem.value.removeEventListener('scroll', onScroll);
+	if (scrollElem.value)
+		scrollElem.value.removeEventListener('scroll', onScroll);
 });
 </script>
 
@@ -87,35 +88,35 @@ onUnmounted(() => {
 						<div class="flex justify-between h-12">
 
 							<div class="shrink-9 flex items-center">
-								<Link :href="lroute('home')">
+								<Link :href="route(page.props.rp + 'home')">
 									<ApplicationLogo class="h-12 w-auto" titleClasses="h-full w-auto hidden 2xs:max-ml:inline-block lg:inline-block" />
 								</Link>
 							</div>
 
 							<div class="hidden space-x-8 ml:-my-px ml:ms-10 ml:flex ml:ml-auto">
-								<NavLink :href="lroute('home')" :active="currentRoute('home')">
+								<NavLink :href="route(page.props.rp + 'home')" :active="route().current(page.props.rp + 'home')">
 									{{ $t('Home') }}
 								</NavLink>
-								<NavLink :href="lroute('about')" :active="currentRoute('about')">
+								<NavLink :href="route(page.props.rp + 'about')" :active="route().current(page.props.rp + 'about')">
 									{{ $t('About') }}
 								</NavLink>
-								<NavLink :href="lroute('hotels')" :active="currentRoute('hotels')">
+								<NavLink :href="route(page.props.rp + 'hotels')" :active="route().current(page.props.rp + 'hotels')">
 									{{ $t('Hotels') }}
 								</NavLink>
-								<NavLink :href="lroute('venue')" :active="currentRoute('venue')">
+								<NavLink :href="route(page.props.rp + 'venue')" :active="route().current(page.props.rp + 'venue')">
 									{{ $t('Venue') }}
 								</NavLink>
-								<NavLink :href="lroute('organization')" :active="currentRoute('organization')">
+								<NavLink :href="route(page.props.rp + 'organization')" :active="route().current(page.props.rp + 'organization')">
 									{{ $t('Garfaludica') }}
 								</NavLink>
-								<NavLink :href="lroute('contact')" :active="currentRoute('contact')">
+								<NavLink :href="route(page.props.rp + 'contact')" :active="route().current(page.props.rp + 'contact')">
 									{{ $t('Contact') }}
 								</NavLink>
-								<NavButton v-if="page.props.settings.portalOpen" :href="lroute('book')" :active="currentRoute('book')">
+								<NavButton v-if="page.props.settings.portalOpen" :href="route(page.props.rp + 'book')" :active="route().current(page.props.rp + 'book')">
 									{{ $t('Book') }}
 								</NavButton>
 								<!--sse-->
-								<Link :href="lroute('admin.index')" class="inline-flex items-center absolute py-1 px-1 top-3 right-3 ml:max-2xl:mt-12 text-sm font-medium leading-5 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out">
+								<Link :href="route(page.props.rp + 'admin.index')" class="inline-flex items-center absolute py-1 px-1 top-3 right-3 ml:max-2xl:mt-12 text-sm font-medium leading-5 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1">
 										<path fill-rule="evenodd" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7V4.5A3.5 3.5 0 0 0 8 1Zm2 6V4.5a2 2 0 1 0-4 0V7h4Z" clip-rule="evenodd" />
 									</svg>
@@ -156,29 +157,29 @@ onUnmounted(() => {
 
 						<div :class="{'block': showingNavigationDropdown, 'hidden': ! showingNavigationDropdown}" class="ml:hidden">
 							<div class="pt-2 pb-3 space-y-1">
-								<ResponsiveNavLink :href="lroute('home')" :active="currentRoute('home')">
+								<ResponsiveNavLink :href="route(page.props.rp + 'home')" :active="route().current(page.props.rp + 'home')">
 									{{ $t('Home') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="lroute('about')" :active="currentRoute('about')">
+								<ResponsiveNavLink :href="route(page.props.rp + 'about')" :active="route().current(page.props.rp + 'about')">
 									{{ $t('About') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="lroute('hotels')" :active="currentRoute('hotels')">
+								<ResponsiveNavLink :href="route(page.props.rp + 'hotels')" :active="route().current(page.props.rp + 'hotels')">
 									{{ $t('Hotels') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="lroute('venue')" :active="currentRoute('venue')">
+								<ResponsiveNavLink :href="route(page.props.rp + 'venue')" :active="route().current(page.props.rp + 'venue')">
 									{{ $t('Venue') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="lroute('organization')" :active="currentRoute('organization')">
+								<ResponsiveNavLink :href="route(page.props.rp + 'organization')" :active="route().current(page.props.rp + 'organization')">
 									{{ $t('Garfaludica') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="lroute('contact')" :active="currentRoute('contact')">
+								<ResponsiveNavLink :href="route(page.props.rp + 'contact')" :active="route().current(page.props.rp + 'contact')">
 									{{ $t('Contact') }}
 								</ResponsiveNavLink>
-								<NavButton v-if="page.props.settings.portalOpen" :href="lroute('book')" :active="currentRoute('book')">
+								<NavButton v-if="page.props.settings.portalOpen" :href="route(page.props.rp + 'book')" :active="route().current(page.props.rp + 'book')">
 									{{ $t('Book') }}
 								</NavButton>
 								<!--sse-->
-								<Link :href="lroute('admin.index')" class="inline-flex items-center py-1 px-1 float-right text-sm font-medium leading-5 text-gray-500 dark:text-gray-350 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 tansition duration-150 ease-in-out">
+								<Link :href="route(page.props.rp + 'admin.index')" class="inline-flex items-center py-1 px-1 float-right text-sm font-medium leading-5 text-gray-500 dark:text-gray-350 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 tansition duration-150 ease-in-out">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1">
 										<path fill-rule="evenodd" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7V4.5A3.5 3.5 0 0 0 8 1Zm2 6V4.5a2 2 0 1 0-4 0V7h4Z" clip-rule="evenodd" />
 									</svg>

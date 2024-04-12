@@ -11,6 +11,9 @@ export default {
 <script setup>
 import { usePage } from '@inertiajs/vue3';
 
+import logo from '@/../../storage/images/logo.png';
+import tdglogo from '@/../../storage/images/tdg-transparent.png';
+
 const page = usePage();
 
 const icon_person = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 inline text-[#0b8a26]"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>'
@@ -28,8 +31,8 @@ const Isera_list_2 = trans('Tenda: <b>:price</b>', {price :'15€'})+'<span clas
 
 <template>
 	<div class="space-x-10 flex justify-center items-center mx-auto h-60">
-			<img class="w-auto h-36 xl:h-full" :src="imageurl('tdg-transparent.png')" alt="Logo Tana Goblin Garfagnana" />
-			<img class="w-auto h-36 xl:h-full" :src="imageurl('logo.png')" alt="Logo Garfaludica APS" />
+			<img class="w-auto h-36 xl:h-full" :src="tdglogo" alt="Logo Tana Goblin Garfagnana" />
+			<img class="w-auto h-36 xl:h-full" :src="logo" alt="Logo Garfaludica APS" />
 	</div>
 
 	<div class="py-12">

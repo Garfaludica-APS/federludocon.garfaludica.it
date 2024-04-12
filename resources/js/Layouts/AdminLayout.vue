@@ -27,12 +27,12 @@ const admin = computed(() => page.props.auth.admin);
 					</span>
 				</div>
 				<div class="flex flex-1 items-stretch">
-					<span class="h-14 py-2 pr-4 font-semibold flex items-center align-center">
+					<span class="h-14 py-2 pr-4 font-semibold flex items-center align-center" :class="isMenuOpen ? 'hidden lg:flex' : ''">
 						{{ $t('Welcome back, :name', { name: admin.username }) }}
 
 					</span>
 				</div>
-				<div class="flex flex-1 justify-end items-stretch space-x-2">
+				<div class="flex flex-1 justify-end items-stretch space-x-2" :class="isMenuOpen ? 'hidden lg:flex' : ''">
 					<DarkModeSwitcher class="h-14 w-14 py-2 text-gray-500 hover:text-gray-700 dark:text-gray-350 dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 transition duration-150 ease-in-out" />
 					<LanguageSwitcher class="h-14 w-14 py-2 text-gray-500 hover:text-gray-700 dark:text-gray-350 dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 transition duration-150 ease-in-out" />
 					<Link :href="route('auth.logout')" method="post" as="button" class="h-14 w-14 py-3 text-gray-500 hover:text-gray-700 dark:text-gray-350 dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 transition duration-150 ease-in-out">
