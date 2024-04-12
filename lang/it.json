@@ -185,6 +185,10 @@
 	"Isera Refuge": "Rifugio Isera",
 	"Bracciacorti Farmhouse": "Agriturismo Bracciacorti",
 	"Admin Management": "Gestione Amministrativa",
-	"Logout": "Logout"
+	"Logout": "Logout",
+	"days": "giorni",
+	"hours": "ore",
+	"minutes": "minuti",
+	"seconds": "secondi",
 
 }
