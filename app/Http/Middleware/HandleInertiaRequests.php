@@ -12,6 +12,7 @@ use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 
@@ -77,7 +78,7 @@ class HandleInertiaRequests extends Middleware
 				...(new Ziggy())->toArray(),
 				'location' => $request->url(),
 			],
-			'rp' => App::isLocale('it') ? '' : 'en.',
+			'rp' => Str::startsWith($request->route()->getName(), 'en.') ? 'en.' : '',
 		]);
 	}
 }
