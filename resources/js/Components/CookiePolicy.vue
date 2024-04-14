@@ -18,7 +18,7 @@ const acceptCookies = () => {
 </script>
 
 <template>
-	<div class="flex flex-col ml:flex-row items-center fixed transition-[bottom] duration-500 inset-x-4 bg-zinc-200 dark:bg-zinc-900 text-gray-900 dark:text-gray-100 z-50 p-8 rounded-xl shadow-2xl ring-4 ring-gray-400 dark:ring-gray-950 text-sm ml:text-base" :class="{'bottom-4': visible, '!bottom-[-100%]': !visible}">
+	<div class="flex flex-col ml:flex-row items-center fixed transition-[bottom] duration-500 inset-x-4 bg-zinc-200 dark:bg-zinc-900 text-gray-900 dark:text-gray-100 z-50 p-8 rounded-xl shadow-2xl ring-4 ring-gray-400 dark:ring-gray-950 text-sm ml:text-base" :class="{'bottom-4': visible, '!bottom-[-1000%]': !visible}">
 		<div class="grow">
 			<h1 class="text-xl font-bold">{{ $t('Cookies Notice') }}</h1>
 			<p class="mt-6" v-html="$t('cookie_notice_text')"></p>
