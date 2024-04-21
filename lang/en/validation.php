@@ -163,6 +163,7 @@ return [
 	'url' => 'The :attribute field must be a valid URL.',
 	'ulid' => 'The :attribute field must be a valid ULID.',
 	'uuid' => 'The :attribute field must be a valid UUID.',
+	'recaptcha' => 'Can not verify that you are not a robot: the :attribute field is invalid. Please, try again.',
 
 	/*
 	|--------------------------------------------------------------------------

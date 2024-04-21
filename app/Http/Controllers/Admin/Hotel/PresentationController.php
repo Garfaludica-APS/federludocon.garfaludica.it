@@ -14,6 +14,7 @@ use App\Models\Hotel;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 use Inertia\Response;
 
@@ -22,8 +23,11 @@ class PresentationController extends Controller
 	/**
 	 * Show the form for editing the specified resource.
 	 */
-	public function show(Manager $manager, Hotel $hotel): Response
+	public function edit(Manager $manager, Hotel $hotel): Response
 	{
+		if (Gate::denies('update-hotel-presentation', $hotel))
+			abort(403);
+
 		$manager->importTranslations();
 		$key = 'hotel_' . Str::transliterate($hotel->name) . '_presentation_text';
 		$locales = $manager->getLocales();
@@ -44,6 +48,9 @@ class PresentationController extends Controller
 	 */
 	public function update(Request $request, Manager $manager, Hotel $hotel): RedirectResponse
 	{
+		if (Gate::denies('update-hotel-presentation', $hotel))
+			abort(403);
+
 		$validated = $request->validate([
 			'presentation' => 'required|array',
 			'presentation.*' => 'required|string',
@@ -55,7 +62,7 @@ class PresentationController extends Controller
 			$manager->translate($key, $locale, $text);
 		}
 		$manager->exportTranslations();
-		return redirect()->route('admin.hotel.presentation.show', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.presentation.edit', $hotel)->with('flash', [
 			'message' => __('Presentation page updated successfully.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,

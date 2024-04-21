@@ -163,6 +163,7 @@ return [
 	'url' => 'Il campo :attribute deve essere un URL valido.',
 	'ulid' => 'Il campo :attribute deve essere un ULID valido.',
 	'uuid' => 'Il campo :attribute deve essere un UUID valido.',
+	'recaptcha' => 'Impossibile verificare che non sei un robot: il campo :attribute non è valido. Per favore, riprova.',
 
 	/*
 	|--------------------------------------------------------------------------

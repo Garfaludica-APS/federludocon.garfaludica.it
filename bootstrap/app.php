@@ -46,7 +46,7 @@ return Application::configure(basePath: \dirname(__DIR__))
 	})
 	->withSchedule(static function(Schedule $schedule): void {
 		$schedule->command('auth:clear-resets')->everyFifteenMinutes();
-		$schedule->command('cloudflare:reload')->daily();
+		$schedule->command('cloudflare:reload')->daily()->environments('production');
 	})
 	->withExceptions(static function(Exceptions $exceptions): void {
 		$exceptions->respond(static function(RedirectResponse|Response $response, \Throwable $exception, Request $request): RedirectResponse|Response {

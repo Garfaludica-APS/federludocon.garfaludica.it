@@ -8,9 +8,11 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Models\Admin;
+use App\Models\Hotel;
 use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -48,5 +50,7 @@ class AppServiceProvider extends ServiceProvider
 				? Limit::perMinutes(15, 3)->by(request()->ip())
 				: Limit::none();
 		});
+
+		Gate::define('update-hotel-presentation', static fn(Admin $admin, Hotel $hotel) => $admin->is_super_admin || $admin->hotels->contains($hotel));
 	}
 }

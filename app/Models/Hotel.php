@@ -11,6 +11,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Hotel extends Model
 {
@@ -23,5 +24,15 @@ class Hotel extends Model
 	public function admins(): BelongsToMany
 	{
 		return $this->belongsToMany(Admin::class);
+	}
+
+	public function rooms(): HasMany
+	{
+		return $this->hasMany(Room::class);
+	}
+
+	public function meals(): HasMany
+	{
+		return $this->hasMany(Meal::class);
 	}
 }

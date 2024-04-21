@@ -115,7 +115,7 @@ watch(actualTimeout, (value) => {
 			<ActionButton
 				class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 ms-3"
 				@click="close"
-			>{{ $t('Close (:timer)', { 'timer': remaining }) }}</ActionButton>
+			>{{ remaining > 0 ? $t('Close (:timer)', { 'timer': remaining }) : $('Close') }}</ActionButton>
 		</div>
 	</Modal>
 </template>
