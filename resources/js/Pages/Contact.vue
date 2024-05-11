@@ -1,7 +1,7 @@
 <script>
 import BaseLayout from '@/Layouts/BaseLayout.vue';
 import PubLayout from '@/Layouts/PubLayout.vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+
 export default {
 	layout: (h, page) => h(BaseLayout, { title: 'Contact Us' }, () => h(PubLayout, () => page)),
 }

@@ -24,11 +24,12 @@ class Booking extends Model
 	protected $fillable = [
 		'email',
 		'state',
+		'expires_at',
 	];
 
 	public function getSignedUrl(): string
 	{
-		return URL::temporarySignedRoute('booking.start', now()->addHours(2), ['booking' => $this]);
+		return URL::temporarySignedRoute('booking.start', $this->expires_at, ['booking' => $this]);
 	}
 
 	public function billingInfo(): HasOne
@@ -50,6 +51,7 @@ class Booking extends Model
 	{
 		return [
 			'state' => BookingState::class,
+			'expires_at' => 'datetime',
 		];
 	}
 }

@@ -24,6 +24,7 @@ return new class extends Migration {
 			$table->text('notes')->nullable();
 			$table->string('pp_order_id', 36)->nullable();
 			$table->timestamps();
+			$table->timestamp('expires_at');
 		});
 		Schema::table('bookings', static function(Blueprint $table): void {
 			$table->increments('short_id')->change();

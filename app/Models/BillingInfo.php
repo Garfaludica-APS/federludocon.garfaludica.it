@@ -29,6 +29,7 @@ class BillingInfo extends Model
 		'country_code',
 		'phone',
 		'tax_id',
+		'phone_country_code',
 	];
 
 	public function booking(): BelongsTo
@@ -81,7 +82,7 @@ class BillingInfo extends Model
 	protected function addressLine2(): Attribute
 	{
 		return Attribute::make(
-			set: static fn(string $value) => ucfirst(trim($value)),
+			set: static fn(?string $value) => $value === null ? null : ucfirst(trim($value)),
 		);
 	}
 
@@ -110,13 +111,6 @@ class BillingInfo extends Model
 	{
 		return Attribute::make(
 			set: static fn(string $value) => mb_strtoupper(str_replace(' ', '', trim($value))),
-		);
-	}
-
-	protected function phone(): Attribute
-	{
-		return Attribute::make(
-			set: static fn(string $value) => preg_replace('/[^0-9]/', '', trim($value)),
 		);
 	}
 }

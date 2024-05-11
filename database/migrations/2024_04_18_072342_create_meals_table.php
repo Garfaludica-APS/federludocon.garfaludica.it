@@ -26,6 +26,7 @@ return new class extends Migration {
 			$table->boolean('reservable')->default(true);
 			$table->timestamps();
 			$table->softDeletes();
+			$table->unique(['hotel_id', 'type', 'menu']);
 		});
 	}
 

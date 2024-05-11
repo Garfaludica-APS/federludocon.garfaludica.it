@@ -1,4 +1,5 @@
 import './bootstrap';
+import 'maz-ui/styles';
 import '../css/app.css';
 
 import { createSSRApp, h } from 'vue';

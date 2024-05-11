@@ -46,11 +46,20 @@
 	"Meals_rec":"<b style=\"color:red\">IMPORTANT</b>: Report intolerances and particular dietary regimes when booking through the platform.",
 	"Panoramico_body":"The price indicated below includes half board service, i.e. dinner, overnight stay and breakfast.<br>Prices for overnight stays are:",
 	"Isera_body":"The price indicated below includes the Bed&Breakfast service, i.e. an overnight stay and a breakfast.<br> The prices for overnight stays are:",
+	"Braccicorti_body":"The price indicated below includes the Bed&Breakfast service, i.e. an overnight stay and a breakfast.<br> The prices for overnight stays are:",
 	"Garfa_email_intro": "To contact the Garfaludica APS association you can write to the following email: ",
 	"Garfa_email_exp" : "For information and questions about the event or problems with the website, contact the Garfaludica APS association.",
 	"Garfa_management_intro": "Below you will find the contacts of the management of the Garfaludica APS association and the telegram group:",
 	"Structures_info": "To contact and get more information on the facilities, below you can find the contact details of the associated facilities. We remind you that you can also choose alternative accommodation, not only those we propose, but these have defined favorable conditions for the event and... are managed by Goblin! <br> You can contact the facilities if there are questions regarding accommodation or for particular needs. We invite users to contact the structures via email by also adding <b>info@garfaludica.it</b> to the CC to allow us to follow the discussion.",
 	"Problem_Title": "In case of technical problems with the site",
 	"Problem_body_Site": "Please contact us at the email: ",
-	"Problem_body_Site_2": "Or contact the developers on Telegram: "
+	"Problem_body_Site_2": "Or contact the developers on Telegram: ",
+	"disabled_not_working_text": "Disabled: not working. Send your changes to <a href=\"https://t.me/SpeedJack\" rel=\"external noopener\" target=\"_blank\" style=\"text-decoration-line: underline; color: rgb(99, 102, 241);\">t.me/SpeedJack</a>.",
+	"Equipped_Area_desc": "You may also use the equipped area for campers. It is located in the center of Corfino. Find it on <a style=\"color:rgb(99, 102, 241)\" rel=\"noopener external\" href=\"https://maps.app.goo.gl/tY3spkvhBymgx4Z68\" target=\"_blank\">Google Maps</a>.",
+	"breakfast": "Breakfast",
+	"dinner": "Dinner",
+	"lunch": "Lunch",
+	"standard": "Standard",
+	"vegetarian": "Vegetarian",
+	"vegan": "Vegan"
 }

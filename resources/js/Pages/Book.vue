@@ -11,8 +11,6 @@ export default {
 import { ref, onMounted } from 'vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { getActiveLanguage } from 'laravel-vue-i18n';
-import TextInput from '@/Components/TextInput.vue';
-import ActionButton from '@/Components/ActionButton.vue';
 
 const props = defineProps({
 	recaptchaScriptTagSrc: String,
@@ -63,26 +61,33 @@ onMounted(() => {
 		<component is="script" :src="recaptchaScriptTagSrc" async defer></component>
 	</Head>
 	<div class="py-12">
-		<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
-			<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+		<div class="max-w-5xl mx-auto sm:px-6 lg:px-8 animate-fade-in">
+			<div class="bg-white dark:bg-gray-800 overflow-hidden text-black dark:text-white shadow-xl sm:rounded-lg">
 				<div>
 					<div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-						<form @submit.prevent="submit">
-							<TextInput
+						<h1 class="text-4xl font-bold">{{ $t('Booking Portal') }}</h1>
+						<p class="mt-4">{{ $t('Garfaludica APS can\'t wait to see you at the GobCon!') }}</p>
+						<p class="mt-4">{{ $t('Please enter your email to start booking. We will send you an email with the instructions to proceed with your order.') }}</p>
+						<p class="mt-2">{{ $t('Make sure to check your spam folder if you do not receive the email within a few minutes.') }}</p>
+						<p class="mt-2">{{ $t('REFUNDS: You can ask for a refund until 24 hours before the event starts. You will receive an email with a link to cancel your order after your order is complete. Please note that orders are not editable: if you need to change your order, you must cancel the previous order and place another one. Refunds are processed manually in a couple of days.') }}</p>
+						<p class="mt-2">{{ $t('If you are having any issues, contact us (see the "Contact" page).') }}</p>
+						<form class="mx-auto mt-4 max-w-sm" @submit.prevent="submit">
+							<MazInput
 									v-model="form.email"
 									ref="emailInput"
 									:label="$t('Email')"
 									:error="form.errors.email"
 									type="text"
-									class="mt-10"
+									class="my-4"
 									:placeholder="$t('Enter your email')"
-									autocomplete="email"
 									autocapitalize="off"
+									block
 							/>
-							<div v-html="recaptchaFormSnippet"></div>
-							<ActionButton :disabled="form.processing || form.email.length < 3 || !recaptchaVerified" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 disabled:bg-indigo-600/50 disabled:text-gray-100 mx-auto" classes="text-xl rounded-md font-bold" type="submit">
+							<div class="mx-auto max-w-fit"><div v-html="recaptchaFormSnippet"></div></div>
+							<MazBtn size="xl" :disabled="form.processing || form.email.length < 3 || !recaptchaVerified" type="submit" block class="mt-4">
 								{{ $t('Start Booking!') }}
-							</ActionButton>
+							</MazBtn>
+							<div v-if="form.errors.global" class="text-red-500 text-sm mt-4">{{ form.errors.global }}</div>
 						</form>
 					</div>
 				</div>

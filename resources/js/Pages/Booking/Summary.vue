@@ -3,12 +3,211 @@ import BaseLayout from '@/Layouts/BaseLayout.vue';
 import BookingLayout from '@/Layouts/BookingLayout.vue';
 
 export default {
-	layout: (h, page) => h(BaseLayout, { title: 'Summary' }, () => h(BookingLayout, () => page)),
+	layout: (h, page) => h(BaseLayout, { title: 'Summary' }, () => h(BookingLayout, { allowReset: false }, () => page)),
 }
 </script>
 
 <script setup>
+import { computed, ref, onMounted } from 'vue';
+import { getActiveLanguage, trans } from 'laravel-vue-i18n';
+import { currency } from 'maz-ui';
+import { router } from '@inertiajs/vue3';
+import dayjs from 'dayjs';
+
+const props = defineProps({
+	booking: Object,
+	hotels: Array,
+});
+
+const locale = computed(() => getActiveLanguage());
+
+const totalCart = computed(() => {
+	const rooms = props.booking.rooms.reduce((total, room) => total + parseFloat(room.price), 0);
+	const meals = props.booking.meals.reduce((total, meal) => total + parseFloat(meal.price), 0);
+	return rooms + meals - totalDiscount.value;
+});
+
+const emptyCart = computed(() => props.booking.rooms.length === 0 && props.booking.meals.length === 0);
+
+const totalDiscount = computed(() => {
+	return props.booking.meals.reduce((total, meal) => total + parseFloat(meal.discount), 0);
+});
+
+function formatPrice(value) {
+	return currency(value, locale.value, { currency: 'EUR' });
+}
+
+function getCartDesc(reservation, noPeriod = false) {
+	var desc = '';
+	desc += reservation.room.name[locale.value];
+	if (reservation.buy_option[locale.value] !== 'default')
+		desc += ' (' + reservation.buy_option[locale.value] + ')';
+	const hotel = props.hotels.find(hotel => hotel.id === reservation.room.hotel_id);
+	if (hotel)
+		desc += ' - ' + trans('hotel_name_' + hotel.name);
+	if (!noPeriod)
+		desc += ' [' + dayjs(reservation.checkin).format('D/M') + ' - ' + dayjs(reservation.checkout).format('D/M') + ']';
+	return desc;
+}
+
+function getCartDescMeal(reservation) {
+	var desc = '';
+	desc += trans(reservation.meal.type);
+	if (reservation.meal.menu !== 'standard')
+		desc += ' (' + trans(reservation.meal.menu) + ')';
+	if (reservation.meal.type === 'breakfast') {
+		const hotel = props.hotels.find(hotel => hotel.id === reservation.meal.hotel_id);
+		if (hotel)
+			desc += ' @ ' + trans('hotel_name_' + hotel.name);
+	}
+	desc += ' [' + dayjs(reservation.date).format('D/M') + ']';
+	return desc;
+}
+
+function nextStep() {
+}
+
+const reservedRooms = computed(() => {
+	return props.booking.rooms.map(reservation => {
+		return {
+			id: reservation.id,
+			period: dayjs(reservation.checkin).format('D/M') + ' - ' + dayjs(reservation.checkout).format('D/M'),
+			hotel: trans('hotel_name_' + props.hotels.find(hotel => hotel.id === reservation.room.hotel_id).name),
+			room: reservation.room.name[locale.value],
+			people: reservation.people,
+			price: formatPrice(reservation.price),
+		};
+	});
+});
+
+const reservedMeals = computed(() => {
+	return props.booking.meals.map(reservation => {
+		return {
+			id: reservation.id,
+			date: dayjs(reservation.date).format('D/M'),
+			quantity: reservation.quantity,
+			type: trans(reservation.meal.type),
+			menu: trans(reservation.meal.menu),
+			hotel: trans('hotel_name_' + props.hotels.find(hotel => hotel.id === reservation.meal.hotel_id).name),
+			price: formatPrice(reservation.price),
+			discount: formatPrice(-reservation.discount),
+			total: formatPrice(reservation.price - reservation.discount),
+		};
+	});
+});
+
+const mounted = ref(false);
+onMounted(() => {
+	mounted.value = true;
+});
 </script>
 
 <template>
+	<MazCard block>
+		<template #title>
+			<h1 class="!text-4xl">{{ $t('Review your Order') }}</h1>
+		</template>
+		<template #subtitle>
+			{{ $t('Step :step of :total', { step: 4, total: 4 }) }}
+		</template>
+		<template #content>
+			<p class="mt-3">{{ $t('Please, review your order. If you need to modify your order, press the "Back" button.') }}</p>
+			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: event organizers who are also administrators of Garfaludica APS MUST NOT place any order via this portal at the moment. Instructions for how they must book for the event will be provided in the coming weeks.') }}</p>
+			<p class="mt-2 text-sm text-green-700">{{ $t('Garfaludica APS does not retain any fees on your order and does not earn anything from organizing this event. All the collected money will be forwarded to the participating hotels in the form of a clearance transfer operation.') }}</p>
+			<p class="mt-2 text-xl">{{ $t('See you at the GobCon!') }}</p>
+			<hr class="border-b border-gray-500 my-4" />
+			<h2 class="text-2xl">{{ $t('Billing Information') }}</h2>
+			<p class="mt-3">{{ $t('First Name') + ': ' + booking.billing_info.first_name }}</p>
+			<p>{{ $t('Last Name') + ': ' + booking.billing_info.last_name }}</p>
+			<p>{{ $t('Tax ID') + ': ' + booking.billing_info.tax_id }}</p>
+			<p>{{ $t(booking.billing_info.address_line_2 ? 'Address Line 1' : 'Address') + ': ' + booking.billing_info.address_line_1 }}</p>
+			<p v-if="booking.billing_info.address_line_2">{{ $t('Address Line 2') + ': ' + booking.billing_info.address_line_2 }}</p>
+			<p>{{ $t('City') + ': ' + booking.billing_info.city }}</p>
+			<p>{{ $t('State') + ': ' + booking.billing_info.state }}</p>
+			<p>{{ $t('Postal Code') + ': ' + booking.billing_info.postal_code }}</p>
+			<p>{{ $t('Country') + ': ' + booking.billing_info.country_code }}</p>
+			<p>{{ $t('Email') + ': ' + booking.billing_info.email }}</p>
+			<p v-if="booking.billing_info.phone">{{ $t('Phone') + ': ' + booking.billing_info.phone }}</p>
+			<hr class="border-b border-gray-500 my-4" />
+			<h2 class="text-2xl">{{ $t('Rooms') }}</h2>
+				<MazTable size="sm" color="secondary" background-even
+					:headers="[
+						{ label: $t('Period'), key: 'period' },
+						{ label: $t('Hotel'), key: 'hotel' },
+						{ label: $t('Room'), key: 'room' },
+						{ label: $t('People'), key: 'people' },
+						{ label: $t('Price'), key: 'price' },
+					]"
+					:rows="reservedRooms"
+					sortable
+				>
+					<template #cell-room="{ value }">
+						<span class="whitespace-normal">{{ value }}</span>
+					</template>
+				</MazTable>
+			<hr class="border-b border-gray-500 my-4" />
+			<h2 class="text-2xl">{{ $t('Meals') }}</h2>
+				<MazTable size="sm" color="secondary" background-even
+					:headers="[
+						{ label: $t('Date'), key: 'date' },
+						{ label: $t('Qty'), key: 'quantity' },
+						{ label: $t('Meal'), key: 'type' },
+						{ label: $t('Menu'), key: 'menu' },
+						{ label: $t('Hotel'), key: 'hotel' },
+						{ label: $t('Price'), key: 'price' },
+						{ label: $t('Discount'), key: 'discount' },
+						{ label: $t('Total'), key: 'total' },
+					]"
+					:rows="reservedMeals"
+					sortable
+				/>
+			<div v-if="booking.notes">
+				<hr class="border-b border-gray-500 my-4" />
+				<h2 class="text-2xl">{{ $t('Notes') }}</h2>
+				<pre class="mt-2">{{ booking.notes }}</pre>
+			</div>
+			<hr class="border-b border-gray-500 my-4" />
+			<h2 class="text-2xl">{{ $t('Total: :total', { total: formatPrice(totalCart) }) }}</h2>
+		</template>
+		<template #footer>
+			<div class="flex space-x-2">
+				<div class="flex-1 grow">
+					<MazBtn block size="xl" leftIcon="storage/icons/backward" color="danger" :href="route('booking.billing', booking)" class="h-full">{{ $t('Back') + ' (' + $t('Billing') + ')' }}</MazBtn>
+				</div>
+				<div class="flex-1 grow">
+					<MazBtn block size="xl" color="primary" rightIcon="storage/icons/forward" @click="nextStep" class="h-full">{{ $t('Next') + ' (' + $t('Payment') + ')'}}</MazBtn>
+				</div>
+			</div>
+		</template>
+	</MazCard>
+	<Teleport v-if="mounted && !emptyCart" to="#cart-details">
+		<li v-for="reservation in booking.rooms" class="flex justify-between border-b border-slate-200 dark:border-slate-700">
+			<span v-if="reservation.buy_option.people === 0" class="pl-4 indent-[-1rem]">{{ $t(':quantityx :desc', { quantity: reservation.people, desc: getCartDesc(reservation) }) }}</span>
+			<span v-else class="pl-4 indent-[-1rem]">{{ getCartDesc(reservation) }}</span>
+			<span class="ml-4">{{ formatPrice(reservation.price) }}</span>
+		</li>
+		<li v-for="reservation in booking.meals" class="flex justify-between border-b border-slate-200 dark:border-slate-700">
+			<span>{{ $t(':quantityx :desc', { quantity: reservation.quantity, desc: getCartDescMeal(reservation) }) }}</span>
+			<span v-if="reservation.discount > 0" class="ml-4" :title="$t('Discount: :discount', { discount: formatPrice(-reservation.discount) })">{{ '*' + formatPrice(reservation.price) }}</span>
+			<span v-else class="ml-4">{{ formatPrice(reservation.price) }}</span>
+		</li>
+		<li v-if="totalDiscount > 0" class="flex justify-between border-b border-slate-200 dark:border-slate-700">
+			<span class="italic">{{ '*' + $t('Discount') }}</span>
+			<span class="ml-4 italic">{{ formatPrice(-totalDiscount) }}</span>
+		</li>
+	</Teleport>
+	<Teleport v-else-if="mounted" to="#cart-details">
+		<li class="italic">{{ $t('No items added.') }}</li>
+	</Teleport>
+	<Teleport v-if="mounted" to="#cart-total">
+		{{ formatPrice(totalCart) }}
+	</Teleport>
+	<Teleport v-if="mounted" to="#step-actions">
+		<div class="flex-1 grow">
+			<MazBtn block leftIcon="storage/icons/backward" color="danger" :href="route('booking.billing', booking)" class="h-full">{{ $t('Back') + ' (' + $t('Billing') + ')' }}</MazBtn>
+		</div>
+		<div class="flex-1 grow">
+			<MazBtn block color="primary" rightIcon="storage/icons/forward" @click="nextStep" class="h-full">{{ $t('Next') + ' (' + $t('Payment') + ')'}}</MazBtn>
+		</div>
+	</Teleport>
 </template>

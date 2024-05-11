@@ -20,7 +20,8 @@ return new class extends Migration {
 			$table->id();
 			$table->foreignUuid('booking_id')->constrained(
 				column: 'id',
-			)->cascadeOnUpdate()->restrictOnDelete();
+			)->cascadeOnUpdate()->cascadeOnDelete();
+			$table->unsignedInteger('buy_option_id');
 			$table->foreignId('room_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
 			$table->unsignedTinyInteger('people');
 			$table->dateTime('checkin');

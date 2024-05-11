@@ -7,6 +7,7 @@ declare(strict_types=1);
  */
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BookingController as AdminBookingController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\Hotel\ExternalBookingController;
 use App\Http\Controllers\Admin\Hotel\MealController;
@@ -40,21 +41,27 @@ Route::group([
 	Route::get('/terms', [ModalController::class, 'terms'])->name('modal.terms');
 	Route::get('/refund', [ModalController::class, 'refund'])->name('modal.refund');
 	Route::get('/license', [ModalController::class, 'license'])->name('modal.license');
+});
 
-	Route::post('/book', [BookController::class, 'submit'])->name('book.start');
+Route::group([
+	'middleware' => 'lang:booking',
+], static function(): void {
+	Route::post('/book', [BookController::class, 'submit'])->middleware('throttle:start-booking')->name('book.start');
 
 	Route::get('/booking/{booking}', [BookingController::class, 'start'])->name('booking.start');
 	Route::get('/booking/{booking}/rooms', [BookingController::class, 'rooms'])->name('booking.rooms');
 	Route::put('/booking/{booking}/rooms', [BookingController::class, 'addRoom'])->name('booking.rooms.store');
-	Route::patch('/booking/{booking}/rooms', [BookingController::class, 'editRoom'])->name('booking.rooms.edit');
-	Route::delete('/booking/{booking}/rooms', [BookingController::class, 'deleteRoom'])->name('booking.rooms.delete');
+	Route::delete('/booking/{booking}/rooms/{reservation}', [BookingController::class, 'deleteRoom'])->name('booking.rooms.delete');
 	Route::get('/booking/{booking}/meals', [BookingController::class, 'meals'])->name('booking.meals');
-	Route::put('/booking/{booking}/meals', [BookingController::class, 'addMeal'])->name('booking.meals.store');
-	Route::delete('/booking/{booking}/meals', [BookingController::class, 'deleteMeal'])->name('booking.meals.delete');
+	Route::patch('/booking/{booking}/meals', [BookingController::class, 'editMeals'])->name('booking.meals.edit');
 	Route::post('/booking/{booking}/meals', [BookingController::class, 'storeNotes'])->name('booking.notes.store');
 	Route::get('/booking/{booking}/billing', [BookingController::class, 'billing'])->name('booking.billing');
 	Route::post('/booking/{booking}/billing', [BookingController::class, 'storeBilling'])->name('booking.billing.store');
 	Route::get('/booking/{booking}/summary', [BookingController::class, 'summary'])->name('booking.summary');
+	Route::post('/booking/room/{room}/available-checkouts', [BookingController::class, 'availableCheckouts'])->name('booking.room.available-checkouts');
+	Route::post('/booking/room/{room}/max-people', [BookingController::class, 'maxPeople'])->name('booking.room.max-people');
+	Route::post('/boooking/{booking}/terminate', [BookingController::class, 'terminate'])->name('booking.terminate');
+	Route::delete('/booking/{booking}/reset', [BookingController::class, 'resetOrder'])->name('booking.reset');
 });
 
 Route::group([
@@ -98,16 +105,19 @@ Route::group([
 	Route::resource('hotel.rooms', RoomController::class)->except([
 		'show',
 	]);
-	Route::patch('/hotel/{hotel}/rooms/{room}/restore', [RoomController::class, 'restore'])->name('hotel.rooms.restore');
+	Route::patch('/hotel/{hotel}/rooms/{room}/restore', [RoomController::class, 'restore'])->withTrashed()->name('hotel.rooms.restore');
 	Route::resource('hotel.meals', MealController::class)->except([
 		'show',
 	]);
-	Route::patch('/hotel/{hotel}/meals/{meal}/restore', [MealController::class, 'restore'])->name('hotel.meals.restore');
+	Route::patch('/hotel/{hotel}/meals/{meal}/restore', [MealController::class, 'restore'])->withTrashed()->name('hotel.meals.restore');
 	Route::resource('hotel.rooms.externalBookings', ExternalBookingController::class)->except([
 		'index', 'show', 'create',
 	]);
 	Route::resource('hotel.externalBookings', ExternalBookingController::class)->only([
 		'index', 'create',
+	]);
+	Route::resource('bookings', AdminBookingController::class)->only([
+		'index', 'show',
 	]);
 })->name('admin');
 

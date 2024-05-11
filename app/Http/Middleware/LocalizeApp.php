@@ -30,6 +30,7 @@ class LocalizeApp
 
 		switch ($domain) {
 			case 'admin':
+			case 'booking':
 				$locale = $request->cookie('lang', $headerLang ?? $locale);
 				break;
 			case 'pub':
@@ -46,7 +47,7 @@ class LocalizeApp
 		if (!$request->hasCookie('lang') || $request->cookie('lang') !== $locale)
 			Cookie::queue('lang', $locale, 60 * 24 * 365, null, null, null, false);
 
-		if ($domain === 'admin')
+		if ($domain === 'admin' || $domain === 'booking')
 			return $next($request);
 		if ($locale === 'en' && !Str::startsWith($request->route()->getName(), 'en.'))
 			return redirect()->route('en.' . $request->route()->getName(), $request->route()->parameters());

@@ -2,6 +2,10 @@
 	"preset": "laravel",
 	"indent": "\t",
 	"lineEnding": "\n",
+	"notPath": [
+		"lang/en/stored.php",
+		"lang/it/stored.php"
+	],
 	"rules": {
 		"align_multiline_comment": {
 			"comment_type": "all_multiline"

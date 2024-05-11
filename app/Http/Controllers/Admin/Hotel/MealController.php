@@ -33,8 +33,8 @@ class MealController extends Controller
 				'id' => $meal->id,
 				'type' => $meal->type,
 				'menu' => $meal->menu,
-				'price' => $meal->price,
-				'meal_time' => $meal->meal_time,
+				'price' => doubleval($meal->price),
+				'meal_time' => $meal->meal_time->format('H:i'),
 				'reservable' => $meal->reservable,
 				'created_at' => $meal->created_at,
 				'updated_at' => $meal->updated_at,
@@ -75,9 +75,9 @@ class MealController extends Controller
 			'reservable' => 'required|boolean',
 		]);
 
-		$hotel->meals->create($validated);
+		$hotel->meals()->create($validated);
 
-		return redirect()->route('admin.hotels.meals.index', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.meals.index', $hotel)->with('flash', [
 			'message' => __('Meal successfully created.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,
@@ -98,8 +98,8 @@ class MealController extends Controller
 				'hotel' => $hotel,
 				'type' => $meal->type,
 				'menu' => $meal->menu,
-				'price' => $meal->price,
-				'meal_time' => $meal->meal_time,
+				'price' => doubleval($meal->price),
+				'meal_time' => $meal->meal_time->format('H:i'),
 				'reservable' => $meal->reservable,
 				'created_at' => $meal->created_at,
 				'updated_at' => $meal->updated_at,
@@ -129,7 +129,7 @@ class MealController extends Controller
 
 		$meal->update($validated);
 
-		return redirect()->route('admin.hotels.meals.index', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.meals.index', $hotel)->with('flash', [
 			'message' => __('Meal successfully updated.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,
@@ -144,17 +144,9 @@ class MealController extends Controller
 	{
 		$this->authorize('delete', [Meal::class, $hotel, $meal]);
 
-		if ($meal->trashed())
-			return redirect()->route('admin.hotels.meals.index', $hotel)->with('flash', [
-				'message' => __('Can not delete meal: meal already deleted.'),
-				'location' => 'toast-tc',
-				'timeout' => 5000,
-				'style' => 'error',
-			]);
-
 		$meal->delete();
 
-		return redirect()->route('admin.hotels.meals.index', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.meals.index', $hotel)->with('flash', [
 			'message' => __('Meal successfully deleted.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,
@@ -166,17 +158,9 @@ class MealController extends Controller
 	{
 		$this->authorize('restore', [Meal::class, $hotel, $meal]);
 
-		if (!$meal->trashed())
-			return redirect()->route('admin.hotels.meals.index', $hotel)->with('flash', [
-				'message' => __('Can not restore meal: meal already active.'),
-				'location' => 'toast-tc',
-				'timeout' => 5000,
-				'style' => 'error',
-			]);
-
 		$meal->restore();
 
-		return redirect()->route('admin.hotels.meals.index', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.meals.index', $hotel)->with('flash', [
 			'message' => __('Meal successfully restored.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,

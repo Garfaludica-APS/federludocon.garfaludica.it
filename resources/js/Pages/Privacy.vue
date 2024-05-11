@@ -1,7 +1,5 @@
 <script setup>
-import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import { useModal } from 'inertia-modal'
-import ActionButton from '@/Components/ActionButton.vue'
 
 const { show, close, redirect } = useModal()
 </script>

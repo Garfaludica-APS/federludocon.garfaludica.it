@@ -8,11 +8,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\MealType;
+use App\Enums\Menu;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 class Meal extends Model
 {
@@ -27,6 +31,14 @@ class Meal extends Model
 		'reservable',
 	];
 
+	protected function mealTime(): Attribute
+	{
+		return Attribute::make(
+			get: fn (string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
+			set: fn (string|Carbon $value) => is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('H:i:s') : $value->setTimezone('UTC')->format('H:i:s'),
+		);
+	}
+
 	public function hotel(): BelongsTo
 	{
 		return $this->belongsTo(Hotel::class);
@@ -35,5 +47,16 @@ class Meal extends Model
 	public function reservations(): HasMany
 	{
 		return $this->hasMany(MealReservation::class);
+	}
+
+	protected function casts(): array
+	{
+		return [
+			'type' => MealType::class,
+			'menu' => Menu::class,
+			'price' => 'decimal:2',
+			// 'meal_time' => 'datetime:H:i',
+			'reservable' => 'boolean',
+		];
 	}
 }

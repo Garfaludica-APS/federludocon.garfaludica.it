@@ -42,12 +42,17 @@ class AppServiceProvider extends ServiceProvider
 
 		RateLimiter::for('login', function(Request $request) {
 			return $this->app->isProduction()
-				? Limit::perMinutes(5, 15)->by(request()->ip())
+				? Limit::perMinutes(5, 15)->by($request->ip())
 				: Limit::none();
 		});
 		RateLimiter::for('password-reset', function(Request $request) {
 			return $this->app->isProduction()
-				? Limit::perMinutes(15, 3)->by(request()->ip())
+				? Limit::perMinutes(15, 3)->by($request->ip())
+				: Limit::none();
+		});
+		RateLimiter::for('start-booking', function(Request $request) {
+			return $this->app->isProduction()
+				? Limit::perMinutes(3, 1)->by($request->ip())
 				: Limit::none();
 		});
 

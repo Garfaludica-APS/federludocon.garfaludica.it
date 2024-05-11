@@ -3,7 +3,6 @@ import { ref, computed, watch } from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import { Modal } from 'inertia-modal';
 import { toast } from 'vue3-toastify';
-import MessageModal from '@/Components/MessageModal.vue';
 import 'vue3-toastify/dist/index.css';
 
 const page = usePage();

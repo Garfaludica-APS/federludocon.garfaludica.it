@@ -8,8 +8,6 @@ export default {
 </script>
 
 <script setup>
-import Intro from '@/Components/Intro.vue';
-
 const props = defineProps({
 	tdgLogo: String,
 });

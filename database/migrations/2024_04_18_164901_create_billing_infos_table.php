@@ -23,13 +23,13 @@ return new class extends Migration {
 			)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('first_name');
 			$table->string('last_name');
-			$table->string('tax_id', 14);
+			$table->string('tax_id', 20);
 			$table->string('address_line_1', 300);
 			$table->string('address_line_2', 300)->nullable();
 			$table->string('city', 120);
 			$table->string('state', 300);
 			$table->string('postal_code', 60);
-			$table->string('country_code', 2)->default('IT');
+			$table->char('country_code', 2)->default('IT');
 			$table->string('email', 254);
 			$table->string('phone', 15)->nullable();
 			$table->timestamps();

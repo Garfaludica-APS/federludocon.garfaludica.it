@@ -20,11 +20,12 @@ return new class extends Migration {
 			$table->id();
 			$table->foreignUuid('booking_id')->constrained(
 				column: 'id',
-			)->cascadeOnUpdate()->restrictOnDelete();
+			)->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignId('meal_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
 			$table->date('date');
 			$table->decimal('price');
 			$table->unsignedInteger('quantity')->default(1);
+			$table->decimal('discount')->default(0.0);
 			$table->timestamps();
 		});
 	}

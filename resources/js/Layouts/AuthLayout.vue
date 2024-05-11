@@ -1,8 +1,5 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
-import Copyright from '@/Components/Copyright.vue';
 
 const page = usePage();
 

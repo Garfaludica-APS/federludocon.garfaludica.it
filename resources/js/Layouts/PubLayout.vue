@@ -1,15 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import NavButton from '@/Components/NavButton.vue';
-import DarkModeSwitcher from '@/Components/DarkModeSwitcher.vue';
-import LanguageSwitcher from '@/Components/LanguageSwitcher.vue';
-import Footer from '@/Components/Footer.vue';
-import Copyright from '@/Components/Copyright.vue';
-import CookiePolicy from '@/Components/CookiePolicy.vue';
 import { getActiveLanguage } from 'laravel-vue-i18n';
 
 const page = usePage();

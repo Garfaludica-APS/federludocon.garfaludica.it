@@ -7,10 +7,6 @@ export default {
 }
 </script>
 
-<script setup>
-import VenueMap from '@/Components/VenueMap.vue';
-</script>
-
 <template>
 	<div class="py-12">
 		<div class="w-screen max-w-7xl mx-auto sm:px-6 lg:px-8 animate-fade-in">

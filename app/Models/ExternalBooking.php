@@ -8,10 +8,12 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use Illuminate\Support\Carbon;
 
 class ExternalBooking extends Model
 {
@@ -22,6 +24,22 @@ class ExternalBooking extends Model
 		'checkout',
 	];
 
+	protected function checkin(): Attribute
+	{
+		return Attribute::make(
+			get: fn (string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
+			set: fn (string|Carbon $value) => is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('Y-m-d H:i:s') : $value->setTimezone('UTC')->format('Y-m-d H:i:s'),
+		);
+	}
+
+	protected function checkout(): Attribute
+	{
+		return Attribute::make(
+			get: fn (string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
+			set: fn (string|Carbon $value) => is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('Y-m-d H:i:s') : $value->setTimezone('UTC')->format('Y-m-d H:i:s'),
+		);
+	}
+
 	public function room(): BelongsTo
 	{
 		return $this->belongsTo(Room::class);
@@ -30,5 +48,13 @@ class ExternalBooking extends Model
 	public function hotel(): HasOneThrough
 	{
 		return $this->hasOneThrough(Hotel::class, Room::class, 'id', 'id', 'room_id', 'hotel_id');
+	}
+
+	protected function casts(): array
+	{
+		return [
+			// 'checkin' => 'datetime',
+			// 'checkout' => 'datetime',
+		];
 	}
 }

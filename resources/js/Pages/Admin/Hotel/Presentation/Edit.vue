@@ -14,9 +14,6 @@ export default {
 <script setup>
 import { onBeforeMount } from 'vue';
 import { useForm } from '@inertiajs/vue3';
-import TextArea from '@/Components/TextArea.vue';
-import ActionButton from '@/Components/ActionButton.vue';
-import { TabGroup, Tab, TabList, TabPanels, TabPanel } from '@headlessui/vue';
 
 const props = defineProps({
 	hotel: Object,
@@ -73,9 +70,10 @@ onBeforeMount(() => {
 									autofocus
 							>
 							</TextArea>
-							<ActionButton :disabled="form.processing" class="mt-6 mx-auto px-8 py-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 disabled:bg-indigo-600/50 disabled:text-gray-100 ml-auto" classes="text-xl rounded-md font-bold" type="submit">
+							<ActionButton :disabled="true || form.processing" class="mt-6 mx-auto px-8 py-2 bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 disabled:bg-indigo-600/50 disabled:text-gray-100 ml-auto" classes="text-xl rounded-md font-bold" type="submit">
 								{{ $t('Save') }}
 							</ActionButton>
+							<p class="text-red-500 mt-2" v-html="$t('disabled_not_working_text')"></p>
 						</div>
 					</TabPanel>
 				</TabPanels>

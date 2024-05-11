@@ -11,9 +11,6 @@ export default {
 }
 </script>
 
-<script setup>
-</script>
-
 <template>
 	{{ $t('There is nothing here... yet. Please select an item from the left sidebar.') }}
 </template>

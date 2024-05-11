@@ -20,3 +20,5 @@ yarn-error.log
 /.vscode
 /.vagrant
 /vite.config.js.timestamp-*.mjs
+/components.d.ts
+/storage/debugbar

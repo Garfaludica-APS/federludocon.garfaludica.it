@@ -2,7 +2,6 @@
 import BaseLayout from '@/Layouts/BaseLayout.vue';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import ActionButton from '@/Components/ActionButton.vue';
-import IconButton from '@/Components/IconButton.vue';
 import { trans } from 'laravel-vue-i18n';
 
 export default {
@@ -21,12 +20,6 @@ export default {
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import DialogModal from '@/Components/DialogModal.vue';
-import TextInput from '@/Components/TextInput.vue';
-import InputError from '@/Components/InputError.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import ConfirmationModal from '@/Components/ConfirmationModal.vue';
-import { Listbox, ListboxOptions, ListboxOption, ListboxLabel, Switch, SwitchGroup, SwitchLabel } from '@headlessui/vue';
 
 const props = defineProps({
 	admins: Array,
@@ -119,7 +112,7 @@ onUnmounted(() => {
 	<section class="mb-6">
 		<h2 class="font-bold text-xl py-4">{{ $t('Administrators') }}</h2>
 		<div class="rounded-2xl dark:bg-slate-900/70 bg-white">
-			<table>
+			<table class="cssTable">
 				<thead>
 					<tr>
 						<th>{{ $t('Username') }}</th>
@@ -195,7 +188,7 @@ onUnmounted(() => {
 	<section>
 		<h2 class="font-bold text-xl py-4">{{ $t('Invitations') }}</h2>
 		<div class="rounded-2xl dark:bg-slate-900/70 bg-white">
-			<table>
+			<table class="cssTable">
 				<thead>
 					<tr>
 						<th>{{ $t('Email') }}</th>

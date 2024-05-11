@@ -14,6 +14,8 @@ use App\Models\Room;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Response;
 
 class RoomController extends Controller
@@ -35,15 +37,15 @@ class RoomController extends Controller
 				'description' => $room->description,
 				'quantity' => $room->quantity,
 				'buy_options' => $room->buy_options,
-				'checkin_time' => $room->checkin_time,
-				'checkout_time' => $room->checkout_time,
+				'checkin_time' => $room->checkin_time->format('H:i'),
+				'checkout_time' => $room->checkout_time->format('H:i'),
 				'created_at' => $room->created_at,
 				'updated_at' => $room->updated_at,
 				'deleted_at' => $room->deleted_at,
 				'can' => [
-					'update' => $admin->can('update', [Room::class, $hotel, $room]),
-					'delete' => $admin->can('delete', [Room::class, $hotel, $room]),
-					'restore' => $admin->can('restore', [Room::class, $hotel, $room]),
+					'update' => Gate::allows('update', [Room::class, $hotel, $room]),
+					'delete' => Gate::allows('delete', [Room::class, $hotel, $room]),
+					'restore' => Gate::allows('restore', [Room::class, $hotel, $room]),
 				],
 			]),
 			'canCreateRooms' => $admin->can('create', [Room::class, $hotel]),
@@ -77,10 +79,10 @@ class RoomController extends Controller
 			'description.en' => 'nullable|string|max:250',
 			'quantity' => 'required|integer|min:1',
 			'buy_options' => 'required|array|min:1',
-			'buy_options.*' => 'array:it,en,people,price',
+			'buy_options.*.id' => 'missing',
 			'buy_options.*.it' => 'required|string|max:50',
 			'buy_options.*.en' => 'required|string|max:50',
-			'buy_options.*.people' => 'required|integer|min:1',
+			'buy_options.*.people' => 'required|integer|min:0',
 			'buy_options.*.price' => 'required|decimal:0,2|min:0',
 			'buy_options.*.included_meals' => 'nullable|array',
 			'buy_options.*.included_meals.*' => 'string|in:breakfast,lunch,dinner',
@@ -88,9 +90,9 @@ class RoomController extends Controller
 			'checkout_time' => 'required|date_format:H:i|lte:checkin_time',
 		]);
 
-		$hotel->rooms->create($validated);
+		$hotel->rooms()->create($validated);
 
-		return redirect()->route('admin.hotels.rooms.index', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.rooms.index', $hotel)->with('flash', [
 			'message' => __('Room successfully created.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,
@@ -113,8 +115,8 @@ class RoomController extends Controller
 				'description' => $room->description,
 				'quantity' => $room->quantity,
 				'buy_options' => $room->buy_options,
-				'checkin_time' => $room->checkin_time,
-				'checkout_time' => $room->checkout_time,
+				'checkin_time' => $room->checkin_time->format('H:i'),
+				'checkout_time' => $room->checkout_time->format('H:i'),
 				'created_at' => $room->created_at,
 				'updated_at' => $room->updated_at,
 				'deleted_at' => $room->deleted_at,
@@ -142,10 +144,10 @@ class RoomController extends Controller
 			'description.en' => 'nullable|string|max:250',
 			'quantity' => 'required|integer|min:1',
 			'buy_options' => 'required|array|min:1',
-			'buy_options.*' => 'array:it,en,people,price',
+			'buy_options.*.id' => 'missing',
 			'buy_options.*.it' => 'required|string|max:50',
 			'buy_options.*.en' => 'required|string|max:50',
-			'buy_options.*.people' => 'required|integer|min:1',
+			'buy_options.*.people' => 'required|integer|min:0',
 			'buy_options.*.price' => 'required|decimal:0,2|min:0',
 			'buy_options.*.included_meals' => 'nullable|array',
 			'buy_options.*.included_meals.*' => 'string|in:breakfast,lunch,dinner',
@@ -155,7 +157,7 @@ class RoomController extends Controller
 
 		$room->update($validated);
 
-		return redirect()->route('admin.hotels.rooms.index', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.rooms.index', $hotel)->with('flash', [
 			'message' => __('Room successfully updated.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,
@@ -170,17 +172,9 @@ class RoomController extends Controller
 	{
 		$this->authorize('delete', [Room::class, $hotel, $room]);
 
-		if ($room->trashed())
-			return redirect()->route('admin.hotels.rooms.index', $hotel)->with('flash', [
-				'message' => __('Can not delete room: room already deleted.'),
-				'location' => 'toast-tc',
-				'timeout' => 5000,
-				'style' => 'error',
-			]);
-
 		$room->delete();
 
-		return redirect()->route('admin.hotels.rooms.index', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.rooms.index', $hotel)->with('flash', [
 			'message' => __('Room successfully deleted.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,
@@ -192,17 +186,9 @@ class RoomController extends Controller
 	{
 		$this->authorize('restore', [Room::class, $hotel, $room]);
 
-		if (!$room->trashed())
-			return redirect()->route('admin.hotels.rooms.index', $hotel)->with('flash', [
-				'message' => __('Can not restore room: room already active.'),
-				'location' => 'toast-tc',
-				'timeout' => 5000,
-				'style' => 'error',
-			]);
-
 		$room->restore();
 
-		return redirect()->route('admin.hotels.rooms.index', $hotel)->with('flash', [
+		return redirect()->route('admin.hotel.rooms.index', $hotel)->with('flash', [
 			'message' => __('Room successfully restored.'),
 			'location' => 'toast-tc',
 			'timeout' => 5000,
