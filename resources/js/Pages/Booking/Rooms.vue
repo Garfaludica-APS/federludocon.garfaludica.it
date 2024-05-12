@@ -56,7 +56,7 @@ function checkinSelected(room, option) {
 	roomLoading.value[room.id][option['id']] = true;
 	errors.value[room.id][option['id']] = null;
 	maxPeople.value[room.id][option['id']] = 1;
-	axios.post(route('booking.room.available-checkouts', room), { checkin: checkin }).then(response => {
+	axios.post(route('booking.room.available-checkouts', { room: room, booking: booking }), { checkin: checkin }).then(response => {
 		page.props.sessionExpireSeconds = response.data.sessionExpireSeconds;
 		const checkouts = response.data.checkouts;
 		if (checkouts.length === 0) {
@@ -88,7 +88,7 @@ function checkoutSelected(room, option) {
 	roomLoading.value[room.id][option['id']] = true;
 	roomDisabled.value[room.id][option['id']] = true;
 	maxPeople.value[room.id][option['id']] = 1;
-	axios.post(route('booking.room.max-people', room), { checkin: checkin, checkout: selectedCheckout.value[room.id][option['id']] }).then(response => {
+	axios.post(route('booking.room.max-people', { room: room, booking: booking }), { checkin: checkin, checkout: selectedCheckout.value[room.id][option['id']] }).then(response => {
 		page.props.sessionExpireSeconds = response.data.sessionExpireSeconds;
 		if (response.data.maxPeople <= 0) {
 			errors.value[room.id][option['id']] = 'There are no available slots for the selected period.';
