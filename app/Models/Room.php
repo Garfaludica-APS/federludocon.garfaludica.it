@@ -35,30 +35,6 @@ class Room extends Model
 		'checkin_dates',
 	];
 
-	protected static function booted(): void
-	{
-		parent::booted();
-		static::saving(function (Room $room) {
-			$maxId = 0;
-			foreach ($room->buy_options as $index => $option) {
-				if (!isset($option['id']))
-					continue;
-				if ($option['id'] > $maxId)
-					$maxId = $option['id'];
-			}
-			$options = [];
-			foreach ($room->buy_options as $index => $option) {
-				if (!isset($option['id'])) {
-					$maxId++;
-					$options[] = array_merge($option, ['id' => $maxId]);
-				} else {
-					$options[] = $option;
-				}
-			}
-			$room->buy_options = $options;
-		});
-	}
-
 	public function getBuyOption(int $id): ?array
 	{
 		foreach ($this->buy_options as $option) {
@@ -68,53 +44,9 @@ class Room extends Model
 		return null;
 	}
 
-	protected function checkinDates(): Attribute
+	public function availableCheckouts(Carbon|string $checkin): array
 	{
-		return Attribute::make(
-			get: function (?array $value, array $attributes): array {
-				$checkinTime = Carbon::parse($attributes['checkin_time'], 'UTC');
-				$checkoutTime = Carbon::parse($attributes['checkout_time'], 'UTC');
-				$checkins = [
-					Carbon::parse('2024-06-14', 'UTC')->setTimeFrom($checkinTime),
-					Carbon::parse('2024-06-15', 'UTC')->setTimeFrom($checkinTime),
-					Carbon::parse('2024-06-16', 'UTC')->setTimeFrom($checkinTime),
-				];
-				$checkouts = [
-					Carbon::parse('2024-06-15', 'UTC')->setTimeFrom($checkoutTime),
-					Carbon::parse('2024-06-16', 'UTC')->setTimeFrom($checkoutTime),
-					Carbon::parse('2024-06-17', 'UTC')->setTimeFrom($checkoutTime),
-				];
-				$bo = $this->castAttribute('buy_options', $attributes['buy_options']);
-				$usePeople = count($bo) === 1 && $bo[0]['people'] === 0;
-				$available = [];
-				foreach ($checkins as $index => $checkin) {
-					if ($checkin < now()->startOfDay())
-						continue;
-					$checkout = $checkouts[$index];
-					$reservations = RoomReservation::where('room_id', $attributes['id'])
-						->where(function ($query) use ($checkin, $checkout) {
-							$query->whereRaw('? between `checkin` and `checkout` or ? between `checkin` and `checkout`', [$checkin, $checkout]);
-						})->get();
-					$count = 0;
-					foreach ($reservations as $reservation)
-						if (!in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUNDED]))
-							$count += $usePeople ? $reservation->people : 1;
-					if ($count >= $attributes['quantity'])
-						continue;
-					$checkin->setTimezone('Europe/Rome');
-					$available[] = [
-						'value' => $checkin,
-						'label' => $checkin->translatedFormat('D d M H:i')
-					];
-				}
-				return $available;
-			}
-		)->shouldCache();
-	}
-
-	public function availableCheckouts(string|Carbon $checkin): array
-	{
-		if (is_string($checkin))
+		if (\is_string($checkin))
 			$checkin = Carbon::parse($checkin, 'Europe/Rome')->setTimezone('UTC');
 		$checkinTime = $this->checkin_time->copy();
 		$checkinTime->setTimezone('UTC');
@@ -135,35 +67,37 @@ class Room extends Model
 			Carbon::parse('2024-06-17', 'UTC')->setTimeFrom($checkoutTime),
 		];
 		$bo = $this->buy_options;
-		$usePeople = count($bo) === 1 && $bo[0]['people'] === 0;
+		$usePeople = \count($bo) === 1 && $bo[0]['people'] === 0;
 		$available = [];
+
 		foreach ($checkouts as $index => $checkout) {
 			if ($checkout < $checkin)
-				continue;
+			continue;
 			$reservations = RoomReservation::where('room_id', $this->id)
-				->where(function ($query) use ($checkin, $checkout) {
+				->where(static function($query) use ($checkin, $checkout): void {
 					$query->whereRaw('? between `checkin` and `checkout` or ? between `checkin` and `checkout`', [$checkin, $checkout]);
 				})->get();
 			$count = 0;
+
 			foreach ($reservations as $reservation)
-				if (!in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUNDED]))
+				if (!\in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
 					$count += $usePeople ? $reservation->people : 1;
 			if ($count >= $this->quantity)
-				continue;
+			continue;
 			$checkout->setTimezone('Europe/Rome');
 			$available[] = [
 				'value' => $checkout,
-				'label' => $checkout->translatedFormat('D d M H:i')
+				'label' => $checkout->translatedFormat('D d M H:i'),
 			];
 		}
 		return $available;
 	}
 
-	public function availableSlots(string|Carbon $checkin, string|Carbon $checkout): bool|int
+	public function availableSlots(Carbon|string $checkin, Carbon|string $checkout): bool|int
 	{
-		if (is_string($checkin))
+		if (\is_string($checkin))
 			$checkin = Carbon::parse($checkin, 'Europe/Rome')->setTimezone('UTC');
-		if (is_string($checkout))
+		if (\is_string($checkout))
 			$checkout = Carbon::parse($checkout, 'Europe/Rome')->setTimezone('UTC');
 		if ($checkin >= $checkout)
 			return false;
@@ -192,32 +126,17 @@ class Room extends Model
 		if (!$checkout->eq($dummy))
 			return false;
 		$reservations = RoomReservation::where('room_id', $this->id)
-			->where(function ($query) use ($checkin, $checkout) {
+			->where(static function($query) use ($checkin, $checkout): void {
 				$query->whereRaw('? between `checkin` and `checkout` or ? between `checkin` and `checkout`', [$checkin, $checkout]);
 			})->get();
 		$bo = $this->buy_options;
-		$usePeople = count($bo) === 1 && $bo[0]['people'] === 0;
+		$usePeople = \count($bo) === 1 && $bo[0]['people'] === 0;
 		$count = 0;
+
 		foreach ($reservations as $reservation)
-			if (!in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUNDED]))
+			if (!\in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
 				$count += $usePeople ? $reservation->people : 1;
 		return $this->quantity - $count;
-	}
-
-	protected function checkinTime(): Attribute
-	{
-		return Attribute::make(
-			get: fn (string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
-			set: fn (string|Carbon $value) => is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('H:i:s') : $value->setTimezone('UTC')->format('H:i:s'),
-		);
-	}
-
-	protected function checkoutTime(): Attribute
-	{
-		return Attribute::make(
-			get: fn (string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
-			set: fn (string|Carbon $value) => is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('H:i:s') : $value->setTimezone('UTC')->format('H:i:s'),
-		);
 	}
 
 	public function hotel(): BelongsTo
@@ -233,6 +152,94 @@ class Room extends Model
 	public function reservations(): HasMany
 	{
 		return $this->hasMany(RoomReservation::class);
+	}
+
+	protected static function booted(): void
+	{
+		parent::booted();
+		static::saving(static function(Room $room): void {
+			$maxId = 0;
+
+			foreach ($room->buy_options as $index => $option) {
+				if (!isset($option['id']))
+				continue;
+				if ($option['id'] > $maxId)
+					$maxId = $option['id'];
+			}
+			$options = [];
+
+			foreach ($room->buy_options as $index => $option) {
+				if (!isset($option['id'])) {
+					++$maxId;
+					$options[] = array_merge($option, ['id' => $maxId]);
+				} else {
+					$options[] = $option;
+				}
+			}
+			$room->buy_options = $options;
+		});
+	}
+
+	protected function checkinDates(): Attribute
+	{
+		return Attribute::make(
+			get: function(?array $value, array $attributes): array {
+				$checkinTime = Carbon::parse($attributes['checkin_time'], 'UTC');
+				$checkoutTime = Carbon::parse($attributes['checkout_time'], 'UTC');
+				$checkins = [
+					Carbon::parse('2024-06-14', 'UTC')->setTimeFrom($checkinTime),
+					Carbon::parse('2024-06-15', 'UTC')->setTimeFrom($checkinTime),
+					Carbon::parse('2024-06-16', 'UTC')->setTimeFrom($checkinTime),
+				];
+				$checkouts = [
+					Carbon::parse('2024-06-15', 'UTC')->setTimeFrom($checkoutTime),
+					Carbon::parse('2024-06-16', 'UTC')->setTimeFrom($checkoutTime),
+					Carbon::parse('2024-06-17', 'UTC')->setTimeFrom($checkoutTime),
+				];
+				$bo = $this->castAttribute('buy_options', $attributes['buy_options']);
+				$usePeople = \count($bo) === 1 && $bo[0]['people'] === 0;
+				$available = [];
+
+				foreach ($checkins as $index => $checkin) {
+					if ($checkin < now()->startOfDay())
+					continue;
+					$checkout = $checkouts[$index];
+					$reservations = RoomReservation::where('room_id', $attributes['id'])
+						->where(static function($query) use ($checkin, $checkout): void {
+							$query->whereRaw('? between `checkin` and `checkout` or ? between `checkin` and `checkout`', [$checkin, $checkout]);
+						})->get();
+					$count = 0;
+
+					foreach ($reservations as $reservation)
+						if (!\in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
+							$count += $usePeople ? $reservation->people : 1;
+					if ($count >= $attributes['quantity'])
+					continue;
+					$checkin->setTimezone('Europe/Rome');
+					$available[] = [
+						'value' => $checkin,
+						'label' => $checkin->translatedFormat('D d M H:i'),
+					];
+				}
+				return $available;
+			}
+		)->shouldCache();
+	}
+
+	protected function checkinTime(): Attribute
+	{
+		return Attribute::make(
+			get: static fn(string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
+			set: static fn(Carbon|string $value) => \is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('H:i:s') : $value->setTimezone('UTC')->format('H:i:s'),
+		);
+	}
+
+	protected function checkoutTime(): Attribute
+	{
+		return Attribute::make(
+			get: static fn(string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
+			set: static fn(Carbon|string $value) => \is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('H:i:s') : $value->setTimezone('UTC')->format('H:i:s'),
+		);
 	}
 
 	protected function casts(): array

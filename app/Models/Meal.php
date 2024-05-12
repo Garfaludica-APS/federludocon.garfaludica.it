@@ -31,14 +31,6 @@ class Meal extends Model
 		'reservable',
 	];
 
-	protected function mealTime(): Attribute
-	{
-		return Attribute::make(
-			get: fn (string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
-			set: fn (string|Carbon $value) => is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('H:i:s') : $value->setTimezone('UTC')->format('H:i:s'),
-		);
-	}
-
 	public function hotel(): BelongsTo
 	{
 		return $this->belongsTo(Hotel::class);
@@ -47,6 +39,14 @@ class Meal extends Model
 	public function reservations(): HasMany
 	{
 		return $this->hasMany(MealReservation::class);
+	}
+
+	protected function mealTime(): Attribute
+	{
+		return Attribute::make(
+			get: static fn(string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
+			set: static fn(Carbon|string $value) => \is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('H:i:s') : $value->setTimezone('UTC')->format('H:i:s'),
+		);
 	}
 
 	protected function casts(): array

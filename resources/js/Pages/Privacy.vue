@@ -19,7 +19,7 @@ const { show, close, redirect } = useModal()
 								{{ $t('Privacy Policy') }}
 							</DialogTitle>
 							<p class="mt-4" v-html="$t('cookie_notice_text')"></p>
-							<p class="mt-4 text-red-500">{{ $t('Page under construction. Additional details will be provided soon.') }}</p>
+							<p class="mt-4">{{ $t('We use PayPal for payments and other services. If you wish to use one of these services and pay on our website, PayPal may collect the personal data you provide, such as payment and other identifying information. PayPal uses this information to operate and improve the services it provides to us and others, including for fraud detection, harm and loss prevention, authentication, analytics related to the performance of its services, and to comply with applicable legal requirements. The processing of this information will be subject to the PayPal Privacy Statement available at PayPal.com.') }}</p>
 							<ActionButton class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 mt-4 float-right" @click="close">
 								{{ $t('Close') }}
 							</ActionButton>

@@ -24,20 +24,6 @@ class MealReservation extends Model
 		'discount',
 	];
 
-	protected static function booted(): void
-	{
-		parent::booted();
-		static::addGlobalScope('order', function ($builder) {
-			$builder->orderBy('date', 'asc')
-				->orderBy('meal_id', 'asc')
-				->orderBy('price', 'desc');
-		});
-		static::saving(function (MealReservation $mealReservation) {
-			if ($mealReservation->discount > $mealReservation->price)
-				$mealReservation->discount = $mealReservation->price;
-		});
-	}
-
 	public function meal(): BelongsTo
 	{
 		return $this->belongsTo(Meal::class);
@@ -51,6 +37,20 @@ class MealReservation extends Model
 	public function booking(): BelongsTo
 	{
 		return $this->belongsTo(Booking::class);
+	}
+
+	protected static function booted(): void
+	{
+		parent::booted();
+		static::addGlobalScope('order', static function($builder): void {
+			$builder->orderBy('date', 'asc')
+				->orderBy('meal_id', 'asc')
+				->orderBy('price', 'desc');
+		});
+		static::saving(static function(MealReservation $mealReservation): void {
+			if ($mealReservation->discount > $mealReservation->price)
+				$mealReservation->discount = $mealReservation->price;
+		});
 	}
 
 	protected function casts(): array

@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Policies;
 
 use App\Models\Admin;
 use App\Models\ExternalBooking;
 use App\Models\Hotel;
 use App\Models\Room;
-use Illuminate\Auth\Access\Response;
 
 class ExternalBookingPolicy
 {

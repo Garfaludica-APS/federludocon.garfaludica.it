@@ -104,9 +104,9 @@ function copyToClipboard(text)
 				<FooterNavLink :href="route(page.props.rp + 'modal.refund', { redirect: route().current() })" preserve-state preserve-scroll>
 					{{ $t('Refund Policy') }}
 				</FooterNavLink>
-				<FooterNavLink :href="route(page.props.rp + 'modal.terms', { redirect: route().current() })" preserve-state preserve-scroll>
+				<!--<FooterNavLink :href="route(page.props.rp + 'modal.terms', { redirect: route().current() })" preserve-state preserve-scroll>
 					{{ $t('Terms of Service') }}
-				</FooterNavLink>
+				</FooterNavLink>-->
 				<FooterNavLink :href="route(page.props.rp + 'modal.privacy', { redirect: route().current() })" preserve-state preserve-scroll>
 					{{ $t('Privacy Policy') }}
 				</FooterNavLink>

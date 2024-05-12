@@ -23,21 +23,22 @@ class GobCon2024Seeder extends Seeder
 		$hotels = Hotel::all();
 		$isera = null;
 		$panoramic = null;
+
 		foreach ($hotels as $hotel) {
 			switch ($hotel->name) {
-			case 'Panoramic Hotel':
-				$this->seedPanoramicRooms($hotel);
-				$panoramic = $hotel;
-				break;
-			case 'Isera Refuge':
-				$this->seedIseraRooms($hotel);
-				$isera = $hotel;
-				break;
-			case 'Braccicorti Farmhouse':
-				$this->seedBraccicortiRooms($hotel);
-				break;
-			default:
-				throw new \Exception('Invalid hotel');
+				case 'Panoramic Hotel':
+					$this->seedPanoramicRooms($hotel);
+					$panoramic = $hotel;
+					break;
+				case 'Isera Refuge':
+					$this->seedIseraRooms($hotel);
+					$isera = $hotel;
+					break;
+				case 'Braccicorti Farmhouse':
+					$this->seedBraccicortiRooms($hotel);
+					break;
+				default:
+					throw new \Exception('Invalid hotel');
 			}
 			$hotel->meals()->create([
 				'type' => MealType::BREAKFAST,
@@ -234,7 +235,6 @@ class GobCon2024Seeder extends Seeder
 
 	private function seedDinners(Hotel $hotel): void
 	{
-
 		$hotel->meals()->create([
 			'type' => MealType::DINNER,
 			'menu' => Menu::STANDARD,

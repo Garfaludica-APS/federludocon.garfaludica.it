@@ -9,6 +9,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false
 	},
+	addPpContainer: {
+		type: Boolean,
+		default: false
+	}
 });
 
 const showDialog = ref(false);
@@ -99,6 +103,8 @@ onUnmounted(() => {
 					</template>
 				</MazCard>
 				<div id="step-actions" class="mt-4 flex space-x-2">
+				</div>
+				<div v-if="addPpContainer" id="paypal-button-container" class="mt-4">
 				</div>
 			</section>
 		</main>

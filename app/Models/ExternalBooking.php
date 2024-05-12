@@ -24,22 +24,6 @@ class ExternalBooking extends Model
 		'checkout',
 	];
 
-	protected function checkin(): Attribute
-	{
-		return Attribute::make(
-			get: fn (string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
-			set: fn (string|Carbon $value) => is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('Y-m-d H:i:s') : $value->setTimezone('UTC')->format('Y-m-d H:i:s'),
-		);
-	}
-
-	protected function checkout(): Attribute
-	{
-		return Attribute::make(
-			get: fn (string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
-			set: fn (string|Carbon $value) => is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('Y-m-d H:i:s') : $value->setTimezone('UTC')->format('Y-m-d H:i:s'),
-		);
-	}
-
 	public function room(): BelongsTo
 	{
 		return $this->belongsTo(Room::class);
@@ -48,6 +32,22 @@ class ExternalBooking extends Model
 	public function hotel(): HasOneThrough
 	{
 		return $this->hasOneThrough(Hotel::class, Room::class, 'id', 'id', 'room_id', 'hotel_id');
+	}
+
+	protected function checkin(): Attribute
+	{
+		return Attribute::make(
+			get: static fn(string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
+			set: static fn(Carbon|string $value) => \is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('Y-m-d H:i:s') : $value->setTimezone('UTC')->format('Y-m-d H:i:s'),
+		);
+	}
+
+	protected function checkout(): Attribute
+	{
+		return Attribute::make(
+			get: static fn(string $value) => Carbon::parse($value, 'UTC')->setTimezone('Europe/Rome'),
+			set: static fn(Carbon|string $value) => \is_string($value) ? Carbon::parse($value, 'Europe/Rome')->setTimezone('UTC')->format('Y-m-d H:i:s') : $value->setTimezone('UTC')->format('Y-m-d H:i:s'),
+		);
 	}
 
 	protected function casts(): array

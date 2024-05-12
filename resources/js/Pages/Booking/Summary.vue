@@ -3,7 +3,7 @@ import BaseLayout from '@/Layouts/BaseLayout.vue';
 import BookingLayout from '@/Layouts/BookingLayout.vue';
 
 export default {
-	layout: (h, page) => h(BaseLayout, { title: 'Summary' }, () => h(BookingLayout, { allowReset: false }, () => page)),
+	layout: (h, page) => h(BaseLayout, { title: 'Summary' }, () => h(BookingLayout, { allowReset: false, addPpContainer: true }, () => page)),
 }
 </script>
 
@@ -11,12 +11,20 @@ export default {
 import { computed, ref, onMounted } from 'vue';
 import { getActiveLanguage, trans } from 'laravel-vue-i18n';
 import { currency } from 'maz-ui';
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
+import { toast } from 'vue3-toastify';
+
+const page = usePage();
 
 const props = defineProps({
 	booking: Object,
 	hotels: Array,
+	sandbox: {
+		type: Boolean,
+		default: false,
+	},
+	pp_client_id: String,
 });
 
 const locale = computed(() => getActiveLanguage());
@@ -64,9 +72,6 @@ function getCartDescMeal(reservation) {
 	return desc;
 }
 
-function nextStep() {
-}
-
 const reservedRooms = computed(() => {
 	return props.booking.rooms.map(reservation => {
 		return {
@@ -96,9 +101,75 @@ const reservedMeals = computed(() => {
 	});
 });
 
+function showError(message) {
+	const t = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+	toast(message, {
+		autoClose: 5000,
+		theme: t,
+		position: 'top-center',
+		type: 'error',
+	});
+}
+
+function loadPaypalButtons() {
+	window.paypal.Buttons({
+		style: {
+			shape: 'rect',
+			layout: 'vertical',
+			color: 'blue',
+			label: 'checkout',
+		},
+		async createOrder() {
+			page.props.sessionExpireSeconds = 60*60*2;
+			try {
+				const response = await axios.post(route('booking.createOrder', props.booking));
+				if (response.data.success) {
+					return response.data.orderId;
+				} else {
+					showError(response.data.error);
+					return null;
+				}
+			} catch (error) {
+				showError('An error occured. Try again.');
+			}
+		},
+		async onApprove(data, actions) {
+			page.props.sessionExpireSeconds = 60*30;
+			try {
+				const response = await axios.post(route('booking.captureOrder', { orderId: data.orderID, booking: props.booking }));
+				if (response.data.success)
+					return actions.redirect(route('booking.success', props.booking));
+				if (response.data.recoverable) {
+					if (response.data.continueUrl)
+						return actions.redirect(response.data.continueUrl);
+					return actions.restart();
+				}
+				showError(response.data.error);
+			} catch (error) {
+				showError('An error occured. Try again.');
+			}
+		},
+		onCancel() {
+			router.get(route('booking.abort', props.booking));
+		},
+	}).render('#paypal-button-container');
+}
+
 const mounted = ref(false);
 onMounted(() => {
 	mounted.value = true;
+	if (typeof window.paypal === 'undefined') {
+		const script = document.createElement('script');
+		if (props.sandbox)
+			script.src = 'https://www.paypal.com/sdk/js?client-id=' + props.pp_client_id + '&currency=EUR&buyer-country=US&components=buttons';
+		else
+			script.src = 'https://www.paypal.com/sdk/js?client-id=' + props.pp_client_id + '&components=buttons';
+		document.head.appendChild(script);
+		script.onload = loadPaypalButtons;
+		script.setAttribute('data-sdk-integration-source', 'developer-studio');
+		return;
+	}
+	loadPaypalButtons();
 });
 </script>
 
@@ -112,8 +183,10 @@ onMounted(() => {
 		</template>
 		<template #content>
 			<p class="mt-3">{{ $t('Please, review your order. If you need to modify your order, press the "Back" button.') }}</p>
+			<p class="mt-2">{{ $t('If everything is correct, you can proceed to payment by pressing the "PayPal Checkout" button or the "Debit or Credit Card" button. Please note that not all cards are supported via the "Debit or Credit Card" button. If your card is unsupported, you can press the "PayPal Checkout" button and then the "Pay with a card" button in the next page.') }}</p>
 			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: event organizers who are also administrators of Garfaludica APS MUST NOT place any order via this portal at the moment. Instructions for how they must book for the event will be provided in the coming weeks.') }}</p>
 			<p class="mt-2 text-sm text-green-700">{{ $t('Garfaludica APS does not retain any fees on your order and does not earn anything from organizing this event. All the collected money will be forwarded to the participating hotels in the form of a clearance transfer operation.') }}</p>
+			<p class="mt-2 text-sm">{{ $t('By paying with your card, you acknowledge that your data will be processed by PayPal subject to the PayPal Privacy Statement available at PayPal.com.') }}</p>
 			<p class="mt-2 text-xl">{{ $t('See you at the GobCon!') }}</p>
 			<hr class="border-b border-gray-500 my-4" />
 			<h2 class="text-2xl">{{ $t('Billing Information') }}</h2>
@@ -169,16 +242,6 @@ onMounted(() => {
 			<hr class="border-b border-gray-500 my-4" />
 			<h2 class="text-2xl">{{ $t('Total: :total', { total: formatPrice(totalCart) }) }}</h2>
 		</template>
-		<template #footer>
-			<div class="flex space-x-2">
-				<div class="flex-1 grow">
-					<MazBtn block size="xl" leftIcon="storage/icons/backward" color="danger" :href="route('booking.billing', booking)" class="h-full">{{ $t('Back') + ' (' + $t('Billing') + ')' }}</MazBtn>
-				</div>
-				<div class="flex-1 grow">
-					<MazBtn block size="xl" color="primary" rightIcon="storage/icons/forward" @click="nextStep" class="h-full">{{ $t('Next') + ' (' + $t('Payment') + ')'}}</MazBtn>
-				</div>
-			</div>
-		</template>
 	</MazCard>
 	<Teleport v-if="mounted && !emptyCart" to="#cart-details">
 		<li v-for="reservation in booking.rooms" class="flex justify-between border-b border-slate-200 dark:border-slate-700">
@@ -204,10 +267,8 @@ onMounted(() => {
 	</Teleport>
 	<Teleport v-if="mounted" to="#step-actions">
 		<div class="flex-1 grow">
-			<MazBtn block leftIcon="storage/icons/backward" color="danger" :href="route('booking.billing', booking)" class="h-full">{{ $t('Back') + ' (' + $t('Billing') + ')' }}</MazBtn>
-		</div>
-		<div class="flex-1 grow">
-			<MazBtn block color="primary" rightIcon="storage/icons/forward" @click="nextStep" class="h-full">{{ $t('Next') + ' (' + $t('Payment') + ')'}}</MazBtn>
+			<MazBtn block leftIcon="storage/icons/backward" color="danger" :href="route('booking.billing', booking)" roundedSize="md">{{ $t('Back') + ' (' + $t('Billing') + ')' }}</MazBtn>
+			<p v-if="props.sandbox" class="text-2xl text-red-600 font-extrabold text-center mt-2">SANDBOX ENABLED!</p>
 		</div>
 	</Teleport>
 </template>

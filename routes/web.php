@@ -62,6 +62,13 @@ Route::group([
 	Route::post('/booking/room/{room}/max-people', [BookingController::class, 'maxPeople'])->name('booking.room.max-people');
 	Route::post('/boooking/{booking}/terminate', [BookingController::class, 'terminate'])->name('booking.terminate');
 	Route::delete('/booking/{booking}/reset', [BookingController::class, 'resetOrder'])->name('booking.reset');
+
+	Route::post('/booking/{booking}/order/createOrder', [BookingController::class, 'createOrder'])->name('booking.createOrder');
+	Route::post('/booking/{booking}/order/{orderId}/capture', [BookingController::class, 'captureOrder'])->name('booking.captureOrder');
+	Route::get('/booking/{booking}/success', [BookingController::class, 'successOrder'])->name('booking.success');
+	Route::get('/booking/{booking}/abort', [BookingController::class, 'abortOrder'])->name('booking.abort');
+
+	Route::get('/booking/{booking}/manage', [BookingController::class, 'manageBooking'])->name('booking.manage');
 });
 
 Route::group([

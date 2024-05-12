@@ -18,7 +18,7 @@ const { show, close, redirect } = useModal()
 							<DialogTitle as="h3" class="text-lg font-bold leading-6">
 								{{ $t('Refund Policy') }}
 							</DialogTitle>
-							<p class="mt-4 text-red-500">{{ $t('Page under construction. Additional details will be provided soon.') }}</p>
+							<p class="mt-4">{{ $t('After placing an order, you may ask for a total refund any time before the start of the event. Partial refund are not allowed. If you need to change your order, please ask a total refund and then place a new order. Refunds are processed manually in a couple of days.') }}</p>
 							<ActionButton class="bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 focus:ring-indigo-500 mt-4 float-right" @click="close">
 								{{ $t('Close') }}
 							</ActionButton>

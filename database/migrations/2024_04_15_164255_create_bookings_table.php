@@ -20,7 +20,7 @@ return new class extends Migration {
 			$table->uuid('id')->primary();
 			$table->unsignedSmallInteger('short_id')->unique();
 			$table->string('email', length: 254);
-			$table->enum('state', ['start', 'rooms', 'meals', 'billing', 'summary', 'payment', 'completed', 'failed', 'cancelled', 'refunded'])->default('start');
+			$table->enum('state', ['start', 'rooms', 'meals', 'billing', 'summary', 'payment', 'completed', 'failed', 'cancelled', 'refund_requested', 'refunded'])->default('start');
 			$table->text('notes')->nullable();
 			$table->string('pp_order_id', 36)->nullable();
 			$table->timestamps();

@@ -11,11 +11,12 @@ namespace App\Mail;
 use App\Models\Booking;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class StartBooking extends Mailable
+class OrderReceipt extends Mailable
 {
 	use Queueable;
 	use SerializesModels;
@@ -23,7 +24,7 @@ class StartBooking extends Mailable
 	/**
 	 * Create a new message instance.
 	 */
-	public function __construct(public Booking $booking) {}
+	public function __construct(public Booking $booking, public string $receiptPath) {}
 
 	/**
 	 * Get the message envelope.
@@ -31,7 +32,7 @@ class StartBooking extends Mailable
 	public function envelope(): Envelope
 	{
 		return new Envelope(
-			subject: __('[Garfaludica APS] Book your rooms and meals for the GobCon!'),
+			subject: __('[Garfaludica APS] GobCon 2024 - Order confirmed!'),
 		);
 	}
 
@@ -41,7 +42,7 @@ class StartBooking extends Mailable
 	public function content(): Content
 	{
 		return new Content(
-			markdown: 'mail.markdown.start-booking',
+			markdown: 'mail.markdown.receipt',
 			with: [
 				'booking' => $this->booking,
 				'logoPath' => storage_path('images/logo.png'),
@@ -56,6 +57,10 @@ class StartBooking extends Mailable
 	 */
 	public function attachments(): array
 	{
-		return [];
+		return [
+			Attachment::fromPath($this->receiptPath)
+				->as('receipt.pdf')
+				->withMime('application/pdf'),
+		];
 	}
 }

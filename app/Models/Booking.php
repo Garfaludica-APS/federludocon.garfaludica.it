@@ -32,6 +32,11 @@ class Booking extends Model
 		return URL::temporarySignedRoute('booking.start', $this->expires_at, ['booking' => $this]);
 	}
 
+	public function getModifyUrl(): string
+	{
+		return URL::signedRoute('booking.manage', ['booking' => $this]);
+	}
+
 	public function billingInfo(): HasOne
 	{
 		return $this->hasOne(BillingInfo::class);

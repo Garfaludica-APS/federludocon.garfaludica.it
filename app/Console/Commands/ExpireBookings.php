@@ -1,5 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * Copyright © 2024 - Garfaludica APS - MIT License
+ */
+
 namespace App\Console\Commands;
 
 use App\Enums\BookingState;
@@ -30,9 +36,10 @@ class ExpireBookings extends Command
 	public function handle(): void
 	{
 		$lock = Cache::lock('bookings', 5);
+
 		try {
 			$lock->block(20);
-			Booking::where('expires_at', '<', now())->whereNotIn('state', [BookingState::PAYMENT, BookingState::COMPLETED, BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUNDED])->delete();
+			Booking::where('expires_at', '<', now())->whereNotIn('state', [BookingState::PAYMENT, BookingState::COMPLETED, BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED])->delete();
 		} catch (LockTimeoutException $e) {
 			return;
 		} finally {

@@ -57,7 +57,7 @@ class BookController extends Controller
 					'Too many attempts. Please try again in :seconds seconds.',
 					['seconds' => $seconds]
 				),
-				])->onlyInput('email');
+			])->onlyInput('email');
 		}
 
 		$this->limiter->increment($request);
@@ -72,7 +72,7 @@ class BookController extends Controller
 				'expires_at' => now()->addHours(2),
 			]);
 
-		Mail::to($validated['email'])->send(new StartBooking($booking)); // TODO: queue
+		Mail::to($validated['email'])->queue(new StartBooking($booking));
 
 		return redirect()->back()->with('flash', [
 			'message' => __('We have sent an email to :email with detailed instructions to proceed with your booking. Please check your inbox. If you didn\'t receive the email, you can request a new email in 3 minutes.', [

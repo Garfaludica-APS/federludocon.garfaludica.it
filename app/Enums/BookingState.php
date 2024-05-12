@@ -19,5 +19,6 @@ enum BookingState: string
 	case COMPLETED = 'completed';
 	case FAILED = 'failed';
 	case CANCELLED = 'cancelled';
+	case REFUND_REQUESTED = 'refund_requested';
 	case REFUNDED = 'refunded';
 }

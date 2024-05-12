@@ -29,8 +29,8 @@ class ExternalBookingController extends Controller
 	{
 		$this->authorize('viewAny', [ExternalBooking::class, $hotel]);
 		$admin = auth()->user();
-		$externalBookings = ExternalBooking::with(['room' => function (Builder $query) use ($hotel) {
-				$query->where('hotel_id', $hotel->id);
+		$externalBookings = ExternalBooking::with(['room' => static function(Builder $query) use ($hotel): void {
+			$query->where('hotel_id', $hotel->id);
 		}])->orderByDesc('created_at')->paginate(20)->through(static fn($item) => [
 			'id' => $item->id,
 			'room' => $item->room,
