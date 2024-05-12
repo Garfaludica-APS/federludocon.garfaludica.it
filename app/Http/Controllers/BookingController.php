@@ -44,12 +44,12 @@ class BookingController extends Controller
 		if (\in_array($booking->state, [BookingState::PAYMENT, BookingState::COMPLETED, BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
 			abort(404);
 
-		$request->session()->invalidate();
+		//$request->session()->invalidate();
 
-		$request->session()->put([
-			'booking' => $booking->id,
-			'editedRooms' => false,
-		]);
+		// $request->session()->put([
+		// 	'booking' => $booking->id,
+		// 	'editedRooms' => false,
+		// ]);
 
 		if ($booking->state === BookingState::SUMMARY)
 			return redirect()->route('booking.summary');
@@ -83,13 +83,13 @@ class BookingController extends Controller
 		])->with('sessionExpireSeconds', floor(now()->diffInSeconds($booking->expires_at)));
 	}
 
-	public function availableCheckouts(Request $request, Room $room): JsonResponse
+	public function availableCheckouts(Request $request, Booking $booking, Room $room): JsonResponse
 	{
 		$validated = $request->validate([
 			'checkin' => 'required|date',
 		]);
 
-		$booking = Booking::findOrFail($request->session()->get('booking'));
+		//$booking = Booking::findOrFail($request->session()->get('booking'));
 		$this->assertBookingState($request, $booking, BookingState::ROOMS);
 		$booking->save();
 
@@ -99,14 +99,14 @@ class BookingController extends Controller
 		]);
 	}
 
-	public function maxPeople(Request $request, Room $room): JsonResponse
+	public function maxPeople(Request $request, Booking $booking, Room $room): JsonResponse
 	{
 		$validated = $request->validate([
 			'checkin' => 'required|date',
 			'checkout' => 'required|date|after:checkin',
 		]);
 
-		$booking = Booking::findOrFail($request->session()->get('booking'));
+		//$booking = Booking::findOrFail($request->session()->get('booking'));
 		$this->assertBookingState($request, $booking, BookingState::ROOMS);
 		$booking->save();
 
@@ -279,7 +279,7 @@ class BookingController extends Controller
 			$lock?->release();
 		}
 
-		$request->session()->put('editedRooms', true);
+		//$request->session()->put('editedRooms', true);
 
 		return redirect()->back()->with([
 			'sessionExpireSecionds' => floor(now()->diffInSeconds($booking->expires_at)),
@@ -396,7 +396,7 @@ class BookingController extends Controller
 			$reservation->delete();
 		});
 
-		$request->session()->put('editedRooms', true);
+		//$request->session()->put('editedRooms', true);
 
 		return redirect()->back()->with([
 			'sessionExpireSecionds' => floor(now()->diffInSeconds($booking->expires_at)),
@@ -418,11 +418,11 @@ class BookingController extends Controller
 
 		$booking->save();
 
-		if ($request->session()->get('editedRooms', false)) {
+		//if ($request->session()->get('editedRooms', false)) {
 			@set_time_limit(55);
-			$request->session()->put('editedRooms', false);
+			// $request->session()->put('editedRooms', false);
 			$this->addMissingMeals($booking);
-		}
+		// }
 
 		$booking->loadMissing('rooms', 'rooms.room', 'meals', 'meals.meal', 'billingInfo');
 
@@ -806,11 +806,11 @@ class BookingController extends Controller
 
 	public function terminate(Request $request, Booking $booking): RedirectResponse
 	{
-		if (!$request->session()->has('booking')
-			|| $request->session()->get('booking') !== $booking->id)
-				return redirect()->route(app()->isLocale('it') ? 'home' : 'en.home');
+		// if (!$request->session()->has('booking')
+			// || $request->session()->get('booking') !== $booking->id)
+				// return redirect()->route(app()->isLocale('it') ? 'home' : 'en.home');
 		$booking->delete();
-		$request->session()->invalidate();
+		// $request->session()->invalidate();
 		return redirect()->route(app()->isLocale('it') ? 'home' : 'en.home')->with('flash', [
 			'message' => __('Sorry, your session has expired.'),
 			'location' => 'modal',
@@ -844,11 +844,11 @@ class BookingController extends Controller
 
 	protected function assertBookingState(Request $request, Booking $booking, array|BookingState $state): void
 	{
-		if (!$request->session()->has('booking')
-			|| $request->session()->get('booking') !== $booking->id)
-				abort(404);
+		// if (!$request->session()->has('booking')
+			// || $request->session()->get('booking') !== $booking->id)
+				// abort(404);
 		if ($booking->expires_at->isPast()) {
-			$request->session()->invalidate();
+			// $request->session()->invalidate();
 			$booking->delete();
 			abort(410);
 		}

@@ -58,8 +58,8 @@ Route::group([
 	Route::get('/booking/{booking}/billing', [BookingController::class, 'billing'])->name('booking.billing');
 	Route::post('/booking/{booking}/billing', [BookingController::class, 'storeBilling'])->name('booking.billing.store');
 	Route::get('/booking/{booking}/summary', [BookingController::class, 'summary'])->name('booking.summary');
-	Route::post('/booking/room/{room}/available-checkouts', [BookingController::class, 'availableCheckouts'])->name('booking.room.available-checkouts');
-	Route::post('/booking/room/{room}/max-people', [BookingController::class, 'maxPeople'])->name('booking.room.max-people');
+	Route::post('/booking/{booking}/room/{room}/available-checkouts', [BookingController::class, 'availableCheckouts'])->name('booking.room.available-checkouts');
+	Route::post('/booking/{booking}/room/{room}/max-people', [BookingController::class, 'maxPeople'])->name('booking.room.max-people');
 	Route::post('/boooking/{booking}/terminate', [BookingController::class, 'terminate'])->name('booking.terminate');
 	Route::delete('/booking/{booking}/reset', [BookingController::class, 'resetOrder'])->name('booking.reset');
 
