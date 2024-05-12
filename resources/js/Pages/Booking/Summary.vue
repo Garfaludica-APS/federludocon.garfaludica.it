@@ -163,7 +163,7 @@ onMounted(() => {
 		if (props.sandbox)
 			script.src = 'https://www.paypal.com/sdk/js?client-id=' + props.pp_client_id + '&currency=EUR&buyer-country=US&components=buttons';
 		else
-			script.src = 'https://www.paypal.com/sdk/js?client-id=' + props.pp_client_id + '&components=buttons';
+			script.src = 'https://www.paypal.com/sdk/js?client-id=' + props.pp_client_id + '&currency=EUR&components=buttons';
 		document.head.appendChild(script);
 		script.onload = loadPaypalButtons;
 		script.setAttribute('data-sdk-integration-source', 'developer-studio');
