@@ -3,7 +3,7 @@ import BaseLayout from '@/Layouts/BaseLayout.vue';
 import BookingLayout from '@/Layouts/BookingLayout.vue';
 
 export default {
-	layout: (h, page) => h(BaseLayout, { title: 'Summary' }, () => h(BookingLayout, { allowReset: false, addPpContainer: true }, () => page)),
+	layout: (h, page) => h(BaseLayout, { title: 'Manage Order' }, () => h(BookingLayout, { allowReset: false }, () => page)),
 }
 </script>
 
@@ -20,11 +20,6 @@ const page = usePage();
 const props = defineProps({
 	booking: Object,
 	hotels: Array,
-	sandbox: {
-		type: Boolean,
-		default: false,
-	},
-	pp_client_id: String,
 });
 
 const locale = computed(() => getActiveLanguage());
@@ -101,93 +96,56 @@ const reservedMeals = computed(() => {
 	});
 });
 
-function showError(message) {
-	const t = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-	toast(message, {
-		autoClose: 5000,
-		theme: t,
-		position: 'top-center',
-		type: 'error',
-	});
-}
+const lastNameInput = ref(null);
+const addressLine1Input = ref(null);
+const addressLine2Input = ref(null);
+const postalCodeInput = ref(null);
+const cityInput = ref(null);
+const stateInput = ref(null);
+const countryInput = ref(null);
+const taxIdInput = ref(null);
+const phoneInput = ref(null);
 
-function loadPaypalButtons() {
-	window.paypal.Buttons({
-		style: {
-			shape: 'rect',
-			layout: 'vertical',
-			color: 'blue',
-			label: 'checkout',
-		},
-		async createOrder() {
-			page.props.sessionExpireSeconds = 60*60*2;
-			try {
-				const response = await axios.post(route('booking.createOrder', props.booking));
-				if (response.data.success) {
-					return response.data.orderId;
-				} else {
-					showError(response.data.error);
-					return null;
-				}
-			} catch (error) {
-				showError('An error occured. Try again.');
-			}
-		},
-		async onApprove(data, actions) {
-			page.props.sessionExpireSeconds = 60*30;
-			try {
-				const response = await axios.post(route('booking.captureOrder', { orderId: data.orderID, booking: props.booking }));
-				if (response.data.success)
-					return actions.redirect(route('booking.success', props.booking));
-				if (response.data.recoverable) {
-					if (response.data.continueUrl)
-						return actions.redirect(response.data.continueUrl);
-					return actions.restart();
-				}
-				showError(response.data.error);
-			} catch (error) {
-				showError('An error occured. Try again.');
-			}
-		},
-		onCancel() {
-			router.get(route('booking.abort', props.booking));
-		},
-	}).render('#paypal-button-container');
-}
+const validForm = computed(() => {
+	return form.first_name && form.last_name && form.tax_id && form.address_line_1 && form.city && form.state && form.postal_code;
+});
+
+const phoneCountryCode = 'IT';
 
 const mounted = ref(false);
 onMounted(() => {
 	mounted.value = true;
-	if (typeof window.paypal === 'undefined') {
-		const script = document.createElement('script');
-		if (props.sandbox)
-			script.src = 'https://www.paypal.com/sdk/js?client-id=' + props.pp_client_id + '&currency=EUR&buyer-country=US&components=buttons';
-		else
-			script.src = 'https://www.paypal.com/sdk/js?client-id=' + props.pp_client_id + '&currency=EUR&components=buttons';
-		document.head.appendChild(script);
-		script.onload = loadPaypalButtons;
-		script.setAttribute('data-sdk-integration-source', 'developer-studio');
-		return;
+	if (props.booking.billing_info) {
+		form.first_name = props.booking.billing_info.first_name;
+		form.last_name = props.booking.billing_info.last_name;
+		form.tax_id = props.booking.billing_info.tax_id;
+		form.address_line_1 = props.booking.billing_info.address_line_1;
+		form.address_line_2 = props.booking.billing_info.address_line_2;
+		form.city = props.booking.billing_info.city;
+		form.state = props.booking.billing_info.state;
+		form.postal_code = props.booking.billing_info.postal_code;
+		form.country_code = props.booking.billing_info.country_code;
+		form.phone = props.booking.billing_info.phone;
 	}
-	loadPaypalButtons();
+	form.defaults();
 });
 </script>
 
 <template>
 	<MazCard block>
 		<template #title>
-			<h1 class="!text-4xl">{{ $t('Review your Order') }}</h1>
+			<h1 class="!text-4xl">{{ $t('Manage Order') }}</h1>
 		</template>
 		<template #subtitle>
-			{{ $t('Step :step of :total', { step: 4, total: 4 }) }}
+			{{ $t('Status: :status', { status: $t(booking.state) }) }}
 		</template>
 		<template #content>
-			<p class="mt-3">{{ $t('Please, review your order. If you need to modify your order, press the "Back" button.') }}</p>
-			<p class="mt-2">{{ $t('If everything is correct, you can proceed to payment by pressing the "PayPal Checkout" button or the "Debit or Credit Card" button. Please note that not all cards are supported via the "Debit or Credit Card" button. If your card is unsupported, you can press the "PayPal Checkout" button and then the "Pay with a card" button in the next page.') }}</p>
-			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: event organizers who are also administrators of Garfaludica APS MUST NOT place any order via this portal at the moment. Instructions for how they must book for the event will be provided in the coming weeks.') }}</p>
-			<p class="mt-2 text-sm text-green-700">{{ $t('Garfaludica APS does not retain any fees on your order and does not earn anything from organizing this event. All the collected money will be forwarded to the participating hotels in the form of a clearance transfer operation.') }}</p>
-			<p class="mt-2 text-sm">{{ $t('By paying with your card, you acknowledge that your data will be processed by PayPal subject to the PayPal Privacy Statement available at PayPal.com.') }}</p>
-			<p class="mt-2 text-xl">{{ $t('See you at the GobCon!') }}</p>
+			<p class="mt-3">{{ $t('You can review and edit your order here.') }}</p>
+			<p v-if="refundable" class="mt-2">{{ $t('You can add notes to your booking, change your billing informations and cancel the booking and ask for a refund.') }}</p>
+			<p v-else class="mt-2">{{ $t('You can add notes to your booking and change your billing informations. Unfortunately, it's too late now to ask for a refund: your order can not be cancelled anymore.') }}</p>
+			<p v-if="refundable" class="mt-2">{{ $t('If you just want to change the menu (Standard, Vegetarian, Vegan) for some meals, just describe the change you want in the notes (since this does not alter the total cost of your booking). If you want to change things that alter the total cost of your booking (such as adding/removing rooms/meals/people or changing check-in and check-out dates) you must cancel the order and place a new one.') }}</p>
+			<p v-else class="mt-2">{{ $t('If you want to change the menu (Standard, Vegetarian, Vegan) for some meals, just describe the change you want in the notes. Other changes are not possible anymore.') }}</p>
+			<p v-if="refundable" class="mt-2">{{ $t('If you cancel the order, all the money you paid will be refunded to you within 2-3 working days. In the meantime, you can place a new order.') }}</p>
 			<hr class="border-b border-gray-500 my-4" />
 			<h2 class="text-2xl">{{ $t('Billing Information') }}</h2>
 			<p class="mt-3">{{ $t('First Name') + ': ' + booking.billing_info.first_name }}</p>
@@ -198,7 +156,7 @@ onMounted(() => {
 			<p>{{ $t('City') + ': ' + booking.billing_info.city }}</p>
 			<p>{{ $t('State') + ': ' + booking.billing_info.state }}</p>
 			<p>{{ $t('Postal Code') + ': ' + booking.billing_info.postal_code }}</p>
-			<p>{{ $t('Country') + ': ' + booking.billing_info.country_code.toUpperCase() }}</p>
+			<p>{{ $t('Country') + ': ' + booking.billing_info.country_code }}</p>
 			<p>{{ $t('Email') + ': ' + booking.billing_info.email }}</p>
 			<p v-if="booking.billing_info.phone">{{ $t('Phone') + ': ' + booking.billing_info.phone }}</p>
 			<hr class="border-b border-gray-500 my-4" />

@@ -20,6 +20,12 @@ const props = defineProps({
 	countries: Array,
 });
 
+const countriesOptions = computed(() => {
+	return props.countries.map(country => {
+		return { value: country.code_2, label: country.name };
+	});
+});
+
 const form = useForm({
 	first_name: '',
 	last_name: '',
@@ -29,7 +35,7 @@ const form = useForm({
 	city: '',
 	state: '',
 	postal_code: '',
-	country_code: 'IT',
+	country_code: 'it',
 	phone: '',
 });
 
@@ -219,15 +225,14 @@ onMounted(() => {
 					/>
 				</div>
 				<div class="flex flex-col md:flex-row justify-evenly md:space-x-4 space-y-6 md:space-y-0 mt-6 mb-4">
-					<MazInput
+					<MazSelect
 						v-model="form.country_code"
+						:options="countriesOptions"
 						:label="$t('Country')"
 						:error="form.errors.country_code ? true : false"
 						:hint="form.errors.country_code"
-						type="text"
 						required
 						ref="countryInput"
-						@keydown.enter.prevent="taxIdInput.focus()"
 						block
 					/>
 					<MazInput

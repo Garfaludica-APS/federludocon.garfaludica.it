@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Inertia\Response;
+use Squire\Models\Country;
 use Srmklive\PayPal\Services\PayPal;
 
 class BookingController extends Controller
@@ -573,9 +574,12 @@ class BookingController extends Controller
 		$booking->loadMissing('rooms', 'rooms.room', 'meals', 'meals.meal', 'billingInfo');
 		$hotels = Hotel::all();
 
+		$countries = Country::all();
+
 		return inertia('Booking/Billing', [
 			'booking' => $booking,
 			'hotels' => $hotels,
+			'countries' => $countries,
 		])->with('sessionExpireSeconds', floor(now()->diffInSeconds($booking->expires_at)));
 	}
 
@@ -840,6 +844,23 @@ class BookingController extends Controller
 	public function manageBooking(Request $request, Booking $booking): Response
 	{
 		abort(404);
+		if (!$request->hasValidSignature()
+			|| !in_array($booking->state, [BookingState::COMPLETED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED])
+			|| Carbon::parse('2024-06-16', 'UTC')->startOfDay()->isPast())
+			abort(404);
+
+		if (in_array($booking->state, [BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
+			return inertia('Booking/Refund', [
+				'booking' => $booking,
+			]);
+
+		$booking->loadMissing('rooms', 'rooms.room', 'meals', 'meals.meal', 'billingInfo');
+		$hotels = Hotel::all();
+
+		return inertia('Booking/Manage', [
+			'booking' => $booking,
+			'hotels' => $hotels,
+		]);
 	}
 
 	protected function assertBookingState(Request $request, Booking $booking, array|BookingState $state): void

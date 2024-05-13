@@ -103,7 +103,7 @@ class BillingInfo extends Model
 	protected function countryCode(): Attribute
 	{
 		return Attribute::make(
-			set: static fn(string $value) => mb_strtoupper(trim($value)),
+			set: static fn(string $value) => mb_strtolower(trim($value)),
 		);
 	}
 
