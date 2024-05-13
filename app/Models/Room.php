@@ -80,7 +80,7 @@ class Room extends Model
 			$count = 0;
 
 			foreach ($reservations as $reservation)
-				if (!\in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
+				if ($reservation->booking && !\in_array($reservation->booking->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
 					$count += $usePeople ? $reservation->people : 1;
 			if ($count >= $this->quantity)
 			continue;
@@ -134,7 +134,7 @@ class Room extends Model
 		$count = 0;
 
 		foreach ($reservations as $reservation)
-			if (!\in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
+			if ($reservation->booking && !\in_array($reservation->booking->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
 				$count += $usePeople ? $reservation->people : 1;
 		return $this->quantity - $count;
 	}
@@ -211,7 +211,7 @@ class Room extends Model
 					$count = 0;
 
 					foreach ($reservations as $reservation)
-						if (!\in_array($reservation->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
+						if ($reservation->booking && !\in_array($reservation->booking->state, [BookingState::FAILED, BookingState::CANCELLED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
 							$count += $usePeople ? $reservation->people : 1;
 					if ($count >= $attributes['quantity'])
 					continue;

@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
 		});
 		RateLimiter::for('start-booking', function(Request $request) {
 			return $this->app->isProduction()
-				? Limit::perMinutes(3, 1)->by($request->ip())
+				? Limit::perMinutes(3, 3)->by($request->ip())
 				: Limit::none();
 		});
 
