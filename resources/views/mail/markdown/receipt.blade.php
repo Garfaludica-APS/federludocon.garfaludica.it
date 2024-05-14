@@ -13,8 +13,6 @@
 
 {{ __('If the button does not work, copy and paste the following link in your browser\'s address bar: :link', ['link' => $booking->getModifyUrl()]) }}
 
-NOTA: Il link non è ancora funzionante (sistema di rimborso non ancora implementato), ma inizierà a funzionare nei prossimi giorni.
-
 {{ __('Do not lose this email!') }}
 
 {{ __('If you have any questions, please do not hesitate to contact us.') }}

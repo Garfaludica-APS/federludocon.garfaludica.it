@@ -53,11 +53,17 @@ class BookingController extends Controller
 		// ]);
 
 		if ($booking->state === BookingState::SUMMARY)
-			return redirect()->route('booking.summary');
+			return redirect()->route('booking.summary', [
+				'booking' => $booking,
+			]);
 		if ($booking->state === BookingState::BILLING)
-			return redirect()->route('booking.billing');
+			return redirect()->route('booking.billing', [
+				'booking' => $booking,
+			]);
 		if ($booking->state === BookingState::MEALS)
-			return redirect()->route('booking.meals');
+			return redirect()->route('booking.meals', [
+				'booking' => $booking,
+			]);
 		$booking->state = BookingState::ROOMS;
 		$booking->expires_at = now()->addMinutes(config('gobcon.session_lifetime', 15));
 		$booking->save();
@@ -455,7 +461,7 @@ class BookingController extends Controller
 		$date = Carbon::parse($validated['date'], 'Europe/Rome')->midDay();
 		$type = MealType::from($validated['type']);
 
-		$meals = MealReservation::with('meal')->whereRelation('meal', 'type', $type)->where('date', $date->format('Y-m-d'))->get();
+		$meals = $booking->meals()->with('meal')->whereRelation('meal', 'type', $type)->where('date', $date->format('Y-m-d'))->get();
 		$freeMeals = $this->getFreeMeals($booking);
 		$toDelete = [];
 		$toSave = [];
@@ -463,7 +469,7 @@ class BookingController extends Controller
 
 		foreach ($freeMeals as $d => $entry) {
 			if (!$date->isSameDay($d))
-			continue;
+				continue;
 			$freeMealCount = $entry[$type->value];
 			break;
 		}
@@ -477,7 +483,7 @@ class BookingController extends Controller
 					break;
 				}
 			if (!$meal && $validated[$menu->value] === 0)
-			continue;
+				continue;
 			if (!$meal) {
 				$meal = new MealReservation([
 					'date' => $date,
@@ -490,6 +496,7 @@ class BookingController extends Controller
 					$meal->meal_id = Meal::whereRelation('hotel', 'name', 'Isera Refuge')->where('type', MealType::LUNCH)->where('menu', $menu)->first()->id;
 				elseif ($type === MealType::DINNER)
 					$meal->meal_id = Meal::whereRelation('hotel', 'name', 'Panoramic Hotel')->where('type', MealType::DINNER)->where('menu', $menu)->first()->id;
+				$meal->loadMissing('meal');
 			}
 
 			switch ($meal->meal->menu) {
@@ -843,7 +850,6 @@ class BookingController extends Controller
 
 	public function manageBooking(Request $request, Booking $booking): Response
 	{
-		abort(404);
 		if (!$request->hasValidSignature()
 			|| !in_array($booking->state, [BookingState::COMPLETED, BookingState::REFUND_REQUESTED, BookingState::REFUNDED])
 			|| Carbon::parse('2024-06-16', 'UTC')->startOfDay()->isPast())
@@ -851,16 +857,96 @@ class BookingController extends Controller
 
 		if (in_array($booking->state, [BookingState::REFUND_REQUESTED, BookingState::REFUNDED]))
 			return inertia('Booking/Refund', [
-				'booking' => $booking,
+				'refunded' => $booking->state === BookingState::REFUNDED,
 			]);
 
 		$booking->loadMissing('rooms', 'rooms.room', 'meals', 'meals.meal', 'billingInfo');
 		$hotels = Hotel::all();
 
+		$refundable = true;
+		foreach ($booking->rooms as $room) {
+			$time = $room->room->checkin_time;
+			$checkin = $room->checkin->copy()->setTimeFrom($time);
+			if (now()->diffInHours($checkin) < 24) {
+				$refundable = false;
+				break;
+			}
+		}
+
+		$countries = Country::all();
+
 		return inertia('Booking/Manage', [
 			'booking' => $booking,
 			'hotels' => $hotels,
+			'refundable' => $refundable,
+			'countries' => $countries,
 		]);
+	}
+
+	public function addNotes(Request $request, Booking $booking): RedirectResponse
+	{
+		if ($booking->state !== BookingState::COMPLETED)
+			abort(404);
+
+		$validated = $request->validate([
+			'notes' => 'required|string|min:1|max:4096',
+		]);
+
+		$newNotes = trim($validated['notes']);
+		$datetime = now()->setTimezone('Europe/Rome')->format('Y-m-d H:i:s');
+		$booking->notes .= "\n\n*** UPDATE {$datetime} ***\n" . $newNotes;
+		$booking->save();
+
+		return redirect()->back()->with([
+			'flash' => [
+				'message' => __('Notes successfully updated.'),
+				'location' => 'toast-tc',
+				'timeout' => 5000,
+				'style' => 'success',
+			],
+		]);
+	}
+
+	public function updateBilling(Request $request, Booking $booking): RedirectResponse
+	{
+		if ($booking->state !== BookingState::COMPLETED)
+			abort(404);
+
+		$validated = $request->validate([
+			'first_name' => 'required|string|min:1|max:100',
+			'last_name' => 'required|string|min:1|max:100',
+			'tax_id' => 'required|string|min:1|max:20',
+			'address_line_1' => 'required|string|min:1|max:300',
+			'address_line_2' => 'nullable|string|max:300',
+			'city' => 'required|string|min:1|max:120',
+			'state' => 'required|string|min:1|max:300',
+			'postal_code' => 'required|string|min:1|max:60',
+			'country_code' => 'required|string|size:2',
+			'email' => 'missing',
+			'phone' => 'nullable|string|max:15',
+		]);
+
+		$booking->billingInfo()->update($validated);
+
+		return redirect()->back()->with([
+			'flash' => [
+				'message' => __('Billing informations successfully updated.'),
+				'location' => 'toast-tc',
+				'timeout' => 5000,
+				'style' => 'success',
+			],
+		]);
+	}
+
+	public function refundBooking(Request $request, Booking $booking): RedirectResponse
+	{
+		if ($booking->state !== BookingState::COMPLETED)
+			abort(404);
+
+		$booking->state = BookingState::REFUND_REQUESTED;
+		$booking->save();
+
+		return redirect()->back();
 	}
 
 	protected function assertBookingState(Request $request, Booking $booking, array|BookingState $state): void
@@ -910,7 +996,7 @@ class BookingController extends Controller
 		$city = htmlspecialchars($booking->billingInfo->city);
 		$state = htmlspecialchars($booking->billingInfo->state);
 		$postalCode = htmlspecialchars($booking->billingInfo->postal_code);
-		$countryCode = htmlspecialchars($booking->billingInfo->country_code);
+		$countryCode = htmlspecialchars(strtoupper($booking->billingInfo->country_code));
 		$email = htmlspecialchars($booking->billingInfo->email);
 		$phone = htmlspecialchars($booking->billingInfo->phone);
 

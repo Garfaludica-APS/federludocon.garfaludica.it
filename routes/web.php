@@ -69,6 +69,10 @@ Route::group([
 	Route::get('/booking/{booking}/abort', [BookingController::class, 'abortOrder'])->name('booking.abort');
 
 	Route::get('/booking/{booking}/manage', [BookingController::class, 'manageBooking'])->name('booking.manage');
+	Route::post('/booking/{booking}/refund', [BookingController::class, 'refundBooking'])->name('booking.refund');
+
+	Route::patch('/booking/{booking}/billing', [BookingController::class, 'updateBilling'])->name('booking.update-billing');
+	Route::patch('/booking/{booking}/add-notes', [BookingController::class, 'addNotes'])->name('booking.add-notes');
 });
 
 Route::group([

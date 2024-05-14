@@ -12,7 +12,11 @@ const props = defineProps({
 	addPpContainer: {
 		type: Boolean,
 		default: false
-	}
+	},
+	disableExpire: {
+		type: Boolean,
+		default: false
+	},
 });
 
 const showDialog = ref(false);
@@ -21,6 +25,8 @@ const refreshing = ref(false);
 
 var interval;
 function decrement() {
+	if (props.disableExpire)
+		return;
 	if (refreshing.value && page.props.sessionExpireSeconds > 60)
 		refreshing.value = false;
 	if (refreshing.value)
@@ -57,11 +63,13 @@ function resetOrder() {
 }
 
 onBeforeMount(() => {
-	interval = setInterval(decrement, 1000);
+	if (!props.disableExpire)
+		interval = setInterval(decrement, 1000);
 });
 
 onUnmounted(() => {
-	clearInterval(interval);
+	if (!props.disableExpire)
+		clearInterval(interval);
 });
 </script>
 
