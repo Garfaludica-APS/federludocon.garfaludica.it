@@ -356,6 +356,9 @@ onMounted(() => {
 	<Teleport v-if="mounted" to="#cart-total">
 		{{ formatPrice(totalCart) }}
 	</Teleport>
+	<Teleport v-if="mounted" to="#cart-subtitle">
+		{{ 'GARFALUDICA-' + booking.short_id.toString().padStart(4, '0') }}
+	</Teleport>
 	<Teleport v-if="mounted" to="#step-actions">
 		<div class="flex-1 grow">
 			<MazBtn block leftIcon="storage/icons/x-mark" color="danger" @click="showDialog = true" class="h-full">{{ $t('Cancel Booking') }}</MazBtn>

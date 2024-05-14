@@ -94,6 +94,7 @@ onUnmounted(() => {
 						</div>
 					</template>
 					<template #subtitle>
+						<span id="cart-subtitle"></span>
 						<hr class="my-2" />
 					</template>
 					<template #content>
