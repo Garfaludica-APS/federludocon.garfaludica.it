@@ -194,7 +194,7 @@ onUnmounted(() => {
 			<main class="z-10 py-20">
 				<slot />
 			</main>
-		<div v-if="showNote" class="absolute bottom-0 right-0 p-3 text-black dark:text-white text-sm">
+		<div v-if="showNote" class="absolute bottom-0 right-0 p-3 text-white text-sm">
 			<p>{{ $t('Note: you must book through the portal even if you only want to book meals but no rooms.') }}</p>
 		</div>
 		</div>
