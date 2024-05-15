@@ -1111,6 +1111,7 @@ class BookingController extends Controller
 			$discount += $meal->discount;
 		}
 
+		$discount += floatval($booking->discount);
 		$total -= $discount;
 		$discount = '€ ' . number_format(-$discount, 2, '.', '');
 		$total = '€ ' . number_format($total, 2, '.', '');
