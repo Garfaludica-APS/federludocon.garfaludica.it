@@ -5,6 +5,13 @@ import { getActiveLanguage } from 'laravel-vue-i18n';
 
 const page = usePage();
 
+const props = defineProps({
+	showNote: {
+		type: Boolean,
+		default: false,
+	},
+});
+
 const showingNavigationDropdown = ref(false);
 
 function localizeRoutes(lang, replace = true)
@@ -71,7 +78,7 @@ onUnmounted(() => {
 
 <template>
 	<div ref="scrollElem" class="min-h-screen min-w-full bg-gobcon-poster bg-cover bg-center bg-no-repeat overflow-y-scroll h-screen scroll-smooth" scroll-region>
-		<div class="min-h-screen min-w-full bg-overlay flex items-center justify-center">
+		<div class="relative min-h-screen min-w-full bg-overlay flex items-center justify-center">
 			<header ref="header" class="fixed inset-x-0 top-0 z-50 pt-1 bg-white dark:bg-slate-900 ml:bg-transparent dark:ml:bg-transparent shadow-md ml:shadow-none transition-background duration-500 group">
 				<div>
 					<nav class="max-w-7xl mx-auto px-4 ml:px-6 lg:px-8">
@@ -187,6 +194,9 @@ onUnmounted(() => {
 			<main class="z-10 py-20">
 				<slot />
 			</main>
+		<div v-if="showNote" class="absolute bottom-0 right-0 p-3 text-black dark:text-white text-sm">
+			<p>{{ $t('Note: you must book through the portal even if you only want to book meals but no rooms.') }}</p>
+		</div>
 		</div>
 
 		<footer class="bg-gray-300 dark:bg-slate-900 text-gray-800 dark:text-gray-100 shadow-md">
