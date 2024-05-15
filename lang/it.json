@@ -401,5 +401,9 @@
 	"Refunded!" : "Rimborsato!",
 	"Your refund has been issues. If you used a PayPal account to pay, you should already received the funds. If you paid with a card, you should receive the refund in a week (it depends on your bank).": "Il tuo rimborso è stato emesso. Se hai utilizzato un account PayPal per pagare, dovresti già aver ricevuto i fondi. Se hai pagato con una carta, dovresti ricevere il rimborso in una settimana (dipende dalla tua banca).",
 	"If you have any questions, of if you don't receive the refund, please contact us at info@garfaludica.it." : "Se hai domande, o se non ricevi il rimborso, contattaci a info@garfaludica.it.",
-	"Order: :order": "Ordine: :order"
+	"Order: :order": "Ordine: :order",
+	"Additional discount": "Sconto aggiuntivo",
+	"NOTE: if you are an event organizer and an administrator of Garfaludica APS, log-in to the Admin Panel before starting the booking process.": "NOTA: se sei un organizzatore dell'evento e un amministratore di Garfaludica APS, effettua il login al Pannello Admin prima di iniziare il processo di prenotazione.",
+	"Since you are logged in as an administrator, you can add an additional discount here.": "Poiché hai effettuato l'accesso come amministratore, puoi aggiungere uno sconto aggiuntivo qui.",
+	"Enter discount": "Inserisci sconto"
 }

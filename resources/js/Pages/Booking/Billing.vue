@@ -11,7 +11,7 @@ export default {
 import { computed, ref, onMounted } from 'vue';
 import { getActiveLanguage, trans } from 'laravel-vue-i18n';
 import { currency } from 'maz-ui';
-import { router, useForm } from '@inertiajs/vue3';
+import { router, useForm, usePage } from '@inertiajs/vue3';
 import dayjs from 'dayjs';
 
 const props = defineProps({
@@ -19,6 +19,8 @@ const props = defineProps({
 	hotels: Array,
 	countries: Array,
 });
+
+const page = usePage();
 
 const countriesOptions = computed(() => {
 	return props.countries.map(country => {
@@ -42,15 +44,23 @@ const form = useForm({
 const locale = computed(() => getActiveLanguage());
 
 const totalCart = computed(() => {
+	return totalCartBeforeAdminDiscount.value - parseFloat(props.booking.discount);
+});
+
+const totalCartBeforeAdminDiscount = computed(() => {
 	const rooms = props.booking.rooms.reduce((total, room) => total + parseFloat(room.price), 0);
 	const meals = props.booking.meals.reduce((total, meal) => total + parseFloat(meal.price), 0);
-	return rooms + meals - totalDiscount.value;
+	return rooms + meals - totalDiscountBeforeAdminDiscount.value;
 });
 
 const emptyCart = computed(() => props.booking.rooms.length === 0 && props.booking.meals.length === 0);
 
-const totalDiscount = computed(() => {
+const totalDiscountBeforeAdminDiscount = computed(() => {
 	return props.booking.meals.reduce((total, meal) => total + parseFloat(meal.discount), 0);
+});
+
+const totalDiscount = computed(() => {
+	return totalDiscountBeforeAdminDiscount.value + parseFloat(props.booking.discount);
 });
 
 function formatPrice(value) {
@@ -84,6 +94,8 @@ function getCartDescMeal(reservation) {
 	return desc;
 }
 
+const loadingPrev = ref(false);
+
 function nextStep() {
 	form.post(route('booking.billing.store', props.booking), {
 		preserveScroll: true,
@@ -107,6 +119,17 @@ const validForm = computed(() => {
 
 const phoneCountryCode = 'IT';
 
+const discountForm = useForm({
+	discount: '0.00',
+});
+
+function addDiscount() {
+	discountForm.post(route('booking.discount.add', props.booking), {
+		preserveScroll: true,
+		preserveState: true,
+	});
+}
+
 const mounted = ref(false);
 onMounted(() => {
 	mounted.value = true;
@@ -123,6 +146,8 @@ onMounted(() => {
 		form.phone = props.booking.billing_info.phone;
 	}
 	form.defaults();
+	discountForm.discount = parseFloat(props.booking.discount);
+	discountForm.defaults();
 });
 </script>
 
@@ -137,9 +162,27 @@ onMounted(() => {
 		<template #content>
 			<p class="mt-3">{{ $t('Please, provide your billing information.') }}</p>
 			<p class="mt-2">{{ $t('In case of issues with the booking, try to reset your order by pressing the "Reset" button near the Order Summary and restart from the beginning. If the problem persist, please contact: info@garfaludica.it (or use the Telegram group: t.me/gobcongarfagnana).') }}</p>
-			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: event organizers who are also administrators of Garfaludica APS MUST NOT place any order via this portal at the moment. Instructions for how they must book for the event will be provided in the coming weeks.') }}</p>
+			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: if you are an event organizer and an administrator of Garfaludica APS, log-in to the Admin Panel before starting the booking process.') }}</p>
 			<p class="mt-2 text-sm text-green-700">{{ $t('Garfaludica APS does not retain any fees on your order and does not earn anything from organizing this event. All the collected money will be forwarded to the participating hotels in the form of a clearance transfer operation.') }}</p>
 			<p class="mt-2 text-xl">{{ $t('See you at the GobCon!') }}</p>
+			<template v-if="page.props.auth.admin">
+				<hr class="border-b border-gray-500 my-4" />
+				<h2 class="text-2xl">{{ $t('Additional discount') }}</h2>
+				<p class="mt-3">{{ $t('Since you are logged in as an administrator, you can add an additional discount here.') }}</p>
+				<div class="flex justify-start gap-x-4">
+					<MazInputPrice class="mt-3"
+						v-model="discountForm.discount"
+						:label="$t('Enter discount')"
+						currency="EUR"
+						:locale="locale"
+						:min="0"
+						:max="totalCartBeforeAdminDiscount"
+						:error="discountForm.errors.discount ? true : false"
+						:hint="discountForm.errors.discount"
+					/>
+					<MazBtn color="secondary" leftIcon="storage/icons/check-circle" @click="addDiscount" class="mt-3" :disabled="!discountForm.isDirty" :loading="discountForm.processing">{{ $t('Save') }}</MazBtn>
+				</div>
+			</template>
 			<hr class="border-b border-gray-500 my-4" />
 			<div class="mt-4">
 				<div class="flex flex-col md:flex-row justify-evenly md:space-x-4 space-y-6 md:space-y-0 mt-6">
@@ -264,7 +307,7 @@ onMounted(() => {
 		<template #footer>
 			<div class="flex space-x-2">
 				<div class="flex-1 grow">
-					<MazBtn block size="xl" leftIcon="storage/icons/backward" color="danger" :href="route('booking.meals', booking)" class="h-full">{{ $t('Back') + ' (' + $t('Meals Booking') + ')' }}</MazBtn>
+					<MazBtn block size="xl" leftIcon="storage/icons/backward" color="danger" :href="route('booking.meals', booking)" :loading="loadingPrev" @click="loadingPrev = true" class="h-full">{{ $t('Back') + ' (' + $t('Meals Booking') + ')' }}</MazBtn>
 				</div>
 				<div class="flex-1 grow">
 					<MazBtn block size="xl" color="primary" rightIcon="storage/icons/forward" @click="nextStep" :loading="form.processing" :disabled="!validForm" class="h-full">{{ $t('Next') + ' (' + $t('Summary') + ')'}}</MazBtn>
@@ -299,7 +342,7 @@ onMounted(() => {
 	</Teleport>
 	<Teleport v-if="mounted" to="#step-actions">
 		<div class="flex-1 grow">
-			<MazBtn block leftIcon="storage/icons/backward" color="danger" :href="route('booking.meals', booking)" class="h-full">{{ $t('Back') + ' (' + $t('Meals Booking') + ')' }}</MazBtn>
+			<MazBtn block leftIcon="storage/icons/backward" color="danger" :href="route('booking.meals', booking)" :loading="loadingPrev" @click="loadingPrev = true" class="h-full">{{ $t('Back') + ' (' + $t('Meals Booking') + ')' }}</MazBtn>
 		</div>
 		<div class="flex-1 grow">
 			<MazBtn block color="primary" rightIcon="storage/icons/forward" @click="nextStep" :loading="form.processing" :disabled="!validForm" class="h-full">{{ $t('Next') + ' (' + $t('Summary') + ')'}}</MazBtn>

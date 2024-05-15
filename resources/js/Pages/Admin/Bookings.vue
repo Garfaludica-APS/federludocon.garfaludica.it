@@ -142,20 +142,20 @@ onMounted(() => {
 
 <template>
 	<section class="mb-6">
-		<h2 class="font-bold text-xl pb-6">{{ $t('Filters') }}</h2>
+		<h2 class="font-bold text-2xl mb-4">{{ $t('Filters') }}</h2>
 		<h3 class="font-bold text-lg">{{ $t('Status') }}</h3>
 		<div class="flex flex-row flex-wrap gap-x-8 pb-6">
-			<div><MazSwitch @update:model-value="changedFilter" v-model="completedFilter" /><span class="ml-1">{{ $t('COMPLETED') }}</span></div>
-			<div><MazSwitch @update:model-value="changedFilter" v-model="cancelledFilter" /><span class="ml-1">{{ $t('CANCELLED') }}</span></div>
-			<div><MazSwitch @update:model-value="changedFilter" v-model="refundFilter" /><span class="ml-1">{{ $t('REFUND_REQUESTED') }}</span></div>
-			<div><MazSwitch @update:model-value="changedFilter" v-model="refundedFilter" /><span class="ml-1">{{ $t('REFUNDED') }}</span></div>
-			<div><MazSwitch @update:model-value="changedFilter" v-model="failedFilter" /><span class="ml-1">{{ $t('FAILED') }}</span></div>
+			<div><MazSwitch @update:model-value="changedFilter" v-model="completedFilter" color="success" /><span class="ml-1">{{ $t('COMPLETED') }}</span></div>
+			<div><MazSwitch @update:model-value="changedFilter" v-model="cancelledFilter" color="danger" /><span class="ml-1">{{ $t('CANCELLED') }}</span></div>
+			<div><MazSwitch @update:model-value="changedFilter" v-model="refundFilter" color="warning" /><span class="ml-1">{{ $t('REFUND_REQUESTED') }}</span></div>
+			<div><MazSwitch @update:model-value="changedFilter" v-model="refundedFilter" color="primary" /><span class="ml-1">{{ $t('REFUNDED') }}</span></div>
+			<div><MazSwitch @update:model-value="changedFilter" v-model="failedFilter" color="danger" /><span class="ml-1">{{ $t('FAILED') }}</span></div>
 		</div>
 		<h3 class="font-bold text-lg">{{ $t('Hotel') }}</h3>
 		<div class="flex flex-row flex-wrap gap-x-8 pb-6">
-			<div><MazSwitch @update:model-value="changedFilter" v-model="panoramicFilter" /><span class="ml-1">{{ $t('hotel_name_Panoramic Hotel') }}</span></div>
-			<div><MazSwitch @update:model-value="changedFilter" v-model="iseraFilter" /><span class="ml-1">{{ $t('hotel_name_Isera Refuge') }}</span></div>
-			<div><MazSwitch @update:model-value="changedFilter" v-model="braccicortiFilter" /><span class="ml-1">{{ $t('hotel_name_Braccicorti Farmhouse') }}</span></div>
+			<div><MazSwitch @update:model-value="changedFilter" v-model="panoramicFilter" color="primary" /><span class="ml-1">{{ $t('hotel_name_Panoramic Hotel') }}</span></div>
+			<div><MazSwitch @update:model-value="changedFilter" v-model="iseraFilter" color="secondary" /><span class="ml-1">{{ $t('hotel_name_Isera Refuge') }}</span></div>
+			<div><MazSwitch @update:model-value="changedFilter" v-model="braccicortiFilter" color="info" /><span class="ml-1">{{ $t('hotel_name_Braccicorti Farmhouse') }}</span></div>
 		</div>
 		<MazTable
 			class="mt-4"
@@ -184,7 +184,7 @@ onMounted(() => {
 					'text-green-500': row.status == 'completed',
 					'text-red-500': row.status == 'cancelled' || row.status == 'failed',
 					'text-yellow-500': row.status == 'refund_requested',
-					'text-indigo-500': row.status === 'refunded',
+					'text-indigo-500': row.status == 'refunded',
 				}">{{ value }}</span>
 			</template>
 			<template #cell-name="{ row, value }">
@@ -192,7 +192,7 @@ onMounted(() => {
 					'text-green-500': row.status == 'completed',
 					'text-red-500': row.status == 'cancelled' || row.status == 'failed',
 					'text-yellow-500': row.status == 'refund_requested',
-					'text-indigo-500': row.status === 'refunded',
+					'text-indigo-500': row.status == 'refunded',
 				}">{{ value }}</span>
 			</template>
 			<template #cell-email="{ row, value }">
@@ -200,7 +200,7 @@ onMounted(() => {
 					'text-green-500': row.status == 'completed',
 					'text-red-500': row.status == 'cancelled' || row.status == 'failed',
 					'text-yellow-500': row.status == 'refund_requested',
-					'text-indigo-500': row.status === 'refunded',
+					'text-indigo-500': row.status == 'refunded',
 				}">{{ value }}</span>
 			</template>
 			<template #cell-period="{ row, value }">
@@ -208,7 +208,7 @@ onMounted(() => {
 					'text-green-500': row.status == 'completed',
 					'text-red-500': row.status == 'cancelled' || row.status == 'failed',
 					'text-yellow-500': row.status == 'refund_requested',
-					'text-indigo-500': row.status === 'refunded',
+					'text-indigo-500': row.status == 'refunded',
 				}">{{ value }}</span>
 			</template>
 			<template #cell-total="{ row, value }">
@@ -216,21 +216,20 @@ onMounted(() => {
 					'text-green-500': row.status == 'completed',
 					'text-red-500': row.status == 'cancelled' || row.status == 'failed',
 					'text-yellow-500': row.status == 'refund_requested',
-					'text-indigo-500': row.status === 'refunded',
+					'text-indigo-500': row.status == 'refunded',
 				}">{{ formatPrice(value) }}</span>
 			</template>
 			<template #cell-status="{ value }">
-				<span :class="{
-					'text-green-500': value == 'completed',
-					'text-red-500': value == 'cancelled' || value == 'failed',
-					'text-yellow-500': value == 'refund_requested',
-					'text-indigo-500': value === 'refunded',
-				}">{{ $t(value) }}</span>
+				<span class="border rounded-xl p-2" :class="{
+					'text-green-500 border-green-500': value == 'completed',
+					'text-red-500 border-red-500': value == 'cancelled' || value == 'failed',
+					'text-yellow-500 border-yellow-500': value == 'refund_requested',
+					'text-indigo-500 border-indigo-500': value == 'refunded',
+				}">{{ $t(value.toUpperCase()) }}</span>
 			</template>
 			<template #actions="{ row }">
-				<MazBtn fab size="md" color="primary" icon="storage/icons/eye" @click="viewBooking(row)" />
+				<MazBtn fab size="md" icon="storage/icons/eye" @click="viewBooking(row)" />
 			</template>
 		</MazTable>
-		<p class="mt-2 text-sm">{{ $t('Click on a row to view booking\'s details.') }}</p>
 	</section>
 </template>

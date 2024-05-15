@@ -73,6 +73,9 @@ Route::group([
 
 	Route::patch('/booking/{booking}/billing', [BookingController::class, 'updateBilling'])->name('booking.update-billing');
 	Route::patch('/booking/{booking}/add-notes', [BookingController::class, 'addNotes'])->name('booking.add-notes');
+
+	Route::post('/booking/{booking}/add-discount', [BookingController::class, 'addDiscount'])->name('booking.discount.add');
+	Route::post('/booking/{booking}/confirm', [BookingController::class, 'confirmBooking'])->name('booking.confirm');
 });
 
 Route::group([
@@ -130,6 +133,9 @@ Route::group([
 	Route::resource('bookings', AdminBookingController::class)->only([
 		'index', 'show',
 	]);
+
+	Route::post('/bookings/{booking}/mark-refunded', [AdminBookingController::class, 'markRefunded'])->name('bookings.mark-refunded');
+	Route::get('/bookings/{booking}/invoice', [AdminBookingController::class, 'invoice'])->name('bookings.invoice');
 })->name('admin');
 
 Route::get('/en/admin', static fn() => to_route('admin.dashboard'))->middleware(['lang:pub', 'auth:web'])->name('en.admin.index');

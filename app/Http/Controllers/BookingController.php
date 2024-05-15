@@ -555,17 +555,6 @@ class BookingController extends Controller
 		$booking->state = BookingState::BILLING;
 		$booking->save();
 
-		$emptyOrder = DB::table('room_reservations')->select('booking_id')->where('booking_id', $booking->id)->union(DB::table('meal_reservations')->select('booking_id')->where('booking_id', $booking->id))->doesntExist();
-		if ($emptyOrder)
-			return redirect()->back()->with([
-				'sessionExpireSecionds' => floor(now()->diffInSeconds($booking->expires_at)),
-				'flash' => [
-					'message' => __('You can not proceed with an empty order. Please, add some rooms or meals to the order first.'),
-					'location' => 'modal',
-					'style' => 'warning',
-				],
-			]);
-
 		return redirect()->route('booking.billing', [
 			'booking' => $booking,
 		])->with('sessionExpireSeconds', floor(now()->diffInSeconds($booking->expires_at)));
@@ -590,6 +579,39 @@ class BookingController extends Controller
 		])->with('sessionExpireSeconds', floor(now()->diffInSeconds($booking->expires_at)));
 	}
 
+	public function addDiscount(Request $request, Booking $booking): RedirectResponse
+	{
+		$this->assertBookingState($request, $booking, BookingState::BILLING);
+
+		if (!$request->user())
+			return redirect()->back()->with([
+				'sessionExpireSecionds' => floor(now()->diffInSeconds($booking->expires_at)),
+				'flash' => [
+					'message' => __('You are not an admin.'),
+					'location' => 'toast-tc',
+					'timeout' => 5000,
+					'style' => 'error',
+				],
+			]);
+
+		$validated = $request->validate([
+			'discount' => 'required|decimal:0,2|min:0',
+		]);
+
+		$booking->discount = $validated['discount'];
+		$booking->save();
+
+		return redirect()->back()->with([
+			'sessionExpireSecionds' => floor(now()->diffInSeconds($booking->expires_at)),
+			'flash' => [
+				'message' => __('Discount successfully added.'),
+				'location' => 'toast-tc',
+				'timeout' => 5000,
+				'style' => 'success',
+			],
+		]);
+	}
+
 	public function storeBilling(Request $request, Booking $booking): RedirectResponse
 	{
 		$this->assertBookingState($request, $booking, BookingState::BILLING);
@@ -607,6 +629,17 @@ class BookingController extends Controller
 			'email' => 'missing',
 			'phone' => 'nullable|string|max:15',
 		]);
+
+		$emptyOrder = DB::table('room_reservations')->select('booking_id')->where('booking_id', $booking->id)->union(DB::table('meal_reservations')->select('booking_id')->where('booking_id', $booking->id))->doesntExist();
+		if ($emptyOrder)
+			return redirect()->back()->with([
+				'sessionExpireSecionds' => floor(now()->diffInSeconds($booking->expires_at)),
+				'flash' => [
+					'message' => __('You can not proceed with an empty order. Please, add some rooms or meals to the order first.'),
+					'location' => 'modal',
+					'style' => 'warning',
+				],
+			]);
 
 		if ($booking->has('billingInfo'))
 			$booking->billingInfo()->update($validated);
@@ -662,8 +695,8 @@ class BookingController extends Controller
 
 		$roomsPrice = DB::table('room_reservations')->where('booking_id', $booking->id)->select(DB::raw('SUM(price) AS price'))->first()->price;
 		$mealsTotals = DB::table('meal_reservations')->where('booking_id', $booking->id)->select(DB::raw('SUM(price) AS price'), DB::raw('SUM(discount) as discount'))->first();
-		$mealsPrice = $mealsTotals->price - $mealsTotals->discount;
-		$totalPrice = $roomsPrice + $mealsPrice;
+		$mealsPrice = floatval($mealsTotals->price) - floatval($mealsTotals->discount);
+		$totalPrice = floatval($roomsPrice) + $mealsPrice - floatval($booking->discount);
 
 		$options = [
 			'intent' => 'CAPTURE',
@@ -787,6 +820,46 @@ class BookingController extends Controller
 			'success' => false,
 			'recoverable' => false,
 			'error' => __('An unrecoverable error has occured. Order cancelled.'),
+		]);
+	}
+
+	public function confirmBooking(Request $request, Booking $booking): RedirectResponse
+	{
+		$this->assertBookingState($request, $booking, BookingState::SUMMARY);
+		if (!$request->user())
+			return redirect()->back()->with([
+				'sessionExpireSecionds' => floor(now()->diffInSeconds($booking->expires_at)),
+				'flash' => [
+					'message' => __('You are not an admin.'),
+					'location' => 'toast-tc',
+					'timeout' => 5000,
+					'style' => 'error',
+				],
+			]);
+
+		$roomsPrice = DB::table('room_reservations')->where('booking_id', $booking->id)->select(DB::raw('SUM(price) AS price'))->first()->price;
+		$mealsTotals = DB::table('meal_reservations')->where('booking_id', $booking->id)->select(DB::raw('SUM(price) AS price'), DB::raw('SUM(discount) as discount'))->first();
+		$mealsPrice = floatval($mealsTotals->price) - floatval($mealsTotals->discount);
+		$totalPrice = floatval($roomsPrice) + $mealsPrice - floatval($booking->discount);
+
+		if ($totalPrice < -0.01 || $totalPrice > 0.01 || floatval($booking->discount) < 0.01)
+			return redirect()->back()->with([
+				'sessionExpireSecionds' => floor(now()->diffInSeconds($booking->expires_at)),
+				'flash' => [
+					'message' => __('An error has occured. Please, try again.'),
+					'location' => 'toast-tc',
+					'timeout' => 5000,
+					'style' => 'error',
+				],
+			]);
+
+		$booking->state = BookingState::COMPLETED;
+		$booking->save();
+		dispatch(function() use ($booking): void {
+			$this->orderCompleted($booking);
+		});
+		return redirect()->route('booking.success', [
+			'booking' => $booking,
 		]);
 	}
 
@@ -968,9 +1041,12 @@ class BookingController extends Controller
 		$booking->expires_at = now()->addMinutes(config('gobcon.session_lifetime', 15));
 	}
 
-	private function orderCompleted(Booking $booking, string $orderId, array $response): void
+	private function orderCompleted(Booking $booking, ?string $orderId = null, ?array $response = null): void
 	{
-		Cache::rememberForever('pp_order_' . $orderId, static fn() => $response);
+		if ($orderId)
+			Cache::rememberForever('pp_order_' . $orderId, static fn() => $response);
+		else
+			$orderId = 'GARFALUDICA-ADMIN-ORDER';
 
 		$imageContent = Storage::get('garfaludica.jpg');
 		$logoUrl = 'data:image/jpeg;base64,' . base64_encode($imageContent);

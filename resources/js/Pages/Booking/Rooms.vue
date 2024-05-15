@@ -24,15 +24,23 @@ const props = defineProps({
 const locale = computed(() => getActiveLanguage());
 
 const totalCart = computed(() => {
+	return totalCartBeforeAdminDiscount.value - parseFloat(props.booking.discount);
+});
+
+const totalCartBeforeAdminDiscount = computed(() => {
 	const rooms = props.booking.rooms.reduce((total, room) => total + parseFloat(room.price), 0);
 	const meals = props.booking.meals.reduce((total, meal) => total + parseFloat(meal.price), 0);
-	return rooms + meals - totalDiscount.value;
+	return rooms + meals - totalDiscountBeforeAdminDiscount.value;
 });
 
 const emptyCart = computed(() => props.booking.rooms.length === 0 && props.booking.meals.length === 0);
 
-const totalDiscount = computed(() => {
+const totalDiscountBeforeAdminDiscount = computed(() => {
 	return props.booking.meals.reduce((total, meal) => total + parseFloat(meal.discount), 0);
+});
+
+const totalDiscount = computed(() => {
+	return totalDiscountBeforeAdminDiscount.value + parseFloat(props.booking.discount);
 });
 
 function formatPrice(value) {
@@ -240,6 +248,8 @@ onBeforeMount(() => {
 	});
 });
 
+const loadingNext = ref(false);
+
 const mounted = ref(false);
 onMounted(() => {
 	mounted.value = true;
@@ -260,7 +270,7 @@ onMounted(() => {
 			<p class="mt-2">{{ $t('If you do not want to book any rooms but you want to book some meals (example: you attend to the event only for a single day and you do not want to stay overnight), just press on the "Next" button without adding any room. You will be able to book your meals in the next page.') }}</p>
 			<p class="mt-2">{{ $t('There are no discounts for minors.') }}</p>
 			<p class="mt-2">{{ $t('In case of issues with the booking, try to reset your order by pressing the "Reset" button near the Order Summary and restart from the beginning. If the problem persist, please contact: info@garfaludica.it (or use the Telegram group: t.me/gobcongarfagnana).') }}</p>
-			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: event organizers who are also administrators of Garfaludica APS MUST NOT place any order via this portal at the moment. Instructions for how they must book for the event will be provided in the coming weeks.') }}</p>
+			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: if you are an event organizer and an administrator of Garfaludica APS, log-in to the Admin Panel before starting the booking process.') }}</p>
 			<p class="mt-2 text-sm text-green-700">{{ $t('Garfaludica APS does not retain any fees on your order and does not earn anything from organizing this event. All the collected money will be forwarded to the participating hotels in the form of a clearance transfer operation.') }}</p>
 			<p class="mt-2 text-xl">{{ $t('See you at the GobCon!') }}</p>
 			<h2 class="my-4 text-3xl flex items-center after:flex-1 after:border-b after:ml-3">{{ $t('Selected Rooms') }}</h2>
@@ -329,7 +339,7 @@ onMounted(() => {
 					<MazBtn block size="xl" leftIcon="storage/icons/x-mark" color="danger" @click="showDialog = true" class="h-full">{{ $t('Cancel Booking') }}</MazBtn>
 				</div>
 				<div class="flex-1 grow">
-					<MazBtn block size="xl" color="primary" rightIcon="storage/icons/forward" :href="route('booking.meals', booking)" class="h-full">{{ $t('Next') + ' (' + $t('Meals Booking') + ')'}}</MazBtn>
+					<MazBtn block size="xl" color="primary" rightIcon="storage/icons/forward" :href="route('booking.meals', booking)" @click="loadingNext = true" :loading="loadingNext" class="h-full">{{ $t('Next') + ' (' + $t('Meals Booking') + ')'}}</MazBtn>
 				</div>
 			</div>
 		</template>
@@ -364,7 +374,7 @@ onMounted(() => {
 			<MazBtn block leftIcon="storage/icons/x-mark" color="danger" @click="showDialog = true" class="h-full">{{ $t('Cancel Booking') }}</MazBtn>
 		</div>
 		<div class="flex-1 grow">
-			<MazBtn block color="primary" rightIcon="storage/icons/forward" :href="route('booking.meals', booking)" class="h-full">{{ $t('Next') + ' (' + $t('Meals Booking') + ')'}}</MazBtn>
+			<MazBtn block color="primary" rightIcon="storage/icons/forward" :href="route('booking.meals', booking)" @click="loadingNext = true" :loading="loadingNext" class="h-full">{{ $t('Next') + ' (' + $t('Meals Booking') + ')'}}</MazBtn>
 		</div>
 	</Teleport>
 	<MazDialog v-model="showDialog" :title="$t('Cancel Booking')">

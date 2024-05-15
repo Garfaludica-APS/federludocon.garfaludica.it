@@ -34,8 +34,8 @@ class Booking extends Model
 	protected function total(): Attribute
 	{
 		return Attribute::make(
-			get: function (?double $value): double|float {
-				return $this->rooms()->sum('price') + $this->meals()->sum('price') - $this->meals()->sum('discount');
+			get: function (?float $value): float {
+				return $this->rooms()->sum('price') + $this->meals()->sum('price') - $this->meals()->sum('discount') - $this->discount;
 			},
 		)->shouldCache();
 	}
@@ -115,6 +115,7 @@ class Booking extends Model
 		return [
 			'state' => BookingState::class,
 			'expires_at' => 'datetime',
+			'discount' => 'decimal:2',
 		];
 	}
 }

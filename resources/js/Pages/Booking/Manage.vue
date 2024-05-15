@@ -44,15 +44,23 @@ const countriesOptions = computed(() => {
 });
 
 const totalCart = computed(() => {
+	return totalCartBeforeAdminDiscount.value - parseFloat(props.booking.discount);
+});
+
+const totalCartBeforeAdminDiscount = computed(() => {
 	const rooms = props.booking.rooms.reduce((total, room) => total + parseFloat(room.price), 0);
 	const meals = props.booking.meals.reduce((total, meal) => total + parseFloat(meal.price), 0);
-	return rooms + meals - totalDiscount.value;
+	return rooms + meals - totalDiscountBeforeAdminDiscount.value;
 });
 
 const emptyCart = computed(() => props.booking.rooms.length === 0 && props.booking.meals.length === 0);
 
-const totalDiscount = computed(() => {
+const totalDiscountBeforeAdminDiscount = computed(() => {
 	return props.booking.meals.reduce((total, meal) => total + parseFloat(meal.discount), 0);
+});
+
+const totalDiscount = computed(() => {
+	return totalDiscountBeforeAdminDiscount.value + parseFloat(props.booking.discount);
 });
 
 function formatPrice(value) {
@@ -366,6 +374,7 @@ onMounted(() => {
 				/>
 				<p v-if="refundable && booking.meals.length > 0" class="mt-2">{{ $t('Meals can not be edited. If you want to edit meals, you must cancel the order and place a new one. If you just want to change the menu of a meal, write your change in the "Notes" section below.') }}</p>
 			<hr class="border-b border-gray-500 my-4" />
+			<p v-if="parseFloat(booking.discount) > 0" class="mt-3">{{ $t('Additional discount') + ': ' + formatPrice(parseFloat(booking.discount)) }}</p>
 			<h2 class="text-4xl font-extrabold">{{ $t('Total: :total', { total: formatPrice(totalCart) }) }}</h2>
 			<hr class="border-b border-gray-500 my-4" />
 			<h2 class="text-2xl font-bold">{{ $t('Notes') }}</h2>

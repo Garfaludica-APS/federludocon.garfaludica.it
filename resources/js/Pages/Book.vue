@@ -71,6 +71,7 @@ onMounted(() => {
 						<p class="mt-2">{{ $t('Make sure to check your spam folder if you do not receive the email within a few minutes.') }}</p>
 						<p class="mt-2">{{ $t('REFUNDS: You can ask for a refund until 24 hours before the event starts. You will receive an email with a link to cancel your order after your order is complete. Please note that orders are not editable: if you need to change your order, you must cancel the previous order and place another one. Refunds are processed manually in a couple of days.') }}</p>
 						<p class="mt-2">{{ $t('If you are having any issues, contact us (see the "Contact" page).') }}</p>
+						<p class="mt-2">{{ $t('In any case, DO NOT book any room in these hotels via other means: you will get higher prices since we have special rates for the event.') }}</p>
 						<form class="mx-auto mt-4 max-w-sm" @submit.prevent="submit">
 							<MazInput
 									v-model="form.email"

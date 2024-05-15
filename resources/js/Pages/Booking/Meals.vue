@@ -24,15 +24,23 @@ const props = defineProps({
 const locale = computed(() => getActiveLanguage());
 
 const totalCart = computed(() => {
+	return totalCartBeforeAdminDiscount.value - parseFloat(props.booking.discount);
+});
+
+const totalCartBeforeAdminDiscount = computed(() => {
 	const rooms = props.booking.rooms.reduce((total, room) => total + parseFloat(room.price), 0);
 	const meals = props.booking.meals.reduce((total, meal) => total + parseFloat(meal.price), 0);
-	return rooms + meals - totalDiscount.value;
+	return rooms + meals - totalDiscountBeforeAdminDiscount.value;
 });
 
 const emptyCart = computed(() => props.booking.rooms.length === 0 && props.booking.meals.length === 0);
 
-const totalDiscount = computed(() => {
+const totalDiscountBeforeAdminDiscount = computed(() => {
 	return props.booking.meals.reduce((total, meal) => total + parseFloat(meal.discount), 0);
+});
+
+const totalDiscount = computed(() => {
+	return totalDiscountBeforeAdminDiscount.value + parseFloat(props.booking.discount);
 });
 
 function formatPrice(value) {
@@ -87,7 +95,11 @@ function groupedMeals(type) {
 
 const notes = ref('');
 
+const loadingNext = ref(false);
+const loadingPrev = ref(false);
+
 function nextStep() {
+	loadingNext.value = true;
 	router.post(route('booking.notes.store', props.booking), { notes: notes.value });
 }
 
@@ -116,7 +128,7 @@ onMounted(() => {
 			<p class="mt-2">{{ $t('There are no discounts for minors.') }}</p>
 			<p class="mt-2 font-semibold">{{ $t('IMPORTANT: Please, if you have any food allergies or intolerances, specify them in the "Notes" at the end of this page.') }}</p>
 			<p class="mt-2">{{ $t('In case of issues with the booking, try to reset your order by pressing the "Reset" button near the Order Summary and restart from the beginning. If the problem persist, please contact: info@garfaludica.it (or use the Telegram group: t.me/gobcongarfagnana).') }}</p>
-			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: event organizers who are also administrators of Garfaludica APS MUST NOT place any order via this portal at the moment. Instructions for how they must book for the event will be provided in the coming weeks.') }}</p>
+			<p class="mt-2 text-sm text-orange-700">{{ $t('NOTE: if you are an event organizer and an administrator of Garfaludica APS, log-in to the Admin Panel before starting the booking process.') }}</p>
 			<p class="mt-2 text-sm text-green-700">{{ $t('Garfaludica APS does not retain any fees on your order and does not earn anything from organizing this event. All the collected money will be forwarded to the participating hotels in the form of a clearance transfer operation.') }}</p>
 			<p class="mt-2 text-xl">{{ $t('See you at the GobCon!') }}</p>
 			<template v-for="date in dates" :key="date">
@@ -147,10 +159,10 @@ onMounted(() => {
 		<template #footer>
 			<div class="flex space-x-2">
 				<div class="flex-1 grow">
-					<MazBtn block size="xl" leftIcon="storage/icons/backward" color="danger" :href="route('booking.rooms', booking)" class="h-full">{{ $t('Back') + ' (' + $t('Rooms Booking') + ')' }}</MazBtn>
+					<MazBtn block size="xl" leftIcon="storage/icons/backward" color="danger" :href="route('booking.rooms', booking)" :loading="loadingPrev" @click="loadingPrev = true" class="h-full">{{ $t('Back') + ' (' + $t('Rooms Booking') + ')' }}</MazBtn>
 				</div>
 				<div class="flex-1 grow">
-					<MazBtn block size="xl" color="primary" rightIcon="storage/icons/forward" @click="nextStep" class="h-full" :disabled="notes.length > 4096">{{ $t('Next') + ' (' + $t('Billing') + ')'}}</MazBtn>
+					<MazBtn block size="xl" color="primary" rightIcon="storage/icons/forward" @click="nextStep" class="h-full" :loading="loadingNext" :disabled="notes.length > 4096">{{ $t('Next') + ' (' + $t('Billing') + ')'}}</MazBtn>
 				</div>
 			</div>
 		</template>
@@ -182,10 +194,10 @@ onMounted(() => {
 	</Teleport>
 	<Teleport v-if="mounted" to="#step-actions">
 		<div class="flex-1 grow">
-			<MazBtn block leftIcon="storage/icons/backward" color="danger" :href="route('booking.rooms', booking)" class="h-full">{{ $t('Back') + ' (' + $t('Rooms Booking') + ')' }}</MazBtn>
+			<MazBtn block leftIcon="storage/icons/backward" color="danger" :href="route('booking.rooms', booking)" :loading="loadingPrev" @click="loadingPrev = true" class="h-full">{{ $t('Back') + ' (' + $t('Rooms Booking') + ')' }}</MazBtn>
 		</div>
 		<div class="flex-1 grow">
-			<MazBtn block color="primary" rightIcon="storage/icons/forward" @click="nextStep" class="h-full" :disabled="notes.length > 4096">{{ $t('Next') + ' (' + $t('Billing') + ')'}}</MazBtn>
+			<MazBtn block color="primary" rightIcon="storage/icons/forward" @click="nextStep" class="h-full" :loading="loadingNext" :disabled="notes.length > 4096">{{ $t('Next') + ' (' + $t('Billing') + ')'}}</MazBtn>
 		</div>
 	</Teleport>
 </template>
