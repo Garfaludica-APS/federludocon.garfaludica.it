@@ -298,7 +298,7 @@ onMounted(() => {
 		<div class="flex-1 grow">
 			<MazBtn block leftIcon="storage/icons/backward" color="danger" :href="route('booking.billing', booking)" :loading="loadingPrev" @click="loadingPrev = true" roundedSize="md">{{ $t('Back') + ' (' + $t('Billing') + ')' }}</MazBtn>
 			<p v-if="props.sandbox" class="text-2xl text-red-600 font-extrabold text-center mt-2">SANDBOX ENABLED!</p>
-			<MazBtn block leftIcon="storage/icons/check" color="primary" class="mt-2" roundedSize="md" v-if="totalCart <= 0 && page.props.auth.admin" :loading="loadingNext" @click="confirmOrder">{{ $t('Confirm Order') }}</MazBtn>
+			<MazBtn block leftIcon="storage/icons/check" color="primary" class="mt-2" roundedSize="md" v-if="totalCart <= 0 && page.props.auth.admin > 0" :loading="loadingNext" @click="confirmOrder">{{ $t('Confirm Order') }}</MazBtn>
 		</div>
 	</Teleport>
 </template>
