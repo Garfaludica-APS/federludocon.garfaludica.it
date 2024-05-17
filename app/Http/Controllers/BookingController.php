@@ -286,6 +286,7 @@ class BookingController extends Controller
 			$lock?->release();
 		}
 
+		Cache::put('booking_' . $booking->id . '_editedRooms', true, 2*60*60);
 		//$request->session()->put('editedRooms', true);
 
 		return redirect()->back()->with([
@@ -403,6 +404,7 @@ class BookingController extends Controller
 			$reservation->delete();
 		});
 
+		Cache::put('booking_' . $booking->id . '_editedRooms', true, 2*60*60);
 		//$request->session()->put('editedRooms', true);
 
 		return redirect()->back()->with([
@@ -425,10 +427,15 @@ class BookingController extends Controller
 
 		$booking->save();
 
+		$editedRooms = Cache::get('booking_' . $booking->id . '_editedRooms', false);
+
 		//if ($request->session()->get('editedRooms', false)) {
+		if ($editedRooms) {
+			Cache::forget('booking_' . $booking->id . '_editedRooms');
 			@set_time_limit(55);
 			// $request->session()->put('editedRooms', false);
 			$this->addMissingMeals($booking);
+		}
 		// }
 
 		$booking->loadMissing('rooms', 'rooms.room', 'meals', 'meals.meal', 'billingInfo');
