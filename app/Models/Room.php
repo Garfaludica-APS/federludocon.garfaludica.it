@@ -108,13 +108,13 @@ class Room extends Model
 		$checkoutTime = $this->checkout_time->copy();
 		$checkoutTime->setTimezone('UTC');
 		if ($checkin < Carbon::parse('2024-06-14', 'UTC')->setTimeFrom($checkinTime))
-			return [];
+			return false;
 		if ($checkin > Carbon::parse('2024-06-16', 'UTC')->setTimeFrom($checkinTime))
-			return [];
+			return false;
 		if ($checkout < Carbon::parse('2024-06-15', 'UTC')->setTimeFrom($checkoutTime))
-			return [];
+			return false;
 		if ($checkout > Carbon::parse('2024-06-17', 'UTC')->setTimeFrom($checkoutTime))
-			return [];
+			return false;
 		$dummy = $this->checkin_time->copy();
 		$dummy->setTimezone('UTC');
 		$dummy->setDateFrom($checkin);
