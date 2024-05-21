@@ -69,6 +69,9 @@ onMounted(() => {
 		form.checkin_time = props.room.checkin_time;
 		form.checkout_time = props.room.checkout_time;
 		form.buy_options = props.room.buy_options;
+		form.buy_options.forEach((option) => {
+			delete option.id;
+		});
 	}
 	if (form.buy_options.length === 0) {
 		addBuyOption();
