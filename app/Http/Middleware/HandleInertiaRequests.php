@@ -55,7 +55,7 @@ class HandleInertiaRequests extends Middleware
 			'auth.admin' => static function() use ($request) {
 				$admin = $request->user();
 				if (!$admin)
-					return null;
+					return ['hotels' => null];
 				return [
 					'id' => $admin->id,
 					'username' => $admin->username,
