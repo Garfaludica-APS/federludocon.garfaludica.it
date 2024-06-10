@@ -52,12 +52,18 @@ class HandleInertiaRequests extends Middleware
 				'timeout' => static fn() => $request->session()->get('flash.timeout') ?? false,
 				'style' => static fn() => $request->session()->get('flash.style') ?? 'default',
 			],
-			'auth.admin' => static fn() => $request->user()
-				? $request->user()
-				: null,
-			'auth.admin.hotels' => static fn() => $request->user()
-				? ($request->user()->is_super_admin ? Hotel::all() : $request->user()->hotels()->get())
-				: null,
+			'auth.admin' => static function() use ($request) {
+				$admin = $request->user();
+				if (!$admin)
+					return null;
+				return [
+					'id' => $admin->id,
+					'username' => $admin->username,
+					'email' => $admin->email,
+					'hotels' => $admin->is_super_admin ? Hotel::all() : $admin->hotels()->get(),
+					'is_super_admin' => $admin->is_super_admin,
+				];
+			},
 			'settings.portalOpen' => static function() {
 				$open = config('gobcon.open', true);
 				$close = config('gobcon.close', false);
