@@ -28,11 +28,17 @@ const props = defineProps({
 
 			<!-- <p class="mt-8 text-gray-100 text-lg">{{ $t('Looking for friends to play with at the GobCon?') }} <Link :href="lroute('tables')" class="inline-block underline text-orange-600 hover:text-orange-500 active:text-orange-500 font-bold">{{ $t('Set up a table!') }}</Link></p> -->
 		</div>
-		<div v-else>
+		<div v-else-if="!page.props.settings.portalClose">
 			<p class="mt-8 text-gray-100 text-base xs:text-lg sm:text-xl font-semibold">{{ $t('The booking portal is closed right now. It will open in:') }}</p>
 			<Countdown :startSeconds="page.props.settings.portalTimer" class="pt-12 text-orange-600" @countdown-end="page.props.settings.portalOpen = true" />
 			<p class="mt-10 text-gray-100 text-sm xs:text-base sm:text-lg">
 				{{ $t('While waiting, you can join our Telegram group to stay updated!') }} <a href="https://t.me/gobcongarfagnana" class="underline text-indigo-600 hover:text-indigo-500 active:text-indigo-500 font-bold" target="_blank">{{ $t('Join the group!') }}</a>
+			</p>
+		</div>
+		<div v-else class="animate-fade-in">
+			<p class="mt-8 text-gray-100 text-base xs:text-lg sm:text-2xl lg:text-4xl font-semibold text-green-600">{{ $t('The event is over. Thank you all for participating!') }}</p>
+			<p class="mt-10 text-gray-100 text-sm xs:text-base sm:text-lg">
+				{{ $t('You may want to join our Telegram group to stay updated with the activities of our association!') }} <a href="https://t.me/associazionegarfaludica" class="underline text-indigo-600 hover:text-indigo-500 active:text-indigo-500 font-bold" target="_blank">{{ $t('Join the group!') }}</a>
 			</p>
 		</div>
 

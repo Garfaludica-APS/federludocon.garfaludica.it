@@ -45,7 +45,7 @@
 	"Cookies Notice": "Informativa sui Cookie",
 	"home_event_title": "<span style=\"color: rgb(22, 163, 74)\">GobCon</span> 2024<br>Garfagnana",
 	"home_event_subtitle": "14-16 Giugno, Corfino, Villa Collemandina, Lucca",
-	"home_about_event_text": "La GobCon è un evento in cui giocatori e giocatrici dell'associazione Tana dei Goblin e non si riuniscono per tre giorni all'insegna del gioco da tavolo. Dal pomeriggio del 14 Giugno fino al 16 Giugno (intera giornata) i partecipanti giocheranno e staranno insieme nella spettacolare area di Corfino.",
+	"home_about_event_text": "La GobCon è un evento in cui giocatori e giocatrici dell'associazione Tana dei Goblin e non si riuniscono per tre giorni all'insegna del gioco da tavolo. Dal pomeriggio del 14 Giugno fino al 16 Giugno (fino a prima di cena) i partecipanti giocheranno e staranno insieme nella spettacolare area di Corfino.",
 	"home_where_text": "Corfino, frazione di Villa Collemandina (Lucca)",
 	"home_when_text": "Da Venerdì a Domenica<br>14-16 Giugno",
 	"footer_org_text": "Associazione di Promozione Sociale - Ente del Terzo settore<br>Iscritta al <a rel=\"external nofollow noopener\" href=\"https://servizi.lavoro.gov.it/runts\" target=\"_blank\">RUNTS</a> dal 19 giugno 2023 (rep. n. 113019)<br><a rel=\"external nofollow noopener\" href=\"https://www.goblins.net/affiliate/tana-dei-goblin-castelnuovo-di-garfagnana\" target=\"_blank\">Tana dei Goblin di Castelnuovo di Garfagnana</a><br><a rel=\"external nofollow noopener\" href=\"https://www.federludo.it/associazioni/garfaludica-aps\" target=\"_blank\">Affiliata a Federludo</a> | <a rel=\"external nofollow noopener\" href=\"https://www.aics.it\" target=\"_blank\">Affiliata AiCS</a><br>Sede legale: <a rel=\"external noopener\" href=\"https://maps.app.goo.gl/Mt2gA2nt1Au2kETS7\" target=\"_blank\">Località Braccicorti 38/A - 55036 Pieve Fosciana (LU)</a>",
@@ -407,5 +407,7 @@
 	"Since you are logged in as an administrator, you can add an additional discount here.": "Poiché hai effettuato l'accesso come amministratore, puoi aggiungere uno sconto aggiuntivo qui.",
 	"Enter discount": "Inserisci sconto",
 	"In any case, DO NOT book any room in these hotels via other means: you will get higher prices since we have special rates for the event.": "In ogni caso, NON prenotare camere in questi hotel tramite altri canali: otterrai prezzi più alti poiché abbiamo tariffe speciali per l'evento.",
-	"Note: you must book through the portal even if you only want to book meals but no rooms.": "Nota: devi prenotare tramite il portale anche se vuoi prenotare solo dei pasti ma nessuna camera."
+	"Note: you must book through the portal even if you only want to book meals but no rooms.": "Nota: devi prenotare tramite il portale anche se vuoi prenotare solo dei pasti ma nessuna camera.",
+	"The event is over. Thank you all for participating!": "L'evento è terminato. Grazie a tutti per aver partecipato!",
+	"You may want to join our Telegram group to stay updated with the activities of our association!": "Potresti voler unirti al nostro gruppo Telegram per rimanere aggiornato sulle attività della nostra associazione!"
 }

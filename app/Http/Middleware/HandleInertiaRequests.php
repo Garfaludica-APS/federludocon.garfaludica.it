@@ -60,6 +60,10 @@ class HandleInertiaRequests extends Middleware
 				: null,
 			'settings.portalOpen' => static function() {
 				$open = config('gobcon.open', true);
+				$close = config('gobcon.close', false);
+				$closed = ($close instanceof Carbon) ? $close->isPast() : $close;
+				if ($closed)
+					return false;
 				return ($open instanceof Carbon) ? $open->isPast() : $open;
 			},
 			'settings.portalTimer' => static function() {
@@ -72,6 +76,10 @@ class HandleInertiaRequests extends Middleware
 					$date->setTimezone('Europe/Rome');
 					return $date->translatedFormat('l j F Y H:i');
 				}
+			},
+			'settings.portalClose' => static function() {
+				$close = config('gobcon.close', false);
+				return ($close instanceof Carbon) ? $close->isPast() : $close;
 			},
 			'ziggy' => static fn() => [
 				...(new Ziggy())->toArray(),

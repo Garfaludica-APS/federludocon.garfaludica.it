@@ -65,7 +65,7 @@ class BookingController extends Controller
 				'booking' => $booking,
 			]);
 		$booking->state = BookingState::ROOMS;
-		$booking->expires_at = now()->addMinutes(config('gobcon.session_lifetime', 15));
+		$booking->expires_at = now()->addMinutes(config('gobcon.session_lifetime', 30));
 		$booking->save();
 		return redirect()->route('booking.rooms', [
 			'booking' => $booking,
@@ -1045,7 +1045,7 @@ class BookingController extends Controller
 		if (!\in_array($booking->state, $state))
 			abort(403);
 
-		$booking->expires_at = now()->addMinutes(config('gobcon.session_lifetime', 15));
+		$booking->expires_at = now()->addMinutes(config('gobcon.session_lifetime', 30));
 	}
 
 	private function orderCompleted(Booking $booking, ?string $orderId = null, ?array $response = null): void

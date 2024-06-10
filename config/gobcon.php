@@ -12,4 +12,7 @@ return [
 	'open' => \is_string(env('GOBCON_BOOKING_OPEN', true))
 		? Carbon::parse(env('GOBCON_BOOKING_OPEN'))
 		: env('GOBCON_BOOKING_OPEN', true),
+	'close' => \is_string(env('GOBCON_BOOKING_CLOSE', false))
+		? Carbon::parse(env('GOBCON_BOOKING_CLOSE'))
+		: env('GOBCON_BOOKING_CLOSE', false),
 ];
