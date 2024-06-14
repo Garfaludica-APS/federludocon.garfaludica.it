@@ -1081,7 +1081,7 @@ class BookingController extends Controller
 		$postalCode = htmlspecialchars($booking->billingInfo->postal_code);
 		$countryCode = htmlspecialchars(strtoupper($booking->billingInfo->country_code));
 		$email = htmlspecialchars($booking->billingInfo->email);
-		$phone = htmlspecialchars($booking->billingInfo->phone);
+		$phone = htmlspecialchars($booking->billingInfo->phone ?? '');
 
 		$locale = app()->isLocale('it') ? 'it' : 'en';
 		$total = 0.0;
@@ -1131,6 +1131,7 @@ class BookingController extends Controller
 
 					<html>
 						<head>
+							<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 							<style>
 								.invoice-box {
 									max-width: 800px;
