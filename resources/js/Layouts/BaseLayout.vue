@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import { Modal } from 'inertia-modal';
 import { toast } from 'vue3-toastify';
@@ -25,6 +25,7 @@ function showToast(msg, pos = 'bottom-right', timeout = 5000, style = 'default')
 const showModal = ref(false);
 
 const flash = computed(() => page.props.flash.message);
+console.log(page.props);
 
 watch(flash, async (oldMsg, newMsg) => {
 	if (!page.props.flash || !page.props.flash.message || page.props.flash.message === '' || newMsg === oldMsg)
@@ -68,13 +69,18 @@ watch(flash, async (oldMsg, newMsg) => {
 const closeModal = () => {
 	showModal.value = false;
 };
+
+const mounted = ref(false);
+onMounted(() => {
+	mounted.value = true;
+});
 </script>
 
 <template>
 	<Head :title="$t(title)" />
 	<slot />
-	<MessageModal :show="showModal" :timeout="$page.props.flash.timeout ? $page.props.flash.timeout : null" :type="$page.props.flash.style" @close="closeModal">
+	<Modal />
+	<MessageModal v-if="mounted" :show="showModal" :timeout="$page.props.flash.timeout ? $page.props.flash.timeout : null" :type="$page.props.flash.style" @close="closeModal">
 		{{ $page.props.flash.message }}
 	</MessageModal>
-	<Modal />
 </template>
