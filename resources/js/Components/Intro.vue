@@ -38,7 +38,7 @@ const props = defineProps({
 		<div v-else class="animate-fade-in">
 			<p class="mt-8 text-gray-100 text-base xs:text-lg sm:text-2xl lg:text-4xl font-semibold text-green-600">{{ $t('The event is over. Thank you all for participating!') }}</p>
 			<p class="mt-10 text-gray-100 text-sm xs:text-base sm:text-lg">
-				{{ $t('You may want to join our Telegram group to stay updated with the activities of our association!') }} <a href="https://t.me/associazionegarfaludica" class="underline text-indigo-600 hover:text-indigo-500 active:text-indigo-500 font-bold" target="_blank">{{ $t('Join the group!') }}</a>
+				{{ $t('You may want to join our Telegram group to stay updated with the activities of our association!') }} <a href="https://t.me/gobcongarfagnana" class="underline text-indigo-600 hover:text-indigo-500 active:text-indigo-500 font-bold" target="_blank">{{ $t('Join the group!') }}</a>
 			</p>
 		</div>
 

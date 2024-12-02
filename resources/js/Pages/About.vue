@@ -43,7 +43,7 @@ const Braccicorti_list_2 = computed(() => trans('Double room for two people: <b>
 			<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 				<div>
 					<div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-						<p class="text-red-500 mb-6 text-xl" v-if="!page.props.settings.portalOpen" v-html="$t('<strong>WARNING:</strong> bookings are currently closed. Bookings will open <strong>:date</strong> (Rome time).', {date: page.props.settings.portalOpenDate})"></p>
+						<p class="text-red-500 mb-6 text-xl" v-if="!page.props.settings.portalOpen" v-html="$t('top_page_warning')"></p>
 						<div class="flex items-center">
 							<h1 class="text-2xl font-medium bg-gradient-to-r to-[#0b8a26] from-[#9bc009] via-[#fbdb19] inline-block text-transparent bg-clip-text">
 								{{ $t('GobCon 2024') }}

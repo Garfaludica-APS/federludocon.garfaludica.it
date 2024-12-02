@@ -15,6 +15,7 @@ use App\RateLimiters\StartBookingRateLimiter;
 use Biscolab\ReCaptcha\Facades\ReCaptcha;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Inertia\Response;
@@ -30,6 +31,10 @@ class BookController extends Controller
 
 	public function show(): Response
 	{
+		$close = config('gobcon.close', false);
+		$closed = ($close instanceof Carbon) ? $close->isPast() : $close;
+		if ($closed)
+			abort(404);
 		$scriptTag = ReCaptcha::htmlScriptTagJsApi([
 			'lang' => App::isLocale('it') ? 'it' : 'en',
 		]);
@@ -43,6 +48,10 @@ class BookController extends Controller
 
 	public function submit(Request $request): RedirectResponse
 	{
+		$close = config('gobcon.close', false);
+		$closed = ($close instanceof Carbon) ? $close->isPast() : $close;
+		if ($closed)
+			abort(404);
 		$validated = $request->validate([
 			'email' => 'required|max:254|email:strict,dns,spoof',
 			'g_recaptcha_response' => 'required|' . recaptchaRuleName(),

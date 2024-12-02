@@ -43,11 +43,11 @@
 	"Close (:timer)": "Chiudi (:timer)",
 	"Accept Cookies": "Accetta i Cookie",
 	"Cookies Notice": "Informativa sui Cookie",
-	"home_event_title": "<span style=\"color: rgb(22, 163, 74)\">GobCon</span> 2024<br>Garfagnana",
-	"home_event_subtitle": "14-16 Giugno, Corfino, Villa Collemandina, Lucca",
-	"home_about_event_text": "La GobCon è un evento in cui giocatori e giocatrici dell'associazione Tana dei Goblin e non si riuniscono per tre giorni all'insegna del gioco da tavolo. Dal pomeriggio del 14 Giugno fino al 16 Giugno (fino a prima di cena) i partecipanti giocheranno e staranno insieme nella spettacolare area di Corfino.",
+	"home_event_title": "<span style=\"color: rgb(22, 163, 74)\">GobCon</span> 2025<br>Garfagnana",
+	"home_event_subtitle": "27-29 Giugno, Corfino, Villa Collemandina, Lucca",
+	"home_about_event_text": "La GobCon è un evento in cui giocatori e giocatrici dell'associazione Tana dei Goblin e non si riuniscono per tre giorni all'insegna del gioco da tavolo. Dal pomeriggio del 27 Giugno fino al 29 Giugno (fino a prima di cena) i partecipanti giocheranno e staranno insieme nella spettacolare area di Corfino.",
 	"home_where_text": "Corfino, frazione di Villa Collemandina (Lucca)",
-	"home_when_text": "Da Venerdì a Domenica<br>14-16 Giugno",
+	"home_when_text": "Da Venerdì a Domenica<br>27-29 Giugno 2025",
 	"footer_org_text": "Associazione di Promozione Sociale - Ente del Terzo settore<br>Iscritta al <a rel=\"external nofollow noopener\" href=\"https://servizi.lavoro.gov.it/runts\" target=\"_blank\">RUNTS</a> dal 19 giugno 2023 (rep. n. 113019)<br><a rel=\"external nofollow noopener\" href=\"https://www.goblins.net/affiliate/tana-dei-goblin-castelnuovo-di-garfagnana\" target=\"_blank\">Tana dei Goblin di Castelnuovo di Garfagnana</a><br><a rel=\"external nofollow noopener\" href=\"https://www.federludo.it/associazioni/garfaludica-aps\" target=\"_blank\">Affiliata a Federludo</a> | <a rel=\"external nofollow noopener\" href=\"https://www.aics.it\" target=\"_blank\">Affiliata AiCS</a><br>Sede legale: <a rel=\"external noopener\" href=\"https://maps.app.goo.gl/Mt2gA2nt1Au2kETS7\" target=\"_blank\">Località Braccicorti 38/A - 55036 Pieve Fosciana (LU)</a>",
 	"footer_org_contact_text": "<a rel=\"noopener\" href=\"mailto:info@garfaludica.it\" target=\"_blank\">info@garfaludica.it</a> | <a rel=\"noopener\" href=\"mailto:garfaludica@pec.it\" target=\"_blank\">garfaludica@pec.it</a><br>Presidenza: <a rel=\"noopener\" href=\"tel:+393247460610\" target=\"_blank\">324-746-0610</a> (<a rel=\"external noopener\" href=\"https://t.me/Pillian\" target=\"_blank\">Christian Pilli</a>)<br>Segreteria: <a rel=\"noopener\" href=\"tel:+393314432124\" target=\"_blank\">331-443-2124</a> (<a rel=\"external noopener\" href=\"https://t.me/SpeedJack\" target=\"_blank\">Niccolò Scatena</a>)<br>Vicepresidenza: <a rel=\"noopener\" href=\"tel:+393282228615\" target=\"_blank\">328-222-8615</a> (<a rel=\"external noopener\" href=\"https://t.me/Badpinger\" target=\"_blank\">Simone Bertagni</a>)<br>Consiglieri: <a rel=\"external noopener\" href=\"https://t.me/CannibalSmith\" target=\"_blank\">Riccardo Evangelisti</a>, <a rel=\"external noopener\" href=\"https://t.me/Picarus\" target=\"_blank\">Pierluigi Pellizzer</a>",
 	"footer_donation_text": "La nostra Associazione vive prevalentemente di donazioni private. Puoi aiutarci a sostenere le spese per la gestione dell'Associazione e l'organizzazione di eventi come questo. Grazie per il tuo sostegno!",
@@ -65,7 +65,7 @@
 	"[Garfaludica APS] You have been invited to join the admin team of GobCon Garfagnana 2024!":"[Garfaludica APS] Sei stato invitato a far parte del team amministrativo di GobCon Garfagnana 2024!",
 	"We hope that this event will be profitable.":"Ci auguriamo che questo evento possa essere proficuo.",
 	"Hello, with this email, we invite you as a super admin of the website": "Ciao, con questa email ti invitiamo come super amministratore del sito web",
-	"<strong>WARNING:</strong> bookings are currently closed. Bookings will open <strong>:date</strong> (Rome time).":"<strong>ATTENZIONE:</strong> le prenotazioni sono attualmente chiuse. Le prenotazioni apriranno <strong>:date</strong>.",
+	"top_page_warning":"<strong>ATTENZIONE:</strong> le informazioni qui riportate si riferiscono all'evento dell'anno 2024. Le informazioni per l'anno 2025 saranno fornite più avanti, sempre in questa pagina!",
 	"Thanks":"Grazie",
 	"Page under construction. Additional details will be provided soon.": "Pagina in costruzione. Ulteriori dettagli saranno forniti a breve.",
 	"Garfaludica APS":"Garfaludica APS",
@@ -408,6 +408,6 @@
 	"Enter discount": "Inserisci sconto",
 	"In any case, DO NOT book any room in these hotels via other means: you will get higher prices since we have special rates for the event.": "In ogni caso, NON prenotare camere in questi hotel tramite altri canali: otterrai prezzi più alti poiché abbiamo tariffe speciali per l'evento.",
 	"Note: you must book through the portal even if you only want to book meals but no rooms.": "Nota: devi prenotare tramite il portale anche se vuoi prenotare solo dei pasti ma nessuna camera.",
-	"The event is over. Thank you all for participating!": "L'evento è terminato. Grazie a tutti per aver partecipato!",
-	"You may want to join our Telegram group to stay updated with the activities of our association!": "Potresti voler unirti al nostro gruppo Telegram per rimanere aggiornato sulle attività della nostra associazione!"
+	"The event is over. Thank you all for participating!": "L'evento è ancora in fase di definizione. Informazioni saranno rilasciate a breve!",
+	"You may want to join our Telegram group to stay updated with the activities of our association!": "Potresti voler unirti al gruppo Telegram dedicato all'evento per rimanere aggiornato!"
 }

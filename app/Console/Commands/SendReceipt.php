@@ -301,6 +301,7 @@ class SendReceipt extends Command
 		Storage::put('receipts/' . $booking->id . '.pdf', $dompdf->output());
 		$receiptPath = storage_path('app/receipts/' . $booking->id . '.pdf');
 
-		//Mail::to($booking->email)->queue(new OrderReceipt($booking, $receiptPath));
+		Mail::to($booking->email)->queue(new OrderReceipt($booking, $receiptPath));
+		$this->info('Done!');
 	}
 }
