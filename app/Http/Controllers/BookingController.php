@@ -65,7 +65,7 @@ class BookingController extends Controller
 				'booking' => $booking,
 			]);
 		$booking->state = BookingState::ROOMS;
-		$booking->expires_at = now()->addMinutes(config('gobcon.session_lifetime', 30));
+		$booking->expires_at = now()->addMinutes(config('federludocon.session_lifetime', 30));
 		$booking->save();
 		return redirect()->route('booking.rooms', [
 			'booking' => $booking,
@@ -726,7 +726,7 @@ class BookingController extends Controller
 				0 => [
 					'custom_id' => $booking->id,
 					'invoice_id' => 'GARFALUDICA-' . mb_str_pad((string)($booking->short_id), 4, '0', \STR_PAD_LEFT),
-					'soft_descriptor' => 'GOBCON24',
+					'soft_descriptor' => 'FEDERLUDOCON25',
 					'amount' => [
 						'currency_code' => 'EUR',
 						'value' => number_format($totalPrice, 2, '.', ''),
@@ -1045,7 +1045,7 @@ class BookingController extends Controller
 		if (!\in_array($booking->state, $state))
 			abort(403);
 
-		$booking->expires_at = now()->addMinutes(config('gobcon.session_lifetime', 30));
+		$booking->expires_at = now()->addMinutes(config('federludocon.session_lifetime', 30));
 	}
 
 	private function orderCompleted(Booking $booking, ?string $orderId = null, ?array $response = null): void

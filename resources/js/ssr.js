@@ -7,7 +7,7 @@ import { modal } from 'inertia-modal';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import { i18nVue } from 'laravel-vue-i18n';
 
-const appName = import.meta.env.VITE_APP_NAME || 'GobCon 2024 Garfagnana';
+const appName = import.meta.env.VITE_APP_NAME || 'FederludoCon 2025 Garfagnana';
 const orgName = import.meta.env.VITE_ORG_NAME || 'Garfaludica APS';
 
 createServer((page) =>

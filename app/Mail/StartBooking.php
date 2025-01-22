@@ -31,7 +31,7 @@ class StartBooking extends Mailable
 	public function envelope(): Envelope
 	{
 		return new Envelope(
-			subject: __('[Garfaludica APS] Book your rooms and meals for the GobCon!'),
+			subject: __('[Garfaludica APS] Book your rooms and meals for the FederludoCon!'),
 		);
 	}
 

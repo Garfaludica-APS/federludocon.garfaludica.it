@@ -52,39 +52,39 @@ class HandleInertiaRequests extends Middleware
 				'timeout' => static fn() => $request->session()->get('flash.timeout') ?? false,
 				'style' => static fn() => $request->session()->get('flash.style') ?? 'default',
 			],
-			'auth.admin' => static function() use ($request) {
-				$admin = $request->user();
-				if (!$admin)
-					return ['hotels' => null];
-				return [
-					'id' => $admin->id,
-					'username' => $admin->username,
-					'email' => $admin->email,
-					'hotels' => $admin->is_super_admin ? Hotel::all() : $admin->hotels()->get(),
-					'is_super_admin' => $admin->is_super_admin,
-				];
-			},
+			// 'auth.admin' => static function() use ($request) {
+			// 	$admin = $request->user();
+			// 	if (!$admin)
+			// 		return ['hotels' => null];
+			// 	return [
+			// 		'id' => $admin->id,
+			// 		'username' => $admin->username,
+			// 		'email' => $admin->email,
+			// 		'hotels' => $admin->is_super_admin ? Hotel::all() : $admin->hotels()->get(),
+			// 		'is_super_admin' => $admin->is_super_admin,
+			// 	];
+			// },
 			'settings.portalOpen' => static function() {
-				$open = config('gobcon.open', true);
-				$close = config('gobcon.close', false);
+				$open = config('federludocon.open', true);
+				$close = config('federludocon.close', false);
 				$closed = ($close instanceof Carbon) ? $close->isPast() : $close;
 				if ($closed)
 					return false;
 				return ($open instanceof Carbon) ? $open->isPast() : $open;
 			},
 			'settings.portalTimer' => static function() {
-				$timer = config('gobcon.open', false);
+				$timer = config('federludocon.open', false);
 				return ($timer instanceof Carbon) ? ceil(abs($timer->diffInSeconds())) : null;
 			},
 			'settings.portalOpenDate' => static function() {
-				$date = config('gobcon.open', null);
+				$date = config('federludocon.open', null);
 				if ($date instanceof Carbon) {
 					$date->setTimezone('Europe/Rome');
 					return $date->translatedFormat('l j F Y H:i');
 				}
 			},
 			'settings.portalClose' => static function() {
-				$close = config('gobcon.close', false);
+				$close = config('federludocon.close', false);
 				return ($close instanceof Carbon) ? $close->isPast() : $close;
 			},
 			'ziggy' => static fn() => [

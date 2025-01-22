@@ -37,7 +37,7 @@ class AdminInvitation extends Mailable
 	public function envelope(): Envelope
 	{
 		return new Envelope(
-			subject: __('[Garfaludica APS] You have been invited to join the admin team of GobCon Garfagnana 2024!'),
+			subject: __('[Garfaludica APS] You have been invited to join the admin team of FederludoCon Garfagnana 2025!'),
 		);
 	}
 

@@ -32,7 +32,7 @@ class OrderReceipt extends Mailable
 	public function envelope(): Envelope
 	{
 		return new Envelope(
-			subject: __('[Garfaludica APS] GobCon 2024 - Order confirmed!'),
+			subject: __('[Garfaludica APS] FederludoCon 2025 - Order confirmed!'),
 		);
 	}
 

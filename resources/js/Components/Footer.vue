@@ -9,8 +9,9 @@ import SocialLink from '@/Components/SocialLink.vue';
 import PayPalDonateButton from '@/Components/PaypalDonateButton.vue';
 
 import aicslogo from '@/../../storage/images/aics-logo.png';
-import federludologo from '@/../../storage/images/federludo-logo.png';
+import federludomark from '@/../../storage/images/federludo-mark.png';
 import tdglogo from '@/../../storage/images/tdg-round-logo.png';
+import comunestemma from '@/../../storage/images/stemma-castelnuovo.svg';
 
 const page = usePage();
 
@@ -25,7 +26,8 @@ const iban = 'IT 46 L 05034 70130 000000003246';
 const ibanNoSpaces = iban.replace(/\s/g, '');
 const tdgLink = 'https://www.goblins.net/affiliate/tana-dei-goblin-castelnuovo-di-garfagnana';
 const federludoLink = 'https://www.federludo.it/associazioni/garfaludica-aps';
-const aicsLink = 'https://www.aics.it/';
+const aicsLink = 'https://www.aics.it';
+const comuneLink = 'https://comune.castelnuovodigarfagnana.lu.it';
 
 function showToast(msg, timeout = 3000)
 {
@@ -58,12 +60,16 @@ function copyToClipboard(text)
 					<img :src="tdglogo" alt="Logo Tana dei Goblin" class="inline-block h-12 w-auto" />
 				</a>
 				<a rel="external noopener nofollow" :href="federludoLink" target="_blank">
-					<img :src="federludologo" alt="Logo Affiliata Federludo" class="inline-block h-12 w-auto" />
+					<img :src="federludomark" alt="Logo Affiliata Federludo" class="inline-block h-12 w-auto" />
 				</a>
 				<a rel="external noopener nofollow" :href="aicsLink" target="_blank">
 					<img :src="aicslogo" alt="Logo Associazione Italiana Cultura e Sport" class="inline-block h-12 w-auto" />
 				</a>
 			</div>
+			<a rel="external noopener nofollow" :href="comuneLink" target="_blank" class="flex align-center items-center mt-4">
+				<img :src="comunestemma" alt="Stemma del Comune di Castelnuovo di Garfagnana" class="w-16 h-auto inline-block mr-4" />
+				<p class="inline max-w-48 text-wrap !inline-block">{{ $t('Con il Patrocinio del Comune di Castelnuovo di Garfagnana') }}</p>
+			</a>
 		</div>
 		<div class="basis-full sm:basis-1/2 lg:basis-1/5 px-3 pb-6">
 			<h4 class="pb-2 border-b-2 border-indigo-500 text-lg uppercase font-extrabold">
@@ -76,11 +82,8 @@ function copyToClipboard(text)
 				<FooterNavLink :href="route(page.props.rp + 'about')">
 					{{ $t('About') }}
 				</FooterNavLink>
-				<FooterNavLink :href="route(page.props.rp + 'hotels')">
-					{{ $t('Hotels') }}
-				</FooterNavLink>
-				<FooterNavLink :href="route(page.props.rp + 'venue')">
-					{{ $t('Venue') }}
+				<FooterNavLink :href="route(page.props.rp + 'larp')">
+					{{ $t('Stelle Nere &amp; Strane Lune') }}
 				</FooterNavLink>
 				<FooterNavLink :href="route(page.props.rp + 'organization')">
 					{{ $t('The Association') }}
@@ -95,18 +98,9 @@ function copyToClipboard(text)
 				{{ $t('Useful Links') }}
 			</h4>
 			<nav>
-				<FooterNavLink v-if="page.props.settings.portalOpen" :href="route(page.props.rp + 'book')">
-					{{ $t('Booking Portal') }}
-				</FooterNavLink>
-				<FooterNavLink href="https://t.me/gobcongarfagnana" external>
+				<FooterNavLink href="https://t.me/federludocongarfagnana" external>
 					{{ $t('Telegram Group') }}
 				</FooterNavLink>
-				<FooterNavLink :href="route(page.props.rp + 'modal.refund', { redirect: route().current() })" preserve-state preserve-scroll>
-					{{ $t('Refund Policy') }}
-				</FooterNavLink>
-				<!--<FooterNavLink :href="route(page.props.rp + 'modal.terms', { redirect: route().current() })" preserve-state preserve-scroll>
-					{{ $t('Terms of Service') }}
-				</FooterNavLink>-->
 				<FooterNavLink :href="route(page.props.rp + 'modal.privacy', { redirect: route().current() })" preserve-state preserve-scroll>
 					{{ $t('Privacy Policy') }}
 				</FooterNavLink>

@@ -18,6 +18,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\LarpController;
 use App\Http\Controllers\ModalController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,7 +33,7 @@ Route::group([
 	})->name('home');
 	Route::get('/about', static fn() => Inertia::render('About'))->name('about');
 	Route::get('/tables', static fn() => Inertia::render('About'))->name('tables');
-	Route::get('/hotels', HotelController::class)->name('hotels');
+	Route::get('/larp', LarpController::class)->name('larp');
 	Route::get('/venue', static fn() => Inertia::render('Venue'))->name('venue');
 	Route::get('/organization', static fn() => Inertia::render('Organization'))->name('organization');
 	Route::get('/contact', static fn() => Inertia::render('Contact'))->name('contact');
@@ -90,7 +91,7 @@ Route::group([
 	})->name('home');
 	Route::get('/about', static fn() => Inertia::render('About'))->name('about');
 	Route::get('/tables', static fn() => Inertia::render('About'))->name('tables');
-	Route::get('/hotels', HotelController::class)->name('hotels');
+	Route::get('/larp', LarpController::class)->name('larp');
 	Route::get('/venue', static fn() => Inertia::render('Venue'))->name('venue');
 	Route::get('/organization', static fn() => Inertia::render('Organization'))->name('organization');
 	Route::get('/contact', static fn() => Inertia::render('Contact'))->name('contact');

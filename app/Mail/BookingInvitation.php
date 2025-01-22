@@ -22,7 +22,7 @@ class BookingInvitation extends Mailable
 	public function envelope(): Envelope
 	{
 		return new Envelope(
-			subject: '[Garfaludica APS] Mancano pochi giorni alla GobCon! Prenota il tuo posto!',
+			subject: '[Garfaludica APS] Mancano pochi giorni alla FederludoCon! Prenota il tuo posto!',
 		);
 	}
 

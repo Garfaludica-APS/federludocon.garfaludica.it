@@ -25,6 +25,12 @@ class LocalizeApp
 	 */
 	public function handle(Request $request, Closure $next, string $domain = 'pub'): Response
 	{
+		App::setLocale('it');
+		$locale = App::currentLocale();
+		if (!$request->hasCookie('lang') || $request->cookie('lang') !== $locale)
+			Cookie::queue('lang', $locale, 60 * 24 * 365, null, null, null, false);
+		return $next($request);
+
 		$locale = Config::get('app.locale', 'it');
 		$headerLang = $request->getPreferredLanguage(['it', 'en']);
 

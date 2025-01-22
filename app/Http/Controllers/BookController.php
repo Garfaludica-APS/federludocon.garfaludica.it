@@ -31,7 +31,8 @@ class BookController extends Controller
 
 	public function show(): Response
 	{
-		$close = config('gobcon.close', false);
+		abort(404); //TODO: remove
+		$close = config('federludocon.close', false);
 		$closed = ($close instanceof Carbon) ? $close->isPast() : $close;
 		if ($closed)
 			abort(404);
@@ -48,7 +49,7 @@ class BookController extends Controller
 
 	public function submit(Request $request): RedirectResponse
 	{
-		$close = config('gobcon.close', false);
+		$close = config('federludocon.close', false);
 		$closed = ($close instanceof Carbon) ? $close->isPast() : $close;
 		if ($closed)
 			abort(404);

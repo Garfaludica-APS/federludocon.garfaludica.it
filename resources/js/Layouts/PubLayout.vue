@@ -3,16 +3,13 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { Link, usePage } from '@inertiajs/vue3';
 import { getActiveLanguage } from 'laravel-vue-i18n';
 
+import comunestemma from '@/../../storage/images/stemma-castelnuovo.svg';
+
 const page = usePage();
 
-const props = defineProps({
-	showNote: {
-		type: Boolean,
-		default: false,
-	},
-});
-
 const showingNavigationDropdown = ref(false);
+
+const comuneLink = 'https://comune.castelnuovodigarfagnana.lu.it';
 
 function localizeRoutes(lang, replace = true)
 {
@@ -98,11 +95,8 @@ onUnmounted(() => {
 								<NavLink :href="route(page.props.rp + 'about')" :active="route().current(page.props.rp + 'about')">
 									{{ $t('About') }}
 								</NavLink>
-								<NavLink :href="route(page.props.rp + 'hotels')" :active="route().current(page.props.rp + 'hotels')">
-									{{ $t('Hotels') }}
-								</NavLink>
-								<NavLink :href="route(page.props.rp + 'venue')" :active="route().current(page.props.rp + 'venue')">
-									{{ $t('Venue') }}
+								<NavLink :href="route(page.props.rp + 'larp')" :active="route().current(page.props.rp + 'larp')">
+									{{ $t('Stelle Nere &amp; Strane Lune') }}
 								</NavLink>
 								<NavLink :href="route(page.props.rp + 'organization')" :active="route().current(page.props.rp + 'organization')">
 									{{ $t('Garfaludica') }}
@@ -110,22 +104,10 @@ onUnmounted(() => {
 								<NavLink :href="route(page.props.rp + 'contact')" :active="route().current(page.props.rp + 'contact')">
 									{{ $t('Contact') }}
 								</NavLink>
-								<NavButton v-if="page.props.settings.portalOpen" :href="route(page.props.rp + 'book')" :active="route().current(page.props.rp + 'book')">
-									{{ $t('Book') }}
-								</NavButton>
-								<!--sse-->
-								<Link :href="route(page.props.rp + 'admin.index')" class="inline-flex items-center absolute py-1 px-1 top-3 right-3 ml:max-2xl:mt-12 text-sm font-medium leading-5 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1">
-										<path fill-rule="evenodd" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7V4.5A3.5 3.5 0 0 0 8 1Zm2 6V4.5a2 2 0 1 0-4 0V7h4Z" clip-rule="evenodd" />
-									</svg>
-									{{ $t('Admin Panel') }}
-								</Link>
-								<!--/sse-->
 							</div>
 
 							<div class="-me-2 flex items-center px-4 space-x-6">
 								<DarkModeSwitcher class="h-8 w-8 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 hover:border-gray-500 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 focus:border-gray-500 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out" />
-								<LanguageSwitcher class="h-8 w-8 text-gray-350 group-[.is-scrolled]:text-gray-500 group-[.is-scrolled]:dark:text-gray-350 hover:text-gray-200 group-[.is-scrolled]:hover:text-gray-700 group-[.is-scrolled]:dark:hover:text-gray-200 hover:border-gray-500 focus:outline-none focus:text-gray-300 group-[.is-scrolled]:focus:text-gray-700 group-[.is-scrolled]:dark:focus:text-gray-300 focus:border-gray-500 group-[.is-scrolled]:dark:focus:text-gray-200 transition duration-150 ease-in-out" @switchLang="localizeRoutes" />
 
 								<button class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none transition duration-150 ease-in-out ml:hidden" :class="{'bg-gray-100 dark:bg-gray-900': showingNavigationDropdown}" @click="showingNavigationDropdown = !showingNavigationDropdown">
 									<svg
@@ -161,11 +143,8 @@ onUnmounted(() => {
 								<ResponsiveNavLink :href="route(page.props.rp + 'about')" :active="route().current(page.props.rp + 'about')">
 									{{ $t('About') }}
 								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="route(page.props.rp + 'hotels')" :active="route().current(page.props.rp + 'hotels')">
-									{{ $t('Hotels') }}
-								</ResponsiveNavLink>
-								<ResponsiveNavLink :href="route(page.props.rp + 'venue')" :active="route().current(page.props.rp + 'venue')">
-									{{ $t('Venue') }}
+								<ResponsiveNavLink :href="route(page.props.rp + 'larp')" :active="route().current(page.props.rp + 'larp')">
+									{{ $t('Stelle Nere &amp; Strane Lune') }}
 								</ResponsiveNavLink>
 								<ResponsiveNavLink :href="route(page.props.rp + 'organization')" :active="route().current(page.props.rp + 'organization')">
 									{{ $t('Garfaludica') }}
@@ -173,17 +152,6 @@ onUnmounted(() => {
 								<ResponsiveNavLink :href="route(page.props.rp + 'contact')" :active="route().current(page.props.rp + 'contact')">
 									{{ $t('Contact') }}
 								</ResponsiveNavLink>
-								<NavButton v-if="page.props.settings.portalOpen" :href="route(page.props.rp + 'book')" :active="route().current(page.props.rp + 'book')">
-									{{ $t('Book') }}
-								</NavButton>
-								<!--sse-->
-								<Link :href="route(page.props.rp + 'admin.index')" class="inline-flex items-center py-1 px-1 float-right text-sm font-medium leading-5 text-gray-500 dark:text-gray-350 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none focus:text-gray-700 dark:focus:text-gray-300 tansition duration-150 ease-in-out">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1">
-										<path fill-rule="evenodd" d="M8 1a3.5 3.5 0 0 0-3.5 3.5V7A1.5 1.5 0 0 0 3 8.5v5A1.5 1.5 0 0 0 4.5 15h7a1.5 1.5 0 0 0 1.5-1.5v-5A1.5 1.5 0 0 0 11.5 7V4.5A3.5 3.5 0 0 0 8 1Zm2 6V4.5a2 2 0 1 0-4 0V7h4Z" clip-rule="evenodd" />
-									</svg>
-									{{ $t('Admin Panel') }}
-								</Link>
-								<!--/sse-->
 							</div>
 						</div>
 
@@ -194,9 +162,10 @@ onUnmounted(() => {
 			<main class="z-10 py-20">
 				<slot />
 			</main>
-		<div v-if="showNote" class="absolute bottom-0 right-0 p-3 text-white text-sm">
-			<p>{{ $t('Note: you must book through the portal even if you only want to book meals but no rooms.') }}</p>
-		</div>
+			<a rel="external noopener nofollow" :href="comuneLink" target="_blank" class="absolute flex align-center items-center bottom-0 right-0 p-3 text-white text-sm">
+				<img :src="comunestemma" alt="Stemma del Comune di Castelnuovo di Garfagnana" class="w-16 h-auto inline-block mr-4" />
+				<p class="inline max-w-48 text-wrap !inline-block">{{ $t('Con il Patrocinio del Comune di Castelnuovo di Garfagnana') }}</p>
+			</a>
 		</div>
 
 		<footer class="bg-gray-300 dark:bg-slate-900 text-gray-800 dark:text-gray-100 shadow-md">

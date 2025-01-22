@@ -1,7 +1,7 @@
 {
-	"name": "garfaludica-aps/gobcon.garfaludica.it",
+	"name": "garfaludica-aps/federludocon.garfaludica.it",
 	"type": "project",
-	"description": "The GobCon booking portal.",
+	"description": "The FederludoCon booking portal.",
 	"keywords": ["laravel", "booking", "event"],
 	"license": "MIT",
 	"repositories": [
@@ -15,7 +15,7 @@
 		"biscolab/laravel-recaptcha": "^6.1",
 		"dompdf/dompdf": "^3.0",
 		"emargareten/inertia-modal": "^1.2",
-		"inertiajs/inertia-laravel": "^1.0",
+		"inertiajs/inertia-laravel": "^2.0",
 		"laravel/framework": "^11.0",
 		"laravel/tinker": "^2.9",
 		"monicahq/laravel-cloudflare": "^3.7",

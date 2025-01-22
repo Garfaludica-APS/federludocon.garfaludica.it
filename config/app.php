@@ -18,7 +18,7 @@ return [
 	|
 	 */
 
-	'name' => env('APP_NAME', 'GobCon Booking Portal'),
+	'name' => env('APP_NAME', 'FederludoCon Booking Portal'),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -57,9 +57,9 @@ return [
 	|
 	 */
 
-	'url' => env('APP_URL', 'https://gobcon.garfaludica.it'),
+	'url' => env('APP_URL', 'https://federludocon.garfaludica.it'),
 
-	'frontend_url' => env('FRONTEND_URL', 'https://gobcon.garfaludica.it'),
+	'frontend_url' => env('FRONTEND_URL', 'https://federludocon.garfaludica.it'),
 
 	'asset_url' => env('ASSET_URL'),
 

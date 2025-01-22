@@ -135,7 +135,7 @@ return [
 
 	'cookie' => env(
 		'SESSION_COOKIE',
-		Str::slug(env('APP_NAME', 'gobcon'), '_') . '_session'
+		Str::slug(env('APP_NAME', 'federludocon'), '_') . '_session'
 	),
 
 	/*
@@ -162,7 +162,7 @@ return [
 	|
 	 */
 
-	'domain' => env('SESSION_DOMAIN', 'gobcon.garfaludica.it'),
+	'domain' => env('SESSION_DOMAIN', 'federludocon.garfaludica.it'),
 
 	/*
 	|--------------------------------------------------------------------------

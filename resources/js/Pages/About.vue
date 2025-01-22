@@ -33,9 +33,10 @@ const Braccicorti_list_2 = computed(() => trans('Double room for two people: <b>
 </script>
 
 <template>
-	<div class="space-x-10 flex justify-center items-center mx-auto h-60">
-			<img class="w-auto h-36 xl:h-full" :src="tdglogo" alt="Logo Tana Goblin Garfagnana" />
-			<img class="w-auto h-36 xl:h-full" :src="logo" alt="Logo Garfaludica APS" />
+	<div class="flex justify-center items-center">
+		<h1 class="text-5xl sm:text-3xl lg:text-8xl xl:text-10xl inline-block uppercase text-[#0A7A70]">
+			{{$t('Informazioni')}}
+		</h1>
 	</div>
 
 	<div class="py-12">
@@ -43,11 +44,10 @@ const Braccicorti_list_2 = computed(() => trans('Double room for two people: <b>
 			<div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
 				<div>
 					<div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-						<p class="text-red-500 mb-6 text-xl" v-if="!page.props.settings.portalOpen" v-html="$t('top_page_warning')"></p>
 						<div class="flex items-center">
-							<h1 class="text-2xl font-medium bg-gradient-to-r to-[#0b8a26] from-[#9bc009] via-[#fbdb19] inline-block text-transparent bg-clip-text">
-								{{ $t('GobCon 2024') }}
-							</h1>
+							<h2 class="text-4xl font-bold dark:text-white inline-block">
+								{{ $t('FederludoCon 2025') }}
+							</h2>
 						</div>
 						<p class="mt-6 text-lg text-black dark:text-slate-200 leading-relaxed" v-html="$t('about_page_presentation_1')"></p>
 						<p class="mt-6 text-lg text-black dark:text-slate-200 leading-relaxed" v-html="$t('about_page_presentation_2')"></p>
@@ -57,108 +57,42 @@ const Braccicorti_list_2 = computed(() => trans('Double room for two people: <b>
 					<div>
 						<div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
 							<div class="flex items-center">
-								<h1 class="text-2xl font-medium bg-gradient-to-r to-[#0b8a26] from-[#9bc009] via-[#fbdb19] inline-block text-transparent bg-clip-text">
+								<h3 class="text-3xl font-bold inline-block dark:text-white">
 										<p v-html="$t('Title_programm')"></p>
-								</h1>
+								</h3>
 							</div>
 							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
-								<p class="font-bold">{{ $t('Friday') }}</p>
-								<ol class="pl-6 lg:pl-8 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
+								<p class="font-bold text-xl">{{ $t('Friday') }}</p>
+								<ol class="pl-6 lg:pl-8 text-base list-disc text-black dark:text-slate-200 leading-relaxed">
 									<li v-html="$t('Fri_list_1')"></li>
 									<li v-html="$t('Fri_list_2')"></li>
+									<li v-html="$t('Fri_list_3')"></li>
+									<li v-html="$t('Fri_list_4')"></li>
 								</ol>
 							</p>
 							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
-								<p class="font-bold">{{ $t('Saturday') }}</p>
-								<ol class="pl-6 lg:pl-8 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
+								<p class="font-bold text-xl">{{ $t('Saturday') }}</p>
+								<ol class="pl-6 lg:pl-8 text-base list-disc text-black dark:text-slate-200 leading-relaxed">
 									<li v-html="$t('Sat_list_1')"></li>
 									<li v-html="$t('Sat_list_2')"></li>
 									<li v-html="$t('Sat_list_3')"></li>
 									<li v-html="$t('Sat_list_4')"></li>
+									<li v-html="$t('Sat_list_5')"></li>
+									<li v-html="$t('Sat_list_6')"></li>
+									<li v-html="$t('Sat_list_7')"></li>
 								</ol>
 							</p>
 							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
-								<p class="font-bold">{{ $t('Sunday') }}</p>
-								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
+								<p class="font-bold text-xl">{{ $t('Sunday') }}</p>
+								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 text-base list-disc text-black dark:text-slate-200 leading-relaxed">
 									<li v-html="$t('Sun_list_1')"></li>
 									<li v-html="$t('Sun_list_2')"></li>
 									<li v-html="$t('Sun_list_3')"></li>
 								</ol>
 							</p>
-							<div class="flex items-center">
-								<h1 class="text-2xl font-medium bg-gradient-to-r to-[#0b8a26] from-[#9bc009] via-[#fbdb19] inline-block text-transparent bg-clip-text">
-									<p v-html="$t('Title_Play_areas')"></p>
-								</h1>
-							</div>
-							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
-								<p v-html="$t('Body_Play_areas')"></p>
-								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
-									<li v-html="$t('Play_areas_list_1')"></li>
-									<li v-html="$t('Play_areas_list_2')"></li>
-								</ol>
-							</p>
-							<div class="flex items-center">
-								<h1 class="text-2xl font-medium bg-gradient-to-r to-[#0b8a26] from-[#9bc009] via-[#fbdb19] inline-block text-transparent bg-clip-text">
-									<p> {{ $t('Meals') }} </p>
-								</h1>
-							</div>
-							<p class="mt-6 text-black dark:text-slate-200 text-lg leading-relaxed">
-								<p v-html="$t('Meals_exp')"></p>
-								<ol class="pl-6 lg:pl-8 pb-6 lg:pb-8 pt-3 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
-									<li v-html="$t('Meals_list_1')"></li>
-									<li v-html="$t('Meals_list_2')"></li>
-									<li v-html="$t('Meals_list_3')"></li>
-									<li v-html="$t('Meals_list_4')"></li>
-								</ol>
-								<p v-html="$t('Meals_rec')"></p>
-							</p>
+							<p class="mt-8 text-black dark:text-slate-200 text-xl leading-relaxed">{{ $t('È necessario prenotare per partecipare all\'evento utilizzando il modulo Google Form che Federludo ha comunicato a tutte le federassociate. Se non ha ricevuto il link, contatta Federludo.') }}</p>
 						</div>
 					</div>
-
-					<div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-						<div class="flex items-center">
-							<h1 class="text-2xl font-medium bg-gradient-to-r to-[#0b8a26] from-[#9bc009] via-[#fbdb19] inline-block text-transparent bg-clip-text">
-								{{ $t('Prices') }}
-							</h1>
-						</div>
-						<p class="mt-4 text-black dark:text-slate-200 leading-relaxed" v-html="$t('All prices listed here are for a <strong>single</strong> person, for each night.')"></p>
-						<p class="mt-6 text-black dark:text-slate-200 leading-relaxed font-bold">{{ $t('hotel_name_Panoramic Hotel') }}</p>
-						<p class="mt-2 text-black dark:text-slate-200 leading-relaxed" v-html="$t('Panoramico_body')"></p>
-						<ol class="pl-6 lg:pl-8 pb-3 lg:pb-3 pt-2 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
-									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_1"></li>
-									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_2"></li>
-									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_3"></li>
-									<li class="pb-1 lg:pb-2" v-html="Panoramico_list_4"></li>
-						</ol>
-						<p class="mt-3 text-black dark:text-slate-200 leading-relaxed font-bold">{{ $t('hotel_name_Isera Refuge')}} </p>
-						<p class="mt-2 text-black dark:text-slate-200 leading-relaxed" v-html="$t('Isera_body')"></p>
-						<ol class="pl-6 lg:pl-8 pb-3 lg:pb-3 pt-2 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
-									<li class="pb-1 lg:pb-2" v-html="Isera_list_1"></li>
-									<li class="pb-1 lg:pb-2" v-html="Isera_list_2"></li>
-						</ol>
-						<p class="mt-3 text-black dark:text-slate-200 leading-relaxed font-bold">{{ $t('hotel_name_Braccicorti Farmhouse')}} </p>
-						<p class="mt-2 text-black dark:text-slate-200 leading-relaxed" v-html="$t('Braccicorti_body')"></p>
-						<ol class="pl-6 lg:pl-8 pb-3 lg:pb-3 pt-2 text-base list-decimal text-black dark:text-slate-200 leading-relaxed">
-									<li class="pb-1 lg:pb-2" v-html="Braccicorti_list_1"></li>
-									<li class="pb-1 lg:pb-2" v-html="Braccicorti_list_2"></li>
-						</ol>
-					</div>
-
-					<div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
-						<div class="flex items-center">
-							<h1 class="text-2xl font-medium bg-gradient-to-r to-[#0b8a26] from-[#9bc009] via-[#fbdb19] inline-block text-transparent bg-clip-text">
-								{{ $t('Alternative Activities') }}
-							</h1>
-						</div>
-						<p class="mt-4 text-black dark:text-slate-200 leading-relaxed">{{ $t('There are some alternative activities that you could do during the event.') }}</p>
-						<p class="mt-6 text-black dark:text-slate-200 leading-relaxed font-bold">{{ $t('Guided excursions on the Pania of Corfino') }}</p>
-						<p class="mt-2 text-black dark:text-slate-200 leading-relaxed">{{ $t('Sunday, at 9:00, starting from the Isera Refuge. You will visit the Orecchiella Park visitor center, the bear enclosure, and climb to the summit of Pania di Corfino (1603 m). Itinerary without technical difficulties. About three and a half hours. 10 euros per person (min. 4 people). Reservations via phone/whatsapp: 328 536 9047.') }}</p>
-						<p class="mt-6 text-black dark:text-slate-200 leading-relaxed font-bold">{{ $t('Guided excursions to Castelnuovo di Garfagnana') }}</p>
-						<p class="mt-2 text-black dark:text-slate-200 leading-relaxed">{{ $t('Saturday afternoon, starting from Piazza delle Erbe (Castelnuovo di Garfagnana). Trip to the old town of Castelnuovo and to the Ariosto fortress, the dome and the theater. 8 euros per person (min. 6 people). Reservations via phone/whatsapp: 379 241 5958.') }}</p>
-						<p class="mt-6 text-black dark:text-slate-200 leading-relaxed font-bold">{{ $t('Other activities') }}</p>
-						<p class="mt-2 text-black dark:text-slate-200 leading-relaxed" v-html="$t('Check the official institutional site of Garfagnana: <a href=&quot;https://turismo.garfagnana.eu&quot; target=&quot;_blank&quot; rel=&quot;external noopener nofollow&quot;>https://turismo.garfagnana.eu</a>.')"></p>
-					</div>
-
 				</div>
 			</div>
 		</div>
